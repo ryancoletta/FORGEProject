@@ -7,7 +7,6 @@ public:
 	void beginNewFrame();
 	void keyDownEvent(const SDL_Event& event);
 	void keyUpEvent(const SDL_Event &event);
-
 	bool isKeyHeld(SDL_Scancode key);
 	bool isKeyDown(SDL_Scancode key);
 	bool isKeyUp(SDL_Scancode key);

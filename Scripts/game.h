@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics.h"
+#include "sprite.h"
 
 class Game {
 public:
@@ -11,5 +12,7 @@ private:
 	void gameLoop();
 	void draw(Graphics &graphics);
 	void update(float deltaTime);
+
+	Sprite _player;
 };
 

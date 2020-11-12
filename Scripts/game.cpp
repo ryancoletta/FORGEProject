@@ -1,9 +1,6 @@
 #include "game.h"
 
 #include <SDL.h>
-#include <SDL_image.h>
-#include <stdio.h>
-#include <string>
 #include "input.h"
 
 Game::Game() {
@@ -17,6 +14,8 @@ void Game::gameLoop() {
 	Graphics graphics;
 	Input input;
 	SDL_Event event;
+
+	_player = Sprite(graphics, "Assets/spritesheet.png", 0, 0, 16, 16, 100, 100);
 
 	int lastUpdateTimeMs = SDL_GetTicks();
 	while (true) {
@@ -44,10 +43,16 @@ void Game::gameLoop() {
 		int elaspedUpdateTimeMs = currentUpdateTimeMs - lastUpdateTimeMs;
 		lastUpdateTimeMs = currentUpdateTimeMs;
 		update(std::min(elaspedUpdateTimeMs, MAX_FRAME_TIME));
+
+		draw(graphics);
 	}
 }
 void Game::draw(Graphics& graphics) {
+	graphics.clear();
 
+	_player.draw(graphics, 100, 100);
+
+	graphics.render();
 }
 void Game::update(float deltaTime) {
 
