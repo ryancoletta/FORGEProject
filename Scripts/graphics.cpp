@@ -3,6 +3,7 @@
 
 Graphics::Graphics() {
 	SDL_CreateWindowAndRenderer(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, 0, &_window, &_renderer);
+	SDL_SetRenderDrawColor(_renderer, 0x47, 0x2D, 0x3C, 0xFF);
 	SDL_SetWindowTitle(_window, "FORGE Project");
 }
 
@@ -18,12 +19,10 @@ SDL_Surface* Graphics::loadImage(const std::string& filePath) {
 }
 
 void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect) {
-	
 	SDL_RenderCopy(_renderer, texture, sourceRect, destRect);
 }
 
 void Graphics::render() {
-	
 	SDL_RenderPresent(_renderer);
 }
 
