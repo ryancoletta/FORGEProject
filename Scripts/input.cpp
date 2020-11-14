@@ -1,6 +1,5 @@
 #include "input.h"
 
-
 void Input::beginNewFrame() {
 	_downKeys.clear();
 	_upKeys.clear();

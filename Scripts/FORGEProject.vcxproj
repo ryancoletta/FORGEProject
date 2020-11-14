@@ -146,25 +146,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="animatedsprite.cpp" />
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
-    <ClCompile Include="grid.cpp" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animatedsprite.h" />
+    <ClInclude Include="animation.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="grid.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="tile.h" />
+    <ClInclude Include="tinyxml2.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

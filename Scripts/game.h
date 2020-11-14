@@ -1,8 +1,7 @@
 #pragma once
 #include "graphics.h"
 #include "entity.h"
-#include "grid.h"
-
+#include "level.h"
 class Game {
 public:
 	Game();
@@ -11,7 +10,7 @@ private:
 	void draw(Graphics &graphics);
 	void update(int deltaTime);
 
-	Grid _grid;
+	Level _level;
 	Entity _playerEntity;
 };
 

@@ -1,14 +1,18 @@
 #pragma once
 #include "globals.h"
+#include "sprite.h"
 
 class Tile
 {
 public:
 	Tile();
-	Tile(Vector2 coordinate, Vector2 position);
+	Tile(Sprite* sprite, Vector2 coordinate, Vector2 position);
 	Vector2 getCoordinate();
 	Vector2 getPosition();
+	Sprite* getSprite();
+	void draw();
 private:
+	Sprite* _sprite;
 	Vector2 _coordinate;
 	Vector2 _position;
 };

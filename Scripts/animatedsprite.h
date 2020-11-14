@@ -2,29 +2,25 @@
 #include "sprite.h"
 #include <vector>
 #include "globals.h"
+#include "animation.h"
+
 class AnimatedSprite : public Sprite
 {
 public:
 	AnimatedSprite();
-	AnimatedSprite(Graphics* graphics, const std::string &filePath, Vector2 sourcePosition, Vector2 sourceScale, int msPerFrame);
+	AnimatedSprite(Graphics* graphics, const std::string &filePath, Vector2 sourcePosition, Vector2 sourceScale);
 	void update(int deltaTime) override;
-	void draw() override;
+	void draw(Vector2 position) override;
 	void playAnimation(std::string animation, bool isLoop = false);
-	void addAnimation(std::string name, int frames, Vector2 firstFramePosition, Vector2 frameScale);
+	void addAnimation(Animation animation);
 	void resetAnimations();
 	void stopAnimation();
 	void setVisible(bool visible);
-	virtual void setupAnimations();
-	virtual void onAnimationDone(std::string currentAnimation);
-protected:
-	float _msPerFrame;
-	bool _isLoop;
-	std::string _currentAnimation;
-
-
-
+	virtual void onAnimationDone(std::string currentAnimationName);
 private:
-	std::map<std::string, std::vector<SDL_Rect>> _animations;
+	bool _isLoop;
+	std::string _currentAnimationName;
+	std::map<std::string, Animation> _animations;
 	int _frameIndex;
 	int _timeElapsed;
 	bool _visible;

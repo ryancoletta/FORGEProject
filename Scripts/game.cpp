@@ -14,13 +14,16 @@ void Game::gameLoop() {
 	Input input;
 	SDL_Event event;
 
-	// TODO change the animated sprite class to accept an ANIMATION rather than require setupAnimations
-	AnimatedSprite animatedPlayerSprite(&graphics, "Assets/spritesheet.png", Vector2(1 * 16, 16), Vector2(16, 16), 500);
-	animatedPlayerSprite.setupAnimations();
-	animatedPlayerSprite.playAnimation("Test", true);
+	// TODO map is based on a tilemap
+	Sprite test(&graphics, "Assets/spritesheet.png", Vector2(2 * 16, 0), Vector2(16, 16));
+	_level = Level(10, 10, &test);
 
-	_grid = Grid(10, 10);
-	_playerEntity = Entity(&_grid, &animatedPlayerSprite, _grid.getTile(0,0));
+	// TODO spawn entities by reading a tilemap (including the player entity)
+	AnimatedSprite animatedPlayerSprite(&graphics, "Assets/spritesheet.png", Vector2(0, 0), Vector2(16, 16));
+	Animation playerIdle("player_idle", 2, 500, Vector2(0,0), Vector2(16, 16));
+	animatedPlayerSprite.addAnimation(playerIdle);
+	animatedPlayerSprite.playAnimation("player_idle", true);
+	_playerEntity = Entity(&_level, &animatedPlayerSprite, _level.getTile(0,0));
 
 	int lastUpdateTimeMs = SDL_GetTicks();
 	while (true) {
@@ -67,7 +70,8 @@ void Game::gameLoop() {
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
-	_playerEntity.draw(); // this is using SPRITE not ANIMATEDSPRITE, why?
+	_level.draw();
+	_playerEntity.draw();
 
 	graphics.render();
 }

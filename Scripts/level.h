@@ -1,17 +1,20 @@
 #pragma once
 #include "tile.h"
 #include <vector>
-class Grid
+#include "sprite.h"
+class Level
 {
 public:
-	Grid();
-	Grid(int rows, int cols);
+	Level();
+	Level(int rows, int cols, Sprite* sprite);
 
 	bool isCoordinateInRange(int x, int y);
 	bool isCoordinateInRange(Vector2 coordinate);
-	Tile getTile(int x, int y);
-	Tile getTile(Vector2 coordinate);
+	Tile* getTile(int x, int y);
+	Tile* getTile(Vector2 coordinate);
+	void draw();
 private:
+	Sprite* _sprite;
 	int _rows;
 	int _cols;
 	std::vector<std::vector<Tile>> _tiles;

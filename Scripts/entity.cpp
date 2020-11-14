@@ -1,21 +1,26 @@
 #include "entity.h"
-#include "grid.h"
+#include "level.h"
 
-Entity::Entity() {}
-Entity::Entity(Grid* grid, Sprite* sprite, Tile startTile) : _grid(grid), _sprite(sprite), _currentTile(startTile) {
-	_sprite->setPosition(_currentTile.getPosition());
-}
+Entity::Entity() :
+	_level(NULL),
+	_sprite(NULL),
+	_currentTile(NULL)
+{}
+Entity::Entity(Level* grid, Sprite* sprite, Tile* startTile) : 
+	_level(grid), 
+	_sprite(sprite), 
+	_currentTile(startTile) 
+{}
 
 void Entity::draw() {
-	_sprite->draw();
+	_sprite->draw(_currentTile->getPosition());
 }
 
 void Entity::move(Vector2 direction) {
 	
-	Vector2 newCoordinate = _currentTile.getCoordinate() + direction;
-	if (_grid->isCoordinateInRange(newCoordinate)) {
-		_currentTile = _grid->getTile(newCoordinate);
-		_sprite->setPosition(_currentTile.getPosition());
+	Vector2 newCoordinate = _currentTile->getCoordinate() + direction;
+	if (_level->isCoordinateInRange(newCoordinate)) {
+		_currentTile = _level->getTile(newCoordinate);
 	}
 }
 

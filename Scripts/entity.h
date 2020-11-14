@@ -1,19 +1,19 @@
 #pragma once
 #include "sprite.h"
 #include "tile.h"
-#include "grid.h"
+#include "level.h"
 
 class Entity
 {
 public:
 	Entity();
-	Entity(Grid* grid, Sprite* sprite, Tile startTile);
+	Entity(Level* grid, Sprite* sprite, Tile* startTile);
 	void draw();
 	void update(int deltaTime);
 	void move(Vector2 direction);
 private:
-	Grid* _grid;
+	Level* _level;
 	Sprite* _sprite;
-	Tile _currentTile;
+	Tile* _currentTile;
 };
 
