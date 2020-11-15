@@ -9,21 +9,26 @@ Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	gameLoop();
 }
+
 void Game::gameLoop() {
 	Graphics graphics;
 	Input input;
 	SDL_Event event;
 
 	// TODO map is based on a tilemap
-	Sprite test(&graphics, "Assets/spritesheet.png", Vector2(2 * 16, 0), Vector2(16, 16));
-	_level = Level(10, 10, &test);
+	//Sprite test(&graphics, "Assets/spritesheet.png", Vector2(2 * 16, 0), Vector2(16, 16));
+	//_level = Level(10, 9, &test); // TODO error where this must be square
+
+	_level = Level(&graphics, "Assets/level1.tmx");
 
 	// TODO spawn entities by reading a tilemap (including the player entity)
 	AnimatedSprite animatedPlayerSprite(&graphics, "Assets/spritesheet.png", Vector2(0, 0), Vector2(16, 16));
 	Animation playerIdle("player_idle", 2, 500, Vector2(0,0), Vector2(16, 16));
 	animatedPlayerSprite.addAnimation(playerIdle);
 	animatedPlayerSprite.playAnimation("player_idle", true);
-	_playerEntity = Entity(&_level, &animatedPlayerSprite, _level.getTile(0,0));
+	_playerEntity = Entity(&_level, &animatedPlayerSprite, _level.getTile(5,5));
+
+	_entityManager.addEntity(&_playerEntity);
 
 	int lastUpdateTimeMs = SDL_GetTicks();
 	while (true) {
@@ -71,10 +76,10 @@ void Game::draw(Graphics& graphics) {
 	graphics.clear();
 
 	_level.draw();
-	_playerEntity.draw();
+	_entityManager.draw();
 
 	graphics.render();
 }
 void Game::update(int deltaTime) {
-	_playerEntity.update(deltaTime);
+	_entityManager.update(deltaTime);
 }

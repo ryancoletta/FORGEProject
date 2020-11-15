@@ -3,9 +3,9 @@
 namespace globals {
 	const int FPS = 50;
 	const int MAX_FRAME_TIME = 5 * 1000 / FPS;
-	const int WINDOW_WIDTH = 640;
-	const int WINDOW_HEIGHT = 480;
-	const float SPRITE_SCALE = 2.0f;
+	const int WINDOW_WIDTH = 960;
+	const int WINDOW_HEIGHT = 720;
+	const float SPRITE_SCALE = 3.0f;
 }
 
 struct Vector2 {

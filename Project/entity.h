@@ -16,4 +16,3 @@ private:
 	Sprite* _sprite;
 	Tile* _currentTile;
 };
-
