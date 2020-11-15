@@ -25,7 +25,7 @@ std::string Animation::getName() { return _name; }
 int Animation::getFrames() { return _frames; }
 int Animation::getMilisecondsPerFrame() { return _milisecondsPerFrame; }
 
-// TODO this assumes all on the same line rn
+// TODO this assumes all on the same line rn, add a wrapping behaviour
 SDL_Rect Animation::getFrameRect(int frame) {
 	return _frameRects[frame];
 }

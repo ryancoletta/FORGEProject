@@ -24,7 +24,7 @@ public:
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 	std::string getSpriteSheet(int gid);
 private:
-	std::map<int, std::string> _spriteSheets; // TODO this is bad and you should feel bad, make a struct
+	std::map<int, std::string> _spriteSheets; // TODO idk what I was thinking, make this a struct called tileSet
 	EntityManager* _entityManager;
 	int _rows;
 	int _cols;

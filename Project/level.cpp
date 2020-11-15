@@ -25,7 +25,7 @@ bool Level::isCoordinateInRange(Vector2 coordinate) {
 	return isCoordinateInRange(coordinate.x, coordinate.y);
 }
 Tile* Level::getTile(int x, int y) {
-	return &_tiles[x][y]; // TODO error where this works when these are SWAPED
+	return &_tiles[x][y];
 }
 Tile* Level::getTile(Vector2 coordinate) {
 	return getTile(coordinate.x, coordinate.y);
@@ -59,6 +59,7 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 
 	loadSpriteSheets(graphics, mapNode);
 
+	// TODO any way to make this less hideously nested
 	XMLElement* pLayer = mapNode->FirstChildElement("layer");
 	if (pLayer) {
 		while (pLayer) {
@@ -73,6 +74,7 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 						while (pTile) {
 
 							int gid = pTile->IntAttribute("gid") - 1;
+							
 							// handle empty gids
 							if (gid == -1) {
 								tileCounter++;
@@ -84,7 +86,6 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 									break;
 								}
 							}
-
 
 							std::string spriteSheet = getSpriteSheet(gid);
 
@@ -103,20 +104,19 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 							// get the position of tile in the level
 							int x = tileCounter % _cols;
 							int y = tileCounter / _cols;
-
 							int posX = x * tileWidth * globals::SPRITE_SCALE;
 							int posY = y * tileHeight * globals::SPRITE_SCALE;
 							Vector2 finalTilePosition = Vector2(posX, posY);
 
-							// calculate the position of the tile in the tileset TODO hard coded
-							int spriteSheetWidth = 48;
+							// calculate the position of the tile in the tileset
+							int spriteSheetWidth = 48; // TODO hard coded, read from file
 							int spriteSheetX = gid % (spriteSheetWidth / tileWidth);
 							spriteSheetX *= tileWidth;
 							int spriteSheetY = gid / (spriteSheetWidth / tileWidth);
 							spriteSheetY *= tileHeight;
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
 
-							// where should this sprite live??
+							// TODO this sprite is destroyed as soon as it exits this scope, cannot store as pointer on entity
 							Sprite tileSprite(graphics, spriteSheet, finalTilesetPosition, tileSize, finalTilePosition);
 
 							if (std::string(layerName) == "BG") {
@@ -124,8 +124,9 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 								_tiles[x][y] = tile;
 							}
 							else {
-								// TODO this entity is destroyed as soon as it exits this scope, must copy it to entity manager
+								// TODO this entity is destroyed as soon as it exits this scope, cannot store as a pointer on entitymanager
 								Entity newEntity( this, &tileSprite, &_tiles[x][y]);
+								//_entityManager->addEntity(&newEntity);
 							}
 
 

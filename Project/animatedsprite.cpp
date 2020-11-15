@@ -69,7 +69,6 @@ void AnimatedSprite::playAnimation(std::string animationName, bool isLoop) {
 	}
 }
 
-// TODO assumption here that animations are all on the same row
 void AnimatedSprite::addAnimation(Animation animation) {
 	_animations.insert(std::pair<std::string, Animation>(animation.getName(), animation));
 }
