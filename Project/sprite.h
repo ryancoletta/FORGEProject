@@ -1,6 +1,9 @@
 #pragma once
-#include "graphics.h"
+#include <string>
+#include <SDL.h>
 #include "globals.h"
+
+class Graphics;
 
 class Sprite
 {

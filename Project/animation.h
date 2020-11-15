@@ -1,8 +1,8 @@
 #pragma once
-#include "globals.h"
 #include <string>
 #include <vector>
 #include <SDL.h>
+#include "globals.h"
 
 class Animation
 {

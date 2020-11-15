@@ -1,5 +1,7 @@
 #include "entity.h"
 #include "level.h"
+#include "sprite.h"
+#include "tile.h"
 
 Entity::Entity() :
 	_level(NULL),

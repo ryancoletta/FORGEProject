@@ -1,8 +1,9 @@
 #pragma once
 #include "graphics.h"
-#include "entity.h"
-#include "entityManager.h"
 #include "level.h"
+#include "entityManager.h"
+#include "entity.h"
+
 class Game {
 public:
 	Game();

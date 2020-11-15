@@ -1,7 +1,8 @@
 #pragma once
-#include "sprite.h"
-#include "tile.h"
-#include "level.h"
+#include "globals.h"
+class Level;
+class Tile;
+class Sprite;
 
 class Entity
 {

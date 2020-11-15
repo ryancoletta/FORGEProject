@@ -3,38 +3,19 @@
 #include <sstream>
 #include <algorithm>
 #include <cmath>
+#include "entitymanager.h"
+#include "sprite.h"
+#include "entity.h"
+
 using namespace tinyxml2;
 
 Level::Level() :
 	_rows(0),
-	_cols(0),
-	_sprite(NULL)
+	_cols(0)
 {}
-
-Level::Level(int rows, int cols, Sprite* sprite) : 
-	_rows(rows), 
-	_cols(cols), 
-	_sprite(sprite) 
+Level::Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager) :
+	_entityManager(entityManager)
 {
-	// center the tiles to the window
-	Vector2 windowCenter = Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2);
-	int cellSize = 16 * globals::SPRITE_SCALE;
-	Vector2 totalScale = Vector2(cols * cellSize, rows * cellSize);
-
-	_tiles.resize(cols);
-	for (int x = 0; x < cols; x++) {
-		std::vector<Tile> row;
-		row.resize(rows);
-		for (int y = 0; y < rows; y++) {
-			Vector2 tileCoordinate(x, y);
-			Vector2 tilePosition(x * cellSize, y * cellSize);
-			Tile tile(*_sprite, tileCoordinate, windowCenter - totalScale / 2 + tilePosition);
-			row[y] = tile;
-		}
-		_tiles[x] = row;
-	}
-}
-Level::Level(Graphics* graphics, std::string levelPath) {
 	loadMap(graphics, levelPath);
 }
 bool Level::isCoordinateInRange(int x, int y) {
@@ -78,75 +59,85 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 
 	loadSpriteSheets(graphics, mapNode);
 
-	XMLElement* pData = mapNode->FirstChildElement("layer")->FirstChildElement("data");
-	if (pData) {
-		while (pData) {
-			XMLElement* pTile = pData->FirstChildElement("tile");
-			int tileCounter = 0;
-			if (pTile) {
-				while (pTile) {
+	XMLElement* pLayer = mapNode->FirstChildElement("layer");
+	if (pLayer) {
+		while (pLayer) {
+			const char* layerName;
+			pLayer->QueryStringAttribute("name", &layerName);
+			XMLElement* pData = pLayer->FirstChildElement("data");
+			if (pData) {
+				while (pData) {
+					XMLElement* pTile = pData->FirstChildElement("tile");
+					int tileCounter = 0;
+					if (pTile) {
+						while (pTile) {
 
-					int gid = pTile->IntAttribute("gid") - 1;
-					// handle empty gids
-					if (gid == -1) {
-						tileCounter++;
-						if (pTile->NextSiblingElement("tile")) {
+							int gid = pTile->IntAttribute("gid") - 1;
+							// handle empty gids
+							if (gid == -1) {
+								tileCounter++;
+								if (pTile->NextSiblingElement("tile")) {
+									pTile = pTile->NextSiblingElement("tile");
+									continue;
+								}
+								else {
+									break;
+								}
+							}
+
+
+							std::string spriteSheet = getSpriteSheet(gid);
+
+							// handle spritesheets that don't exist
+							if (spriteSheet == "") {
+								tileCounter++;
+								if (pTile->NextSiblingElement("tile")) {
+									pTile = pTile->NextSiblingElement("tile");
+									continue;
+								}
+								else {
+									break;
+								}
+							}
+
+							// get the position of tile in the level
+							int x = tileCounter % _cols;
+							int y = tileCounter / _cols;
+
+							int posX = x * tileWidth * globals::SPRITE_SCALE;
+							int posY = y * tileHeight * globals::SPRITE_SCALE;
+							Vector2 finalTilePosition = Vector2(posX, posY);
+
+							// calculate the position of the tile in the tileset TODO hard coded
+							int spriteSheetWidth = 48;
+							int spriteSheetX = gid % (spriteSheetWidth / tileWidth);
+							spriteSheetX *= tileWidth;
+							int spriteSheetY = gid / (spriteSheetWidth / tileWidth);
+							spriteSheetY *= tileHeight;
+							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
+
+							// where should this sprite live??
+							Sprite tileSprite(graphics, spriteSheet, finalTilesetPosition, tileSize, finalTilePosition);
+
+							if (std::string(layerName) == "BG") {
+								Tile tile(tileSprite, Vector2(x, y), finalTilePosition);
+								_tiles[x][y] = tile;
+							}
+							else {
+								// TODO this entity is destroyed as soon as it exits this scope, must copy it to entity manager
+								Entity newEntity( this, &tileSprite, &_tiles[x][y]);
+							}
+
+
+							tileCounter++;
+
 							pTile = pTile->NextSiblingElement("tile");
-							continue;
-						}
-						else {
-							break;
 						}
 					}
-
-					
-					std::string spriteSheet = getSpriteSheet(gid);
-
-					// handle spritesheets that don't exist
-					if (spriteSheet == "") {
-						tileCounter++;
-						if (pTile->NextSiblingElement("tile")) {
-							pTile = pTile->NextSiblingElement("tile");
-							continue;
-						}
-						else {
-							break;
-						}
-					}
-
-					// get the position of tile in the level
-					int x = tileCounter % _cols;
-					int y = tileCounter / _cols;
-					
-					int posX = x * tileWidth * globals::SPRITE_SCALE;
-					int posY = y * tileHeight * globals::SPRITE_SCALE;
-					Vector2 finalTilePosition = Vector2(posX, posY);
-
-					// calculate the position of the tile in the tileset TODO hard coded
-					int spriteSheetWidth = 48;
-					int spriteSheetX = gid % (spriteSheetWidth / tileWidth);
-					spriteSheetX *= tileWidth;
-					int spriteSheetY = gid / (spriteSheetWidth / tileWidth);
-					spriteSheetY *= tileHeight;
-					Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
-
-
-					Sprite tileSprite(graphics, spriteSheet, finalTilesetPosition, tileSize, finalTilePosition);
-					Tile tile(tileSprite, Vector2(x, y), finalTilePosition);
-					_tiles[x][y] = tile;
-
-					tileCounter++;
-
-					pTile = pTile->NextSiblingElement("tile");
+					pData = pData->NextSiblingElement("data");
 				}
 			}
-			XMLElement* pLayer = pData->NextSiblingElement("layer");
-			if (pLayer) {
-				pData = pLayer->FirstChildElement("data");
-			}
-			else {
-				pData = NULL;
-			}
+			pLayer = pLayer->NextSiblingElement("layer");
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "entitymanager.h"
+#include "entity.h"
 
 void EntityManager::addEntity(Entity* entity) {
 	_allEntities.push_back(entity);

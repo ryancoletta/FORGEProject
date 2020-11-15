@@ -1,5 +1,5 @@
 #include "sprite.h"
-#include "globals.h"
+#include "graphics.h"
 
 Sprite::Sprite() : 
 	_graphics(NULL), 

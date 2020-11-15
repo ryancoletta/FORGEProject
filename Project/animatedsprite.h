@@ -1,8 +1,10 @@
 #pragma once
-#include "sprite.h"
 #include <vector>
+#include <map>
 #include "globals.h"
-#include "animation.h"
+#include "sprite.h"
+
+class Animation;
 
 class AnimatedSprite : public Sprite
 {

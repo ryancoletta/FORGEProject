@@ -1,9 +1,9 @@
-#include "game.h"
-
 #include <SDL.h>
+#include "game.h"
 #include "input.h"
 #include "globals.h"
 #include "animatedsprite.h"
+#include "animation.h"
 
 Game::Game() {
 	SDL_Init(SDL_INIT_EVERYTHING);
@@ -15,19 +15,15 @@ void Game::gameLoop() {
 	Input input;
 	SDL_Event event;
 
-	// TODO map is based on a tilemap
-	//Sprite test(&graphics, "Assets/spritesheet.png", Vector2(2 * 16, 0), Vector2(16, 16));
-	//_level = Level(10, 9, &test); // TODO error where this must be square
+	_level = Level(&graphics, "Assets/level1.tmx", &_entityManager);
 
-	_level = Level(&graphics, "Assets/level1.tmx");
-
-	// TODO spawn entities by reading a tilemap (including the player entity)
+	// temp spawn the player here
 	AnimatedSprite animatedPlayerSprite(&graphics, "Assets/spritesheet.png", Vector2(0, 0), Vector2(16, 16));
 	Animation playerIdle("player_idle", 2, 500, Vector2(0,0), Vector2(16, 16));
 	animatedPlayerSprite.addAnimation(playerIdle);
 	animatedPlayerSprite.playAnimation("player_idle", true);
-	_playerEntity = Entity(&_level, &animatedPlayerSprite, _level.getTile(5,5));
 
+	_playerEntity = Entity(&_level, &animatedPlayerSprite, _level.getTile(5,5));
 	_entityManager.addEntity(&_playerEntity);
 
 	int lastUpdateTimeMs = SDL_GetTicks();

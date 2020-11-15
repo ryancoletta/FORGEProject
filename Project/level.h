@@ -1,18 +1,19 @@
 #pragma once
-#include "tile.h"
+
 #include <vector>
 #include <string>
 #include <map>
-#include "sprite.h"
+#include "tile.h"
+#include <memory>
 #include "tinyxml2.h"
 
+class EntityManager;
 
 class Level
 {
 public:
 	Level();
-	Level(int rows, int cols, Sprite* sprite);
-	Level(Graphics* graphics, std::string levelPath);
+	Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager);
 
 	bool isCoordinateInRange(int x, int y);
 	bool isCoordinateInRange(Vector2 coordinate);
@@ -23,11 +24,8 @@ public:
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 	std::string getSpriteSheet(int gid);
 private:
-	
-	Sprite* _sprite; // TODO delete
-
-	std::map<int, std::string> _spriteSheets; // first gid >> spriteSheet
-
+	std::map<int, std::string> _spriteSheets; // TODO this is bad and you should feel bad, make a struct
+	EntityManager* _entityManager;
 	int _rows;
 	int _cols;
 	std::vector<std::vector<Tile>> _tiles;

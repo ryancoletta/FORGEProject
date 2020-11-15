@@ -1,4 +1,6 @@
 #include "animatedsprite.h"
+#include "graphics.h"
+#include "animation.h"
 
 AnimatedSprite::AnimatedSprite() : 
 	_frameIndex(0),

@@ -1,5 +1,5 @@
-#include "graphics.h"
 #include "globals.h"
+#include "graphics.h"
 
 Graphics::Graphics() {
 	SDL_CreateWindowAndRenderer(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, 0, &_window, &_renderer);
