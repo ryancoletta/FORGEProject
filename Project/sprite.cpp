@@ -6,7 +6,7 @@ Sprite::Sprite() :
 	_spriteSheet(NULL), 
 	_sourceRect({ 0,0,0,0 }) 
 {}
-Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 position) : 
+Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) : 
 	_graphics(graphics)
 {
 	_sourceRect.x = sourcePosition.x;

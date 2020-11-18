@@ -4,16 +4,18 @@
 #include "tile.h"
 
 Entity::Entity() :
+	_entityID(0),
 	_level(NULL),
 	_sprite(NULL),
 	_currentTile(NULL)
 {}
-Entity::Entity(Level* grid, Sprite* sprite, Tile* startTile) : 
-	_level(grid), 
+Entity::Entity(int entityID, Level* level, Sprite* sprite, Tile* startTile) :
+	_entityID(entityID),
+	_level(level),
 	_sprite(sprite), 
 	_currentTile(startTile) 
 {}
-
+int Entity::getEntityID() { return _entityID; }
 void Entity::draw() {
 	_sprite->draw(_currentTile->getPosition());
 }

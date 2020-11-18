@@ -1,19 +1,17 @@
 #pragma once
 #include "graphics.h"
-#include "level.h"
 #include "entityManager.h"
-#include "entity.h"
 
 class Game {
 public:
 	Game();
+	~Game();
 private:
 	void gameLoop();
 	void draw(Graphics &graphics);
 	void update(int deltaTime);
 
-	Level _level;
+	Level* _level;
 	EntityManager _entityManager;
-	Entity _playerEntity;
 };
 

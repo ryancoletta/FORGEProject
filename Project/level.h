@@ -8,13 +8,16 @@
 #include "tinyxml2.h"
 
 class EntityManager;
+class SpriteManager;
+class Graphics;
+struct SpriteSheet;
 
 class Level
 {
 public:
 	Level();
-	Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager);
-
+	Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager, SpriteManager* spriteManager);
+	~Level();
 	bool isCoordinateInRange(int x, int y);
 	bool isCoordinateInRange(Vector2 coordinate);
 	Tile* getTile(int x, int y);
@@ -22,13 +25,28 @@ public:
 	void draw();
 	void loadMap(Graphics* graphics, std::string levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
-	std::string getSpriteSheet(int gid);
+	//std::string getSpriteSheet(int gid);
 private:
-	std::map<int, std::string> _spriteSheets; // TODO idk what I was thinking, make this a struct called tileSet
 	EntityManager* _entityManager;
+	SpriteManager* _spriteManager;
 	int _rows;
 	int _cols;
-	std::vector<std::vector<Tile>> _tiles;
+	std::vector<std::vector<Tile*>> _tiles;
+	std::vector<SpriteSheet> _spriteSheets;
+};
 
+struct SpriteSheet {
+	int firstGid;
+	int width;
+	std::string path;
+	SpriteSheet() {
+		this->firstGid = 0;
+		this->path = "";
+	}
+ 	SpriteSheet(int firstGid, int width, std::string path) {
+		this->firstGid = firstGid;
+		this->width = width;
+		this->path = path;
+	}
 };
 

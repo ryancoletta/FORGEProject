@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\ryanc\Documents\Visual Studio 2019\FORGEProject\Librarys\SDL2_image-2.0.5\include;C:\Users\ryanc\Documents\Visual Studio 2019\FORGEProject\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\ryanc\Documents\Visual Studio 2019\FORGEProject\Librarys\SDL2_image-2.0.5\lib\x64;C:\Users\ryanc\Documents\Visual Studio 2019\FORGEProject\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -155,6 +155,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="spritemanager.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="spritemanager.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>

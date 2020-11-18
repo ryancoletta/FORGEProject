@@ -9,7 +9,7 @@ class Sprite
 {
 public:
 	Sprite();
-	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 position = Vector2::zero());
+	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position);
 

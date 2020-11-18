@@ -51,6 +51,9 @@
     <ClCompile Include="entitymanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="spritemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="entitymanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spritemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

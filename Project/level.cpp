@@ -5,7 +5,8 @@
 #include <cmath>
 #include "entitymanager.h"
 #include "sprite.h"
-#include "entity.h"
+#include "graphics.h"
+#include "spritemanager.h"
 
 using namespace tinyxml2;
 
@@ -13,8 +14,9 @@ Level::Level() :
 	_rows(0),
 	_cols(0)
 {}
-Level::Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager) :
-	_entityManager(entityManager)
+Level::Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
+	_entityManager(entityManager),
+	_spriteManager(spriteManager)
 {
 	loadMap(graphics, levelPath);
 }
@@ -25,7 +27,7 @@ bool Level::isCoordinateInRange(Vector2 coordinate) {
 	return isCoordinateInRange(coordinate.x, coordinate.y);
 }
 Tile* Level::getTile(int x, int y) {
-	return &_tiles[x][y];
+	return _tiles[x][y];
 }
 Tile* Level::getTile(Vector2 coordinate) {
 	return getTile(coordinate.x, coordinate.y);
@@ -33,7 +35,7 @@ Tile* Level::getTile(Vector2 coordinate) {
 void Level::draw() {
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
-			_tiles[x][y].draw();
+			_tiles[x][y]->draw();
 		}
 	}
 }
@@ -73,10 +75,13 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 					if (pTile) {
 						while (pTile) {
 
-							int gid = pTile->IntAttribute("gid") - 1;
 							
+							int gid;
+							XMLError result = pTile->QueryIntAttribute("gid", &gid);
+							
+
 							// handle empty gids
-							if (gid == -1) {
+							if (result == XML_NO_ATTRIBUTE) {
 								tileCounter++;
 								if (pTile->NextSiblingElement("tile")) {
 									pTile = pTile->NextSiblingElement("tile");
@@ -87,10 +92,16 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 								}
 							}
 
-							std::string spriteSheet = getSpriteSheet(gid);
+							SpriteSheet spriteSheet;
+							for (int i = 0; i < _spriteSheets.size(); i++) {
+								if (_spriteSheets[i].firstGid <= gid) {
+									spriteSheet = _spriteSheets[i];
+								}
+							}
 
 							// handle spritesheets that don't exist
-							if (spriteSheet == "") {
+							if (spriteSheet.path == "") {
+								//printf("Error: SpriteSheet %s not found", spriteSheet.path);
 								tileCounter++;
 								if (pTile->NextSiblingElement("tile")) {
 									pTile = pTile->NextSiblingElement("tile");
@@ -100,6 +111,8 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 									break;
 								}
 							}
+
+							int spriteSheetGid = gid - spriteSheet.firstGid;
 
 							// get the position of tile in the level
 							int x = tileCounter % _cols;
@@ -109,24 +122,21 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 							Vector2 finalTilePosition = Vector2(posX, posY);
 
 							// calculate the position of the tile in the tileset
-							int spriteSheetWidth = 48; // TODO hard coded, read from file
-							int spriteSheetX = gid % (spriteSheetWidth / tileWidth);
+							int spriteSheetWidth = spriteSheet.width;
+							int spriteSheetX = spriteSheetGid % (spriteSheetWidth / tileWidth);
 							spriteSheetX *= tileWidth;
-							int spriteSheetY = gid / (spriteSheetWidth / tileWidth);
+							int spriteSheetY = spriteSheetGid / (spriteSheetWidth / tileWidth);
 							spriteSheetY *= tileHeight;
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
 
-							// TODO this sprite is destroyed as soon as it exits this scope, cannot store as pointer on entity
-							Sprite tileSprite(graphics, spriteSheet, finalTilesetPosition, tileSize, finalTilePosition);
-
+							Sprite* tileSprite = _spriteManager->loadSprite(gid, graphics, spriteSheet.path, finalTilesetPosition, tileSize);
+							
 							if (std::string(layerName) == "BG") {
-								Tile tile(tileSprite, Vector2(x, y), finalTilePosition);
-								_tiles[x][y] = tile;
+								
+								_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition);;
 							}
 							else {
-								// TODO this entity is destroyed as soon as it exits this scope, cannot store as a pointer on entitymanager
-								Entity newEntity( this, &tileSprite, &_tiles[x][y]);
-								//_entityManager->addEntity(&newEntity);
+								_entityManager->addEntity(spriteSheetGid, this, tileSprite, _tiles[x][y]);
 							}
 
 
@@ -152,31 +162,21 @@ void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 			pSpriteSheet->QueryAttribute("firstgid", &firstGid);
 
 			const char* source = pSpriteSheet->FirstChildElement("image")->Attribute("source");
+			int width = pSpriteSheet->FirstChildElement("image")->IntAttribute("width");
 
 			std::stringstream ss;
 			ss << "Assets/" << source;
-			_spriteSheets.insert(std::pair<int, std::string>(firstGid, ss.str()));
+			SpriteSheet spriteSheet = SpriteSheet(firstGid, width, ss.str());
+			_spriteSheets.push_back(spriteSheet);
 
 			pSpriteSheet = pSpriteSheet->NextSiblingElement("tileset");
 		}
 	}
 }
-
-std::string Level::getSpriteSheet(int gid) {
-	if (_spriteSheets.empty()) { return ""; }
-
-	std::map<int, std::string>::iterator it;
-	std::string spriteSheet = "";
-
-	for (it = _spriteSheets.begin(); it != _spriteSheets.end(); it++)
-	{
-		int firstGid = it->first;
-		if (firstGid >= gid) {
-			break;
-		}
-		else {
-			spriteSheet = it->second;
+Level::~Level() {
+	for (int x = 0; x < _tiles.size(); x++) {
+		for (int y = 0; y < _tiles[x].size(); y++) {
+			delete _tiles[x][y];
 		}
 	}
-	return spriteSheet;
 }
