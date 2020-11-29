@@ -57,11 +57,14 @@ Entity* EntityManager::GetPlayerEntity() {
 	}
 	return playerEntities[0];
 }
-EntityManager::~EntityManager() {
+void EntityManager::clearEntities() {
 	std::multimap<EntityType, Entity*>::iterator it;
 	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
 	{
 		delete it->second;
 	}
 	_allEntities.clear();
+}
+EntityManager::~EntityManager() {
+	clearEntities();
 }

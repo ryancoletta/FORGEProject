@@ -6,15 +6,19 @@ Tile::Tile() :
 	_sprite(NULL),
 	_coordinate(Vector2::zero()),
 	_position(Vector2::zero()),
-	_occupant(NULL)
+	_occupant(NULL),
+	_blocked(false)
 {}
-Tile::Tile(Sprite* sprite, Vector2 coordinate, Vector2 position) : 
+Tile::Tile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) : 
 	_sprite(sprite), 
 	_coordinate(coordinate), 
 	_position(position),
-	_occupant(NULL)
+	_occupant(NULL),
+	_blocked(blocked)
 {}
 Tile::~Tile() {}
+void Tile::setBlocked(bool blocked) { _blocked = blocked; }
+bool Tile::isBlocked() { return _blocked; }
 Vector2 Tile::getCoordinate() { return _coordinate; }
 Vector2 Tile::getPosition() { return _position; }
 Sprite* Tile::getSprite() { return _sprite; }

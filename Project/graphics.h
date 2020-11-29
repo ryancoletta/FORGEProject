@@ -22,7 +22,10 @@ public:
 	void clear();
 
 	SDL_Renderer* getRenderer() const;
+
+	void setMaxColor(int r, int g, int b);
 private:
+	int _r, _g, _b;
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
 	std::map<std::string, SDL_Surface*> _spriteSheets;

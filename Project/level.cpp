@@ -7,18 +7,21 @@
 #include "sprite.h"
 #include "graphics.h"
 #include "spritemanager.h"
+#include "exittile.h"
 
 using namespace tinyxml2;
 
 Level::Level() :
+	_entityManager(NULL),
+	_spriteManager(NULL),
 	_rows(0),
 	_cols(0)
 {}
-Level::Level(Graphics* graphics, std::string levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
+Level::Level(Game* game, Graphics* graphics, std::string levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
 	_entityManager(entityManager),
 	_spriteManager(spriteManager)
 {
-	loadMap(graphics, levelPath);
+	loadMap(game, graphics, levelPath);
 }
 bool Level::isCoordinateInRange(int x, int y) {
 	return (x >= 0) && (y >= 0) && (x < _cols) && (y < _rows);
@@ -35,11 +38,11 @@ Tile* Level::getTile(Vector2 coordinate) {
 void Level::draw() {
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
-			_tiles[x][y]->draw();
+			if (_tiles[x][y]) { _tiles[x][y]->draw(); }
 		}
 	}
 }
-void Level::loadMap(Graphics* graphics, std::string levelPath) {
+void Level::loadMap(Game* game, Graphics* graphics, std::string levelPath) {
 	XMLDocument doc;
 	std::stringstream ss;
 	ss << levelPath;
@@ -87,9 +90,7 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 									pTile = pTile->NextSiblingElement("tile");
 									continue;
 								}
-								else {
-									break;
-								}
+								else { break; }
 							}
 
 							SpriteSheet spriteSheet;
@@ -107,9 +108,7 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 									pTile = pTile->NextSiblingElement("tile");
 									continue;
 								}
-								else {
-									break;
-								}
+								else { break; }
 							}
 
 							int spriteSheetGid = gid - spriteSheet.firstGid;
@@ -132,7 +131,15 @@ void Level::loadMap(Graphics* graphics, std::string levelPath) {
 							Sprite* tileSprite = _spriteManager->loadSprite(gid, spriteSheet.path, finalTilesetPosition, tileSize);
 							
 							if (std::string(layerName) == "BG") {
-								_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition);
+								if (gid <= static_cast<TileType>(TILE_WALL)) {
+									_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition, true);
+								}
+								else if (gid <= static_cast<TileType>(TILE_OPEN)) {
+									_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition);
+								}
+								else if (gid == static_cast<TileType>(TILE_EXIT)) {
+									_tiles[x][y] = new ExitTile(game, tileSprite, Vector2(x, y), finalTilePosition);
+								}
 							}
 							else {
 								_entityManager->addEntity(static_cast<EntityType>(gid), this, tileSprite, _tiles[x][y]);

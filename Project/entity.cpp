@@ -30,7 +30,10 @@ bool Entity::move(int turn, Vector2 direction) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
-		if (newTile->isOccupied()) {
+		if (newTile->isBlocked()) {
+			return false;
+		}
+		else if (newTile->isOccupied()) {
 			Entity* toPush = newTile->getOccupant();
 			if (!toPush->move(turn, direction)) {
 				return false;

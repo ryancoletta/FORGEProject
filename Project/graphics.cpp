@@ -1,7 +1,10 @@
 #include "globals.h"
 #include "graphics.h"
+#include <SDL_ttf.h>
 
-Graphics::Graphics() {
+Graphics::Graphics() :
+	_r(255),_g(255),_b(255)
+{
 	SDL_CreateWindowAndRenderer(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, 0, &_window, &_renderer);
 	//SDL_SetRenderDrawColor(_renderer, 0x47, 0x2D, 0x3C, 0xFF);
 	SDL_SetRenderDrawColor(_renderer, 0xFF, 0x69, 0xB4, 0xFF); // debug pink
@@ -21,6 +24,7 @@ SDL_Surface* Graphics::loadImage(const std::string& filePath) {
 }
 
 void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect) {
+	SDL_SetTextureColorMod(texture, _r, _g, _b);
 	SDL_RenderCopy(_renderer, texture, sourceRect, destRect);
 }
 
@@ -34,4 +38,10 @@ void Graphics::clear() {
 
 SDL_Renderer* Graphics::getRenderer() const {
 	return _renderer;
+}
+
+void Graphics::setMaxColor(int r, int g, int b) {
+	_r = r;
+	_g = g;
+	_b = b;
 }

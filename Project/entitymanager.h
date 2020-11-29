@@ -21,6 +21,7 @@ public:
 	void resetAll();
 	std::vector<Entity*> GetEntitiesByType(EntityType entityType);
 	Entity* GetPlayerEntity();
+	void clearEntities();
 private:
 	std::multimap<EntityType, Entity*> _allEntities;
 };

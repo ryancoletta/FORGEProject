@@ -9,11 +9,12 @@ class Graphics;
 class SpriteManager
 {
 public:
+	SpriteManager();
 	SpriteManager(Graphics* graphics);
 	~SpriteManager();
 	Sprite* loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 private:
 	Graphics* _graphics;
-	std::map<int,Sprite*> _loadedSprites;
+	std::multimap<int,Sprite*> _loadedSprites;
 };
 
