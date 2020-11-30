@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "animatedsprite.h"
 #include "graphics.h"
 #include "animation.h"

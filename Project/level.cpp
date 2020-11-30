@@ -8,6 +8,7 @@
 #include "graphics.h"
 #include "spritemanager.h"
 #include "exittile.h"
+#include "globals.h"
 
 using namespace tinyxml2;
 

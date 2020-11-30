@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "entity.h"
 #include "level.h"
 #include "sprite.h"

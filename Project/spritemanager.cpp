@@ -4,6 +4,7 @@
 #include "animation.h"
 #include "graphics.h"
 #include "entity.h"
+#include "globals.h"
 
 SpriteManager::SpriteManager() :
 	_graphics(NULL)

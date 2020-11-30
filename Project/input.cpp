@@ -1,4 +1,5 @@
 #include "input.h"
+#include "globals.h"
 
 void Input::beginNewFrame() {
 	_downKeys.clear();

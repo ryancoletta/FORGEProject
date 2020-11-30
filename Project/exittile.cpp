@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "exittile.h"
 #include <string>
 #include "entity.h"

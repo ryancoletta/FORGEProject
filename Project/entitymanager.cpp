@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "entitymanager.h"
 #include "entity.h"
 #include "level.h"

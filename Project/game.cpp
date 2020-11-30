@@ -1,3 +1,4 @@
+#include "globals.h"
 #include <SDL.h>
 #include <algorithm>
 #include "game.h"
@@ -19,9 +20,9 @@ Game::Game() :
 
 void Game::nextLevel() {
 	// TODO mem alloc error
-	//_level++; 
+	_level++; 
 	// TODO temp loop thru all levels
-	_level = (_level + 1) % 3;
+	//_level = (_level + 1) % 3;
 	SDL_Event nextLevelEvent;
 	nextLevelEvent.type = _nextLevelEvent;
 	SDL_PushEvent(&nextLevelEvent);
@@ -32,15 +33,11 @@ void Game::gameLoop() {
 	SpriteManager spriteManager(&graphics);
 	Input input;
 
-	std::string allLevels[] = { 
+	std::vector<std::string> allLevels = {
 		"Assets/level1.tmx",
-		"Assets/level2.tmx",
-		"Assets/level3.tmx",
-		"Assets/level4.tmx",
-		"Assets/level5.tmx",
 	};
 
-	while (_level < allLevels->size()) {
+	while (_level < allLevels.size()) {
 		// load the level
 		_currentLevel = new Level(this, &graphics, allLevels[_level], &_entityManager, &spriteManager);
 
@@ -126,6 +123,7 @@ void Game::gameLoop() {
 		_entityManager.clearEntities();
 		delete _currentLevel;
 	}
+
 }
 void Game::draw(Graphics& graphics) {
 	graphics.clear();
@@ -152,4 +150,6 @@ void Game::checkWinCondition() {
 	}
 }
 
-Game::~Game() {}
+Game::~Game() {
+
+}

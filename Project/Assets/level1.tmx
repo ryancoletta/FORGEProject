@@ -9,7 +9,7 @@
  <tileset firstgid="19" name="entity_sprites" tilewidth="16" tileheight="16" tilecount="5" columns="5">
   <image source="entity_sprites.png" width="80" height="16"/>
  </tileset>
- <layer id="2" name="BG" width="20" height="15">
+ <layer id="2" name="BG" width="20" height="15" locked="1">
   <data>
    <tile gid="14"/>
    <tile gid="14"/>
@@ -465,6 +465,7 @@
    <tile/>
    <tile/>
    <tile gid="19"/>
+   <tile gid="21"/>
    <tile/>
    <tile/>
    <tile/>
@@ -482,8 +483,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="21"/>
    <tile/>
    <tile/>
    <tile/>

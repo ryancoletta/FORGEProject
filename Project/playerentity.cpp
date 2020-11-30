@@ -1,4 +1,5 @@
 #include "playerentity.h"
+#include "globals.h"
 
 PlayerEntity::PlayerEntity() :
 	Entity()

@@ -1,4 +1,8 @@
 #pragma once
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h> // replaces malloc with a way to track
+
 
 namespace globals {
 	const int FPS = 50;

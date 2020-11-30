@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "graphics.h"
 #include <SDL_ttf.h>
+#include "globals.h"
 
 Graphics::Graphics() :
 	_r(255),_g(255),_b(255)
