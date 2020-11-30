@@ -36,6 +36,8 @@ void Game::gameLoop() {
 		"Assets/level1.tmx",
 		"Assets/level2.tmx",
 		"Assets/level3.tmx",
+		"Assets/level4.tmx",
+		"Assets/level5.tmx",
 	};
 
 	while (_level < allLevels->size()) {
@@ -73,16 +75,16 @@ void Game::gameLoop() {
 				return;
 			}
 			else if (input.isKeyDown(SDL_SCANCODE_UP)) {
-				if (playerEntity->move(_turn, Vector2::down())) { _turn++; }
+				if (playerEntity->move(_turn, Vector2::down())) { _turn++; checkWinCondition(); }
 			}
 			else if (input.isKeyDown(SDL_SCANCODE_RIGHT)) {
-				if (playerEntity->move(_turn, Vector2::right())) { _turn++; }
+				if (playerEntity->move(_turn, Vector2::right())) { _turn++; checkWinCondition(); }
 			}
 			else if (input.isKeyDown(SDL_SCANCODE_DOWN)) {
-				if (playerEntity->move(_turn, Vector2::up())) { _turn++; }
+				if (playerEntity->move(_turn, Vector2::up())) { _turn++; checkWinCondition(); }
 			}
 			else if (input.isKeyDown(SDL_SCANCODE_LEFT)) {
-				if (playerEntity->move(_turn, Vector2::left())) { _turn++; }
+				if (playerEntity->move(_turn, Vector2::left())) { _turn++; checkWinCondition(); }
 			}
 			else if (input.isKeyDown(SDL_SCANCODE_Z)) {
 				if (_turn > 0) { _entityManager.undoAll(--_turn); }
@@ -114,7 +116,7 @@ void Game::gameLoop() {
 		SDL_Delay(500);
 		graphics.setMaxColor(0, 0, 0);
 		draw(graphics);
-		SDL_Delay(500);
+		SDL_Delay(2000);
 		graphics.setMaxColor(255, 255, 255);
 		
 		//SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); // TODO you can queue up a bunch of moves during this delay, want to prevent
@@ -135,6 +137,19 @@ void Game::draw(Graphics& graphics) {
 }
 void Game::update(int deltaTime) {
 	_entityManager.update(deltaTime);
+}
+
+void Game::checkWinCondition() {
+	std::vector<Entity*> chickens = _entityManager.GetEntitiesByType(ENTITY_CHICKEN);
+	bool isWin = true;
+	for (int i = 0; i < chickens.size(); i++) {
+		if (chickens[i]->getTile()->getTileType() != TILE_GOAL) {
+			isWin = false;
+		}
+	}
+	if (isWin) {
+		nextLevel();
+	}
 }
 
 Game::~Game() {}

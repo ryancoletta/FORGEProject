@@ -9,7 +9,8 @@ Tile::Tile() :
 	_occupant(NULL),
 	_blocked(false)
 {}
-Tile::Tile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) : 
+Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
+	_tileType(tileType),
 	_sprite(sprite), 
 	_coordinate(coordinate), 
 	_position(position),
@@ -19,6 +20,7 @@ Tile::Tile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
 Tile::~Tile() {}
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 bool Tile::isBlocked() { return _blocked; }
+TileType Tile::getTileType() { return _tileType; }
 Vector2 Tile::getCoordinate() { return _coordinate; }
 Vector2 Tile::getPosition() { return _position; }
 Sprite* Tile::getSprite() { return _sprite; }

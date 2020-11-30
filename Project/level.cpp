@@ -132,13 +132,13 @@ void Level::loadMap(Game* game, Graphics* graphics, std::string levelPath) {
 							
 							if (std::string(layerName) == "BG") {
 								if (gid <= static_cast<TileType>(TILE_WALL)) {
-									_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition, true);
+									_tiles[x][y] = new Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
 								}
 								else if (gid <= static_cast<TileType>(TILE_OPEN)) {
-									_tiles[x][y] = new Tile(tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = new Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
-								else if (gid == static_cast<TileType>(TILE_EXIT)) {
-									_tiles[x][y] = new ExitTile(game, tileSprite, Vector2(x, y), finalTilePosition);
+								else if (gid <= static_cast<TileType>(TILE_GOAL)) {
+									_tiles[x][y] = new Tile(TILE_GOAL, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 							}
 							else {

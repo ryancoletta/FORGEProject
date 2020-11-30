@@ -8,6 +8,7 @@ public:
 	~Game();
 	void nextLevel();
 private:
+	void checkWinCondition();
 	void gameLoop();
 	void draw(Graphics &graphics);
 	void update(int deltaTime);

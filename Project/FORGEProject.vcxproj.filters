@@ -57,6 +57,9 @@
     <ClCompile Include="exittile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="playerentity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="exittile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

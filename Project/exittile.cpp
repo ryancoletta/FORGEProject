@@ -8,7 +8,7 @@ ExitTile::ExitTile() :
 {}
 
 ExitTile::ExitTile(Game* game, Sprite* sprite, Vector2 coordinate, Vector2 position) :
-	Tile(sprite, coordinate, position),
+	Tile(TILE_GOAL, sprite, coordinate, position),
 	_game(game)
 {}
 

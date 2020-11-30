@@ -5,19 +5,20 @@ class Entity;
 class Sprite;
 
 enum TileType {
-	TILE_WALL = 9,
-	TILE_OPEN = 18,
-	TILE_EXIT = 19,
+	TILE_WALL = 13,
+	TILE_OPEN = 14,
+	TILE_GOAL = 15,
 };
 
 class Tile
 {
 public:
 	Tile();
-	Tile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
+	Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
 	~Tile();
 	void setBlocked(bool blocked);
 	bool isBlocked();
+	TileType getTileType();
 	Vector2 getCoordinate();
 	Vector2 getPosition();
 	Sprite* getSprite();
@@ -30,6 +31,7 @@ protected:
 	virtual void onVacate();
 	virtual void onOccupy();
 
+	TileType _tileType;
 	Entity* _occupant;
 	Sprite* _sprite;
 	Vector2 _coordinate;

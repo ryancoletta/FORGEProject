@@ -22,10 +22,29 @@ Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTil
 	}
 }
 int Entity::getEntityID() { return _entityID; }
+Tile* Entity::getTile() { return _tileHistory.top(); }
+Vector2 Entity::getCoordinate() { return getTile()->getCoordinate(); }
 void Entity::draw() {
 	_sprite->draw(_tileHistory.top()->getPosition());
 }
 
+bool Entity::canMove(Vector2 direction) {
+	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
+	if (_level->isCoordinateInRange(newCoordinate)) {
+		Tile* newTile = _level->getTile(newCoordinate);
+		if (newTile->isBlocked()) {
+			return false;
+		}
+		else if (newTile->isOccupied()) {
+			Entity* toPush = newTile->getOccupant();
+			if (!toPush->canMove(direction)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	return false;
+}
 bool Entity::move(int turn, Vector2 direction) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
@@ -75,4 +94,24 @@ void Entity::reset() {
 
 void Entity::update(int deltaTime) {
 	_sprite->update(deltaTime);
+}
+
+void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {
+	entities.push_back(this);
+	for (int r = 0; r < 4; r++) {
+		int x = sin(r * M_PI / 2.0);
+		int y = cos(r * M_PI / 2.0);
+		Vector2 adjacentCoordinate = _tileHistory.top()->getCoordinate() + Vector2(x,y);
+		if (_level->isCoordinateInRange(adjacentCoordinate)) {
+			Tile* adjacentTile = _level->getTile(adjacentCoordinate);
+			if (adjacentTile->isOccupied()) {
+				Entity* neighbor = adjacentTile->getOccupant();
+				if ((std::count(entities.begin(), entities.end(), neighbor) == 0) &&
+					(((1 << neighbor->getEntityID()) & flags) > 0))
+				{
+					neighbor->getAllConnected(entities, flags);
+				}
+			}
+		}
+	}
 }

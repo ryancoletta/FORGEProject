@@ -155,6 +155,7 @@
     <ClCompile Include="input.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="entity.cpp" />
+    <ClCompile Include="playerentity.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
     <ClCompile Include="tile.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="playerentity.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
     <ClInclude Include="tile.h" />

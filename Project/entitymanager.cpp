@@ -3,9 +3,19 @@
 #include "level.h"
 #include "sprite.h"
 #include "tile.h"
+#include "playerentity.h"
 
 void EntityManager::addEntity(EntityType entityType, Level* level, Sprite* sprite, Tile* startTile) {
-	Entity* newEntity = new Entity(entityType, level, sprite, startTile);
+	Entity* newEntity;
+	switch (entityType) {
+		case ENTITY_PLAYER:
+			newEntity = new PlayerEntity(entityType, level, sprite, startTile);
+			break;
+		default:
+			newEntity = new Entity(entityType, level, sprite, startTile);
+			break;
+	}
+
 	_allEntities.insert(std::pair<EntityType, Entity*>(entityType, newEntity));
 }
 void EntityManager::draw() {
@@ -28,6 +38,8 @@ void EntityManager::undoAll(int turn) {
 	{
 		it->second->undo(turn);
 	}
+	Entity* player = GetPlayerEntity();
+	static_cast<PlayerEntity*>(player)->updateFlock();
 }
 void EntityManager::resetAll() {
 	std::multimap<EntityType, Entity*>::iterator it;
@@ -35,6 +47,8 @@ void EntityManager::resetAll() {
 	{
 		it->second->reset();
 	}
+	Entity* player = GetPlayerEntity();
+	static_cast<PlayerEntity*>(player)->updateFlock();
 }
 std::vector<Entity*> EntityManager::GetEntitiesByType(EntityType entityID) {
 
