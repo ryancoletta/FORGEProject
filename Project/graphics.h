@@ -10,7 +10,7 @@ public:
 	~Graphics();
 
 	// loads an image into the spritesheet map
-	SDL_Surface* loadImage(const std::string& filePath);
+	SDL_Surface* loadImage(const std::string& filePath); // & acts as a pointer, but cannot be null !!!
 
 	// draw an image to destRect
 	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect);
@@ -21,7 +21,8 @@ public:
 	// clears the screen
 	void clear();
 
-	SDL_Renderer* getRenderer() const;
+	SDL_Renderer* getRenderer() const; // TODO const correctness !!!
+	// rule: must not modify member vars
 
 	void setMaxColor(int r, int g, int b);
 private:

@@ -1,21 +1,20 @@
-#include "game.h"
 #include "globals.h"
+#include "game.h"
 
 
-// const expressions - type safe "macros" or constants
 
 int main(int argc, char* args[]) {
 	
+	// allows for memory debuging
 	#if defined(_DEBUG)
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF );
+		_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_CHECK_ALWAYS_DF | _CRTDBG_LEAK_CHECK_DF );
 	#endif
-
-	malloc(5000);
 
 	Game game;
 
+	// this may not be necessary w/ the above flags
 	#if defined(_DEBUG)
-	_CrtDumpMemoryLeaks();
+		_CrtDumpMemoryLeaks();
 	#endif
 
 	return 0;

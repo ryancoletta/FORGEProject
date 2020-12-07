@@ -1,7 +1,7 @@
+#include "globals.h"
 #include "tile.h"
 #include "SDL.h"
 #include "sprite.h"
-#include "globals.h"
 
 Tile::Tile() :
 	_sprite(NULL),

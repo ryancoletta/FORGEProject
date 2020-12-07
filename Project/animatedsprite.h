@@ -28,4 +28,3 @@ private:
 	int _timeElapsed;
 	bool _visible;
 };
-

@@ -1,3 +1,4 @@
+#include "globals.h"
 #include "level.h"
 #include <stdio.h>
 #include <sstream>
@@ -8,7 +9,6 @@
 #include "graphics.h"
 #include "spritemanager.h"
 #include "exittile.h"
-#include "globals.h"
 
 using namespace tinyxml2;
 
@@ -18,7 +18,7 @@ Level::Level() :
 	_rows(0),
 	_cols(0)
 {}
-Level::Level(Game* game, Graphics* graphics, std::string levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
+Level::Level(Game* game, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
 	_entityManager(entityManager),
 	_spriteManager(spriteManager)
 {
@@ -43,10 +43,10 @@ void Level::draw() {
 		}
 	}
 }
-void Level::loadMap(Game* game, Graphics* graphics, std::string levelPath) {
+void Level::loadMap(Game* game, Graphics* graphics, const std::string* levelPath) {
 	XMLDocument doc;
 	std::stringstream ss;
-	ss << levelPath;
+	ss << *levelPath;
 	doc.LoadFile(ss.str().c_str());
 
 	XMLElement* mapNode = doc.FirstChildElement("map");
@@ -133,13 +133,13 @@ void Level::loadMap(Game* game, Graphics* graphics, std::string levelPath) {
 							
 							if (std::string(layerName) == "BG") {
 								if (gid <= static_cast<TileType>(TILE_WALL)) {
-									_tiles[x][y] = new Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
+									_tiles[x][y] = DBG_NEW Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
 								}
 								else if (gid <= static_cast<TileType>(TILE_OPEN)) {
-									_tiles[x][y] = new Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid <= static_cast<TileType>(TILE_GOAL)) {
-									_tiles[x][y] = new Tile(TILE_GOAL, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW Tile(TILE_GOAL, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 							}
 							else {
@@ -159,7 +159,6 @@ void Level::loadMap(Game* game, Graphics* graphics, std::string levelPath) {
 		}
 	}
 }
-
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 	XMLElement* pSpriteSheet = mapNode->FirstChildElement("tileset");
 	if (pSpriteSheet) {

@@ -10,10 +10,10 @@ void EntityManager::addEntity(EntityType entityType, Level* level, Sprite* sprit
 	Entity* newEntity;
 	switch (entityType) {
 		case ENTITY_PLAYER:
-			newEntity = new PlayerEntity(entityType, level, sprite, startTile);
+			newEntity = DBG_NEW PlayerEntity(entityType, level, sprite, startTile);
 			break;
 		default:
-			newEntity = new Entity(entityType, level, sprite, startTile);
+			newEntity = DBG_NEW Entity(entityType, level, sprite, startTile);
 			break;
 	}
 

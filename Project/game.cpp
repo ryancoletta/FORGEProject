@@ -39,7 +39,8 @@ void Game::gameLoop() {
 
 	while (_level < allLevels.size()) {
 		// load the level
-		_currentLevel = new Level(this, &graphics, allLevels[_level], &_entityManager, &spriteManager);
+		// TODO make all unchanging pointers const !!!
+		_currentLevel = DBG_NEW Level(this, &graphics, &allLevels[_level], &_entityManager, &spriteManager);
 
 		// find the player
 		Entity* playerEntity = _entityManager.GetPlayerEntity();

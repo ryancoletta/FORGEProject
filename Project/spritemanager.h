@@ -5,6 +5,7 @@
 
 class Sprite;
 class Graphics;
+class AnimationManager;
 
 class SpriteManager
 {
@@ -15,6 +16,7 @@ public:
 	Sprite* loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 private:
 	Graphics* _graphics;
+	AnimationManager* _animationManager;
 	std::multimap<int,Sprite*> _loadedSprites;
 };
 

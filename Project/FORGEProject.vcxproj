@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="animation.cpp" />
+    <ClCompile Include="animationmanager.cpp" />
     <ClCompile Include="entitymanager.cpp" />
     <ClCompile Include="exittile.cpp" />
     <ClCompile Include="game.cpp" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="animation.h" />
+    <ClInclude Include="animationmanager.h" />
     <ClInclude Include="entitymanager.h" />
     <ClInclude Include="exittile.h" />
     <ClInclude Include="game.h" />

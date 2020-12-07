@@ -21,11 +21,9 @@ AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, 
 {}
 
 AnimatedSprite::~AnimatedSprite() {
-	std::map<std::string, Animation*>::iterator it;
-	for (it = _animations.begin(); it != _animations.end(); it++)
-	{
-		delete it->second;
-	}
+	// TODO why isn't this ever hit
+	// creating an animation manager instead, but still curious
+	printf("I AM NEVER HIT!!!");
 }
 
 void AnimatedSprite::update(int deltaTime) {

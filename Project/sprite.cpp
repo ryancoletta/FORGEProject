@@ -1,6 +1,7 @@
+#include "globals.h"
 #include "sprite.h"
 #include "graphics.h"
-#include "globals.h"
+
 
 Sprite::Sprite() : 
 	_graphics(NULL), 
@@ -17,6 +18,9 @@ Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePo
 
 	_spriteSheet = SDL_CreateTextureFromSurface(graphics->getRenderer(), graphics->loadImage(filePath));
 	if (_spriteSheet == NULL) { printf("Error: unable to load image\n"); }
+}
+Sprite::~Sprite() {
+
 }
 void Sprite::draw(Vector2 position) {
 	SDL_Rect destRect = { 
