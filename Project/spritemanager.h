@@ -10,8 +10,7 @@ class AnimationManager;
 class SpriteManager
 {
 public:
-	SpriteManager();
-	SpriteManager(Graphics* graphics);
+	SpriteManager(Graphics* graphics, AnimationManager* animationManager);
 	~SpriteManager();
 	Sprite* loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 private:

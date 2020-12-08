@@ -1,13 +1,6 @@
 #include "globals.h"
 #include "animation.h"
 
-Animation::Animation() :
-	_name(""),
-	_frames(0),
-	_milisecondsPerFrame(0),
-	_firstFramePosition(Vector2::zero()),
-	_frameScale(Vector2::zero())
-{}
 Animation::Animation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale) :
 	_name(name),
 	_frames(frames),

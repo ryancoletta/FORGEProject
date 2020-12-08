@@ -2,7 +2,6 @@
 #include "game.h"
 
 
-
 int main(int argc, char* args[]) {
 	
 	// allows for memory debuging
@@ -11,6 +10,7 @@ int main(int argc, char* args[]) {
 	#endif
 
 	Game game;
+	game.play();
 
 	// this may not be necessary w/ the above flags
 	#if defined(_DEBUG)

@@ -7,24 +7,15 @@
 #include "entity.h"
 #include "animationmanager.h"
 
-SpriteManager::SpriteManager() :
-	_graphics(NULL)
-{
-	if (_animationManager == NULL) {
-		_animationManager = DBG_NEW AnimationManager();
-	}
-}
-SpriteManager::SpriteManager(Graphics* graphics) :
-	_graphics(graphics)
-{
-	if (_animationManager == NULL) {
-		_animationManager = DBG_NEW AnimationManager();
-	}
-}
+SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationManager) :
+	_graphics(graphics),
+	_animationManager(animationManager)
+{}
 Sprite* SpriteManager::loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
 	Sprite* newSprite;
 	switch (spriteID) {
 		case static_cast<int>(ENTITY_PLAYER) : {
+			// animation instance class that is unique and defines speed and offset
 			newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(0, 0), Vector2(16, 16));
 			Animation* newAnimation = _animationManager->loadAnimation("player_idle", 2, 500, Vector2(0, 0), Vector2(16, 16));
 			static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);

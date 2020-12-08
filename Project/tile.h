@@ -13,9 +13,8 @@ enum TileType {
 class Tile
 {
 public:
-	Tile();
 	Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
-	~Tile();
+	virtual ~Tile() {}
 	void setBlocked(bool blocked);
 	bool isBlocked();
 	TileType getTileType();

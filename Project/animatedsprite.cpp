@@ -3,14 +3,6 @@
 #include "graphics.h"
 #include "animation.h"
 
-AnimatedSprite::AnimatedSprite() : 
-	_frameIndex(0),
-	_timeElapsed(0), 
-	_visible(false), 
-	_isLoop(false), 
-	_currentAnimationName("")
-{}
-
 AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) :
 	Sprite(graphics, filePath, sourcePosition, sourceScale), 
 	_frameIndex(0),
@@ -19,12 +11,6 @@ AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, 
 	_isLoop(false), 
 	_currentAnimationName("")
 {}
-
-AnimatedSprite::~AnimatedSprite() {
-	// TODO why isn't this ever hit
-	// creating an animation manager instead, but still curious
-	printf("I AM NEVER HIT!!!");
-}
 
 void AnimatedSprite::update(int deltaTime) {
 	Sprite::update(deltaTime);

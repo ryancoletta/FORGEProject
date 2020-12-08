@@ -154,7 +154,10 @@
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="input.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="levelmanager.cpp" />
+    <ClCompile Include="main.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
+    </ClCompile>
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="playerentity.cpp" />
     <ClCompile Include="sprite.cpp" />
@@ -174,6 +177,7 @@
     <ClInclude Include="level.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="levelmanager.h" />
     <ClInclude Include="playerentity.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />

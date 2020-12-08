@@ -73,7 +73,7 @@ distribution.
 			int len = 512;
 			for (;;) {
 				len = len*2;
-				char* str = new char[len]();
+				char* str = DBG_NEW char[len]();
 				const int required = _vsnprintf(str, len, format, va);
 				delete[] str;
 				if ( required != -1 ) {
@@ -197,7 +197,7 @@ void StrPair::SetStr( const char* str, int flags )
     Reset();
     size_t len = strlen( str );
     TIXMLASSERT( _start == 0 );
-    _start = new char[ len+1 ];
+    _start = DBG_NEW char[ len+1 ];
     memcpy( _start, str, len+1 );
     _end = _start + len;
     _flags = flags | NEEDS_DELETE;
@@ -2340,7 +2340,7 @@ XMLError XMLDocument::LoadFile( FILE* fp )
 
     const size_t size = static_cast<size_t>(filelength);
     TIXMLASSERT( _charBuffer == 0 );
-    _charBuffer = new char[size+1];
+    _charBuffer = DBG_NEW char[size+1];
     const size_t read = fread( _charBuffer, 1, size, fp );
     if ( read != size ) {
         SetError( XML_ERROR_FILE_READ_ERROR, 0, 0 );
@@ -2396,7 +2396,7 @@ XMLError XMLDocument::Parse( const char* p, size_t len )
         len = strlen( p );
     }
     TIXMLASSERT( _charBuffer == 0 );
-    _charBuffer = new char[ len+1 ];
+    _charBuffer = DBG_NEW char[ len+1 ];
     memcpy( _charBuffer, p, len );
     _charBuffer[len] = 0;
 
@@ -2435,7 +2435,7 @@ void XMLDocument::SetError( XMLError error, int lineNum, const char* format, ...
 	_errorStr.Reset();
 
     const size_t BUFFER_SIZE = 1000;
-    char* buffer = new char[BUFFER_SIZE];
+    char* buffer = DBG_NEW char[BUFFER_SIZE];
 
     TIXMLASSERT(sizeof(error) <= sizeof(int));
     TIXML_SNPRINTF(buffer, BUFFER_SIZE, "Error=%s ErrorID=%d (0x%x) Line number=%d", ErrorIDToName(error), int(error), int(error), lineNum);

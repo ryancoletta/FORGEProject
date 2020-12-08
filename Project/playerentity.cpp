@@ -2,9 +2,6 @@
 #include "playerentity.h"
 
 
-PlayerEntity::PlayerEntity() :
-	Entity()
-{}
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
 	Entity(entityID, level, sprite, startTile)
 {

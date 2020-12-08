@@ -1,15 +1,14 @@
 #pragma once
 #include "tile.h"
 
-class Game;
+class LevelManager;
 
 class ExitTile : public Tile
 {
 public:
-	ExitTile();
-	ExitTile(Game* game, Sprite* sprite, Vector2 coordinate, Vector2 position);
+	ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinate, Vector2 position);
 protected:
 	void onOccupy() override;
-	Game* _game;
+	LevelManager* _levelManager;
 };
 

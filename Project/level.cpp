@@ -9,20 +9,15 @@
 #include "graphics.h"
 #include "spritemanager.h"
 #include "exittile.h"
+#include "levelmanager.h"
 
 using namespace tinyxml2;
 
-Level::Level() :
-	_entityManager(NULL),
-	_spriteManager(NULL),
-	_rows(0),
-	_cols(0)
-{}
-Level::Level(Game* game, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
+Level::Level(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager) :
 	_entityManager(entityManager),
 	_spriteManager(spriteManager)
 {
-	loadMap(game, graphics, levelPath);
+	loadMap(levelManager, graphics, levelPath);
 }
 bool Level::isCoordinateInRange(int x, int y) {
 	return (x >= 0) && (y >= 0) && (x < _cols) && (y < _rows);
@@ -43,7 +38,7 @@ void Level::draw() {
 		}
 	}
 }
-void Level::loadMap(Game* game, Graphics* graphics, const std::string* levelPath) {
+void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath) {
 	XMLDocument doc;
 	std::stringstream ss;
 	ss << *levelPath;
@@ -139,7 +134,7 @@ void Level::loadMap(Game* game, Graphics* graphics, const std::string* levelPath
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid <= static_cast<TileType>(TILE_GOAL)) {
-									_tiles[x][y] = DBG_NEW Tile(TILE_GOAL, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 							}
 							else {
@@ -158,6 +153,7 @@ void Level::loadMap(Game* game, Graphics* graphics, const std::string* levelPath
 			pLayer = pLayer->NextSiblingElement("layer");
 		}
 	}
+	doc.Clear();
 }
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 	XMLElement* pSpriteSheet = mapNode->FirstChildElement("tileset");

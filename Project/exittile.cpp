@@ -3,18 +3,15 @@
 #include <string>
 #include "entity.h"
 #include "game.h"
+#include "levelmanager.h"
 
-ExitTile::ExitTile() :
-	_game(NULL)
-{}
-
-ExitTile::ExitTile(Game* game, Sprite* sprite, Vector2 coordinate, Vector2 position) :
+ExitTile::ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinate, Vector2 position) :
 	Tile(TILE_GOAL, sprite, coordinate, position),
-	_game(game)
+	_levelManager(levelManager)
 {}
 
 void ExitTile::onOccupy() {
 	if (_occupant->getEntityID() == ENTITY_PLAYER) {
-		_game->nextLevel();
+		_levelManager->levelComplete();
 	}
 }

@@ -11,6 +11,7 @@ enum EntityType {
 	ENTITY_BOX		= 21,
 	ENTITY_CHICKEN	= 22,
 };
+
 inline EntityType operator|(EntityType a, EntityType b)
 {
 	return static_cast<EntityType>((1 << static_cast<int>(a)) | (1 << static_cast<int>(b)));
@@ -19,7 +20,6 @@ inline EntityType operator|(EntityType a, EntityType b)
 class Entity
 {
 public:
-	Entity();
 	Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile);
 	int getEntityID();
 	Tile* getTile();

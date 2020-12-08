@@ -10,7 +10,6 @@
 #include <stdlib.h>
 #include <crtdbg.h> // replaces malloc with a way to track
 
-
 namespace globals {
 	const int FPS = 50;
 	const int MAX_FRAME_TIME = 5 * 1000 / FPS;

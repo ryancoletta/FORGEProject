@@ -9,87 +9,74 @@
 #include "spritemanager.h"
 #include "level.h"
 #include "entity.h"
+#include "animationmanager.h"
+#include "levelmanager.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
 	_turn(0)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	gameLoop();
+	_graphics = DBG_NEW Graphics();
+	_entityManager = DBG_NEW EntityManager();
+	_animationManager = DBG_NEW AnimationManager();
+	_spriteManager = DBG_NEW SpriteManager(_graphics, _animationManager);
+	_levelManager = DBG_NEW LevelManager(_nextLevelEvent);
+	_input = DBG_NEW Input();
 }
 
-void Game::nextLevel() {
-	// TODO mem alloc error
-	_level++; 
-	// TODO temp loop thru all levels
-	//_level = (_level + 1) % 3;
-	SDL_Event nextLevelEvent;
-	nextLevelEvent.type = _nextLevelEvent;
-	SDL_PushEvent(&nextLevelEvent);
-}
-
-void Game::gameLoop() {
-	Graphics graphics;
-	SpriteManager spriteManager(&graphics);
-	Input input;
-
-	std::vector<std::string> allLevels = {
-		"Assets/level1.tmx",
-	};
-
-	while (_level < allLevels.size()) {
-		// load the level
-		// TODO make all unchanging pointers const !!!
-		_currentLevel = DBG_NEW Level(this, &graphics, &allLevels[_level], &_entityManager, &spriteManager);
-
+void Game::play() {
+	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
 		// find the player
-		Entity* playerEntity = _entityManager.GetPlayerEntity();
+		Entity* playerEntity = _entityManager->GetPlayerEntity();
 		if (!playerEntity) { return; }
 
 		// play the level
 		int lastUpdateTimeMs = SDL_GetTicks();
 		bool complete = false;
 		while (!complete) {
-			input.beginNewFrame();
+			_input->beginNewFrame();
 
 			if (SDL_PollEvent(&_event)) {
 				if (_event.type == SDL_KEYDOWN) {
 					if (_event.key.repeat == 0) {
-						input.keyDownEvent(_event);
+						_input->keyDownEvent(_event);
 					}
 				}
 				else if (_event.type == SDL_KEYUP) {
-					input.keyUpEvent(_event);
+					_input->keyUpEvent(_event);
 				}
 				if (_event.type == _nextLevelEvent) {
 					complete = true;
 				}
 				if (_event.type == SDL_QUIT) {
+					// TODO mem leak here on level
 					return;
 				}
 			}
 
-			if (input.isKeyDown(SDL_SCANCODE_ESCAPE)) {
+			if (_input->isKeyDown(SDL_SCANCODE_ESCAPE)) {
+				// TODO mem leak here on level
 				return;
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_UP)) {
-				if (playerEntity->move(_turn, Vector2::down())) { _turn++; checkWinCondition(); }
+			else if (_input->isKeyDown(SDL_SCANCODE_UP)) {
+				if (playerEntity->move(_turn, Vector2::down())) { _turn++; }
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_RIGHT)) {
-				if (playerEntity->move(_turn, Vector2::right())) { _turn++; checkWinCondition(); }
+			else if (_input->isKeyDown(SDL_SCANCODE_RIGHT)) {
+				if (playerEntity->move(_turn, Vector2::right())) { _turn++; }
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_DOWN)) {
-				if (playerEntity->move(_turn, Vector2::up())) { _turn++; checkWinCondition(); }
+			else if (_input->isKeyDown(SDL_SCANCODE_DOWN)) {
+				if (playerEntity->move(_turn, Vector2::up())) { _turn++; }
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_LEFT)) {
-				if (playerEntity->move(_turn, Vector2::left())) { _turn++; checkWinCondition(); }
+			else if (_input->isKeyDown(SDL_SCANCODE_LEFT)) {
+				if (playerEntity->move(_turn, Vector2::left())) { _turn++; }
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_Z)) {
-				if (_turn > 0) { _entityManager.undoAll(--_turn); }
+			else if (_input->isKeyDown(SDL_SCANCODE_Z)) {
+				if (_turn > 0) { _entityManager->undoAll(--_turn); }
 			}
-			else if (input.isKeyDown(SDL_SCANCODE_R)) {
+			else if (_input->isKeyDown(SDL_SCANCODE_R)) {
 				if (_turn != 0) {
-					_entityManager.resetAll();
+					_entityManager->resetAll();
 					_turn = 0;
 				}
 			}
@@ -99,58 +86,33 @@ void Game::gameLoop() {
 			lastUpdateTimeMs = currentUpdateTimeMs;
 			update(std::min(elaspedUpdateTimeMs, globals::MAX_FRAME_TIME));
 
-			draw(graphics);
+			draw();
 		}
-
-		// TODO hacky alternative to palette swapping for an exit transition
-		graphics.setMaxColor(200, 200, 255);
-		draw(graphics);
-		SDL_Delay(500);
-		graphics.setMaxColor(100, 100, 200);
-		draw(graphics);
-		SDL_Delay(500);
-		graphics.setMaxColor(50, 50, 150);
-		draw(graphics);
-		SDL_Delay(500);
-		graphics.setMaxColor(0, 0, 0);
-		draw(graphics);
-		SDL_Delay(2000);
-		graphics.setMaxColor(255, 255, 255);
 		
 		//SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); // TODO you can queue up a bunch of moves during this delay, want to prevent
 
 		// reset data
 		_turn = 0;
-		_entityManager.clearEntities();
-		delete _currentLevel;
-	}
+		_entityManager->clearEntities();
+	} 
 
 }
-void Game::draw(Graphics& graphics) {
-	graphics.clear();
+void Game::draw() {
+	_graphics->clear();
 
-	_currentLevel->draw();
-	_entityManager.draw();
+	_levelManager->draw();
+	_entityManager->draw();
 
-	graphics.render();
+	_graphics->render();
 }
 void Game::update(int deltaTime) {
-	_entityManager.update(deltaTime);
-}
-
-void Game::checkWinCondition() {
-	std::vector<Entity*> chickens = _entityManager.GetEntitiesByType(ENTITY_CHICKEN);
-	bool isWin = true;
-	for (int i = 0; i < chickens.size(); i++) {
-		if (chickens[i]->getTile()->getTileType() != TILE_GOAL) {
-			isWin = false;
-		}
-	}
-	if (isWin) {
-		nextLevel();
-	}
+	_entityManager->update(deltaTime);
 }
 
 Game::~Game() {
-
+	delete _graphics;
+	delete _entityManager;
+	delete _spriteManager;
+	delete _levelManager;
+	delete _input;
 }

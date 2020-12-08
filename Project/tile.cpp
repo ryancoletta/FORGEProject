@@ -3,13 +3,6 @@
 #include "SDL.h"
 #include "sprite.h"
 
-Tile::Tile() :
-	_sprite(NULL),
-	_coordinate(Vector2::zero()),
-	_position(Vector2::zero()),
-	_occupant(NULL),
-	_blocked(false)
-{}
 Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
 	_tileType(tileType),
 	_sprite(sprite), 
@@ -18,7 +11,6 @@ Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 positi
 	_occupant(NULL),
 	_blocked(blocked)
 {}
-Tile::~Tile() {}
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 bool Tile::isBlocked() { return _blocked; }
 TileType Tile::getTileType() { return _tileType; }

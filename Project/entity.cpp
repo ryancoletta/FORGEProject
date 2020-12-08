@@ -4,11 +4,6 @@
 #include "sprite.h"
 #include "tile.h"
 
-Entity::Entity() :
-	_entityID(ENTITY_PLAYER),
-	_level(NULL),
-	_sprite(NULL)
-{}
 Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
 	_entityID(entityID),
 	_level(level),

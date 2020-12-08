@@ -20,7 +20,7 @@ must not be misrepresented as being the original software.
 3. This notice may not be removed or altered from any source
 distribution.
 */
-
+#include "globals.h"
 #ifndef TINYXML2_INCLUDED
 #define TINYXML2_INCLUDED
 
@@ -301,7 +301,7 @@ private:
         if ( cap > _allocated ) {
             TIXMLASSERT( cap <= INT_MAX / 2 );
             const int newAllocated = cap * 2;
-            T* newMem = new T[newAllocated];
+            T* newMem = DBG_NEW T[newAllocated];
             TIXMLASSERT( newAllocated >= _size );
             memcpy( newMem, _mem, sizeof(T)*_size );	// warning: not using constructors, only works for PODs
             if ( _mem != _pool ) {
@@ -371,7 +371,7 @@ public:
     virtual void* Alloc() {
         if ( !_root ) {
             // Need a new block.
-            Block* block = new Block();
+            Block* block = DBG_NEW Block();
             _blockPtrs.Push( block );
 
             Item* blockItems = block->items;

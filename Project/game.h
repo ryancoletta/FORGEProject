@@ -2,22 +2,30 @@
 #include "graphics.h"
 #include "entityManager.h"
 
+class Graphics;
+class EntityManager;
+class AnimationManager;
+class SpriteManager;
+class LevelManager;
+class Input;
+
 class Game {
 public:
 	Game();
 	~Game();
-	void nextLevel();
+	void play();
 private:
-	void checkWinCondition();
-	void gameLoop();
-	void draw(Graphics &graphics);
+	void draw();
 	void update(int deltaTime);
 
 	SDL_Event _event;
 	int _turn;
-	int _level;
 	Uint32 _nextLevelEvent;
-	Level* _currentLevel;
-	EntityManager _entityManager;
+	LevelManager* _levelManager;
+	EntityManager* _entityManager;
+	Graphics* _graphics;
+	AnimationManager* _animationManager;
+	SpriteManager* _spriteManager;
+	Input* _input;
 };
 

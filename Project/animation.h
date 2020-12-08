@@ -7,7 +7,6 @@
 class Animation
 {
 public:
-	Animation();
 	Animation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale);
 	std::string getName();
 	int getFrames();

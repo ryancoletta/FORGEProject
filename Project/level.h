@@ -7,7 +7,7 @@
 #include <memory>
 #include "tinyxml2.h"
 
-class Game;
+class LevelManager;
 class EntityManager;
 class SpriteManager;
 class Graphics;
@@ -16,15 +16,14 @@ struct SpriteSheet;
 class Level
 {
 public:
-	Level();
-	Level(Game* game, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager);
+	Level(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager);
 	~Level();
 	bool isCoordinateInRange(int x, int y);
 	bool isCoordinateInRange(Vector2 coordinate);
 	Tile* getTile(int x, int y);
 	Tile* getTile(Vector2 coordinate);
 	void draw();
-	void loadMap(Game* game, Graphics* graphics, const std::string* levelPath);
+	void loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 private:
 	EntityManager* _entityManager;
