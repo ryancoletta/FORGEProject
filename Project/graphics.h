@@ -15,10 +15,8 @@ public:
 	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect);
 	void render();
 	void clear();
-	void setMaxColor(int r, int g, int b);
 
 private:
-	int _r, _g, _b;
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
 	std::map<std::string, SDL_Surface*> _spriteSheets;
