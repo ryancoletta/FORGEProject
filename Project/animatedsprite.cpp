@@ -12,6 +12,25 @@ AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, 
 	_currentAnimationName("")
 {}
 
+void AnimatedSprite::setVisible(bool visible) { _visible = visible; }
+
+void AnimatedSprite::addAnimation(Animation* animation) { _animations.insert(std::pair<std::string, Animation*>(animation->getName(), animation)); }
+
+void AnimatedSprite::playAnimation(std::string animationName, bool isLoop) {
+	_isLoop = isLoop;
+	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
+		_currentAnimationName = animationName;
+		_frameIndex = 0;
+	}
+}
+
+void AnimatedSprite::resetAnimations() { _animations.clear(); }
+
+void AnimatedSprite::stopAnimation() {
+	_frameIndex = 0;
+	onAnimationDone(_currentAnimationName);
+}
+
 void AnimatedSprite::update(int deltaTime) {
 	Sprite::update(deltaTime);
 
@@ -52,33 +71,4 @@ void AnimatedSprite::draw(Vector2 position) {
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
 		_graphics->blitSurface(_spriteSheet, &sourceRect, &destRect);
 	}
-}
-
-void AnimatedSprite::playAnimation(std::string animationName, bool isLoop) {
-	_isLoop = isLoop;
-	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
-		_currentAnimationName = animationName;
-		_frameIndex = 0;
-	}
-}
-
-void AnimatedSprite::addAnimation(Animation* animation) {
-	_animations.insert(std::pair<std::string, Animation*>(animation->getName(), animation));
-}
-
-void AnimatedSprite::resetAnimations() {
-	_animations.clear();
-}
-
-void AnimatedSprite::stopAnimation() {
-	_frameIndex = 0;
-	onAnimationDone(_currentAnimationName);
-}
-
-void AnimatedSprite::setVisible(bool visible) {
-	_visible = visible;
-}
-
-void AnimatedSprite::onAnimationDone(std::string currentAnimation) {
-
 }

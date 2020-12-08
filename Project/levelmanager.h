@@ -13,19 +13,22 @@ class LevelManager
 public:
 	LevelManager(Uint32 nextLevelEvent);
 	~LevelManager();
+
 	bool loadLevel(int levelIndex, Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	bool loadNextLevel(Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
-	void draw();
 	void levelComplete();
+	void draw();
+
 private:
 	void clear();
+
+	int _levelIndex;
+	Uint32 _nextLevelEvent;
+	Level* _currentLevel;
 	std::vector<std::string> _levelPaths = { 
 		"Assets/level1.tmx",
 		"Assets/level2.tmx",
 		"Assets/level3.tmx"
 	};
-	Uint32 _nextLevelEvent;
-	int _levelIndex;
-	Level* _currentLevel;
 };
 

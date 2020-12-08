@@ -1,4 +1,3 @@
-#include "globals.h"
 #include "level.h"
 #include <stdio.h>
 #include <sstream>
@@ -19,25 +18,23 @@ Level::Level(LevelManager* levelManager, Graphics* graphics, const std::string* 
 {
 	loadMap(levelManager, graphics, levelPath);
 }
-bool Level::isCoordinateInRange(int x, int y) {
-	return (x >= 0) && (y >= 0) && (x < _cols) && (y < _rows);
-}
-bool Level::isCoordinateInRange(Vector2 coordinate) {
-	return isCoordinateInRange(coordinate.x, coordinate.y);
-}
-Tile* Level::getTile(int x, int y) {
-	return _tiles[x][y];
-}
-Tile* Level::getTile(Vector2 coordinate) {
-	return getTile(coordinate.x, coordinate.y);
-}
-void Level::draw() {
+
+Level::~Level() {
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
-			if (_tiles[x][y]) { _tiles[x][y]->draw(); }
+			delete _tiles[x][y];
 		}
 	}
 }
+
+Tile* Level::getTile(int x, int y) const { return _tiles[x][y]; }
+
+Tile* Level::getTile(Vector2 coordinate) const { return getTile(coordinate.x, coordinate.y); }
+
+bool Level::isCoordinateInRange(int x, int y) const { return (x >= 0) && (y >= 0) && (x < _cols) && (y < _rows); }
+
+bool Level::isCoordinateInRange(Vector2 coordinate) const { return isCoordinateInRange(coordinate.x, coordinate.y); }
+
 void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath) {
 	XMLDocument doc;
 	std::stringstream ss;
@@ -155,6 +152,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 	}
 	doc.Clear();
 }
+
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 	XMLElement* pSpriteSheet = mapNode->FirstChildElement("tileset");
 	if (pSpriteSheet) {
@@ -175,10 +173,11 @@ void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 		}
 	}
 }
-Level::~Level() {
+
+void Level::draw() {
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
-			delete _tiles[x][y];
+			if (_tiles[x][y]) { _tiles[x][y]->draw(); }
 		}
 	}
 }

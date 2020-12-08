@@ -25,6 +25,20 @@ Game::Game() :
 	_input = DBG_NEW Input();
 }
 
+Game::~Game() {
+	delete _graphics;
+	delete _entityManager;
+	delete _spriteManager;
+	delete _levelManager;
+	delete _input;
+
+	_graphics = NULL;
+	_entityManager = NULL;
+	_spriteManager = NULL;
+	_levelManager = NULL;
+	_input = NULL;
+}
+
 void Game::play() {
 	// load the next level
 	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
@@ -87,8 +101,6 @@ void Game::play() {
 			draw();
 		}
 		
-		
-
 		// pause, victorious
 		SDL_Delay(500);
 		SDL_PumpEvents();
@@ -97,9 +109,9 @@ void Game::play() {
 		// reset
 		_turn = 0;
 		_entityManager->clearEntities();
-	} 
-
+	}
 }
+
 void Game::draw() {
 	_graphics->clear();
 
@@ -108,14 +120,7 @@ void Game::draw() {
 
 	_graphics->render();
 }
+
 void Game::update(int deltaTime) {
 	_entityManager->update(deltaTime);
-}
-
-Game::~Game() {
-	delete _graphics;
-	delete _entityManager;
-	delete _spriteManager;
-	delete _levelManager;
-	delete _input;
 }

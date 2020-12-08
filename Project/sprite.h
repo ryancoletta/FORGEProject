@@ -10,6 +10,7 @@ class Sprite
 public:
 	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 	virtual ~Sprite() {}
+
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position);
 

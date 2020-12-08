@@ -8,7 +8,9 @@ class AnimationManager
 {
 public:
 	~AnimationManager();
+
 	Animation* loadAnimation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale);
+
 private:
 	std::map<std::string, Animation*> _loadedAnimations;
 };

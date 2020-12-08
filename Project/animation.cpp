@@ -15,11 +15,10 @@ Animation::Animation(std::string name, int frames, int framesPerSecond, Vector2 
 	}
 }
 
-std::string Animation::getName() { return _name; }
-int Animation::getFrames() { return _frames; }
-int Animation::getMilisecondsPerFrame() { return _milisecondsPerFrame; }
+std::string Animation::getName() const { return _name; }
 
-// TODO this assumes all on the same line rn, add a wrapping behaviour
-SDL_Rect Animation::getFrameRect(int frame) {
-	return _frameRects[frame];
-}
+int Animation::getFrames() const { return _frames; }
+
+int Animation::getMilisecondsPerFrame() const { return _milisecondsPerFrame; }
+
+SDL_Rect Animation::getFrameRect(int frame) { return _frameRects[frame]; } // TODO this assumes all on the same line rn, add a wrapping behaviour

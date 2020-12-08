@@ -17,14 +17,14 @@ Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTil
 		startTile->occupy(this);
 	}
 }
-int Entity::getEntityID() { return _entityID; }
-Tile* Entity::getTile() { return _tileHistory.top(); }
-Vector2 Entity::getCoordinate() { return getTile()->getCoordinate(); }
-void Entity::draw() {
-	_sprite->draw(_tileHistory.top()->getPosition());
-}
 
-bool Entity::canMove(Vector2 direction) {
+int Entity::getEntityID() const { return _entityID; }
+
+Tile* Entity::getTile() const { return _tileHistory.top(); }
+
+Vector2 Entity::getCoordinate() const { return getTile()->getCoordinate(); }
+
+bool Entity::canMove(Vector2 direction) const {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
@@ -41,6 +41,7 @@ bool Entity::canMove(Vector2 direction) {
 	}
 	return false;
 }
+
 bool Entity::move(int turn, Vector2 direction) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
@@ -90,6 +91,10 @@ void Entity::reset() {
 
 void Entity::update(int deltaTime) {
 	_sprite->update(deltaTime);
+}
+
+void Entity::draw() {
+	_sprite->draw(_tileHistory.top()->getPosition());
 }
 
 void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {

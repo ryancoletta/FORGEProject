@@ -11,6 +11,19 @@ SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationMana
 	_graphics(graphics),
 	_animationManager(animationManager)
 {}
+
+SpriteManager::~SpriteManager() {
+
+	std::multimap<int, Sprite*>::iterator it;
+	for (it = _loadedSprites.begin(); it != _loadedSprites.end(); it++)
+	{
+		delete it->second;
+	}
+	_loadedSprites.clear();
+
+	delete _animationManager;
+}
+
 Sprite* SpriteManager::loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
 	Sprite* newSprite;
 	switch (spriteID) {
@@ -44,14 +57,4 @@ Sprite* SpriteManager::loadSprite(int spriteID, const std::string& filePath, Vec
 	return newSprite;
 }
 
-SpriteManager::~SpriteManager() {
 
-	std::multimap<int, Sprite*>::iterator it;
-	for (it = _loadedSprites.begin(); it != _loadedSprites.end(); it++)
-	{
-		delete it->second;
-	}
-	_loadedSprites.clear();
-
-	delete _animationManager;
-}

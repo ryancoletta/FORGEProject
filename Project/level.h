@@ -1,5 +1,5 @@
 #pragma once
-
+#include "globals.h"
 #include <vector>
 #include <string>
 #include <map>
@@ -18,18 +18,21 @@ class Level
 public:
 	Level(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath, EntityManager* entityManager, SpriteManager* spriteManager);
 	~Level();
-	bool isCoordinateInRange(int x, int y);
-	bool isCoordinateInRange(Vector2 coordinate);
-	Tile* getTile(int x, int y);
-	Tile* getTile(Vector2 coordinate);
-	void draw();
+
+	Tile* getTile(int x, int y) const;
+	Tile* getTile(Vector2 coordinate) const;
+	bool isCoordinateInRange(int x, int y) const;
+	bool isCoordinateInRange(Vector2 coordinate) const;
+
 	void loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
+	void draw();
+
 private:
-	EntityManager* _entityManager;
-	SpriteManager* _spriteManager;
 	int _rows;
 	int _cols;
+	EntityManager* _entityManager;
+	SpriteManager* _spriteManager;
 	std::vector<std::vector<Tile*>> _tiles;
 	std::vector<SpriteSheet> _spriteSheets;
 };

@@ -23,16 +23,20 @@ class Entity
 public:
 	Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile);
 	virtual ~Entity() {}
-	int getEntityID();
-	Tile* getTile();
-	Vector2 getCoordinate();
+
+	int getEntityID() const;
+	Tile* getTile() const;
+	Vector2 getCoordinate() const;
+	bool canMove(Vector2 direction) const;
+
+	virtual bool move(int turn, Vector2 direction);
+
 	void draw();
 	void update(int deltaTime);
-	bool canMove(Vector2 direction);
-	virtual bool move(int turn, Vector2 direction);
 	void undo(int turn);
 	void reset();
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
+
 private:
 	EntityType _entityID;
 	Level* _level;

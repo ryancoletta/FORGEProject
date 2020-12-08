@@ -11,14 +11,18 @@ Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 positi
 	_occupant(NULL),
 	_blocked(blocked)
 {}
+
+bool Tile::isBlocked() const { return _blocked; }
+bool Tile::isOccupied() const { return _occupant != NULL; }
+
+TileType Tile::getTileType() const { return _tileType; }
+Vector2 Tile::getCoordinate() const { return _coordinate; }
+Vector2 Tile::getPosition() const { return _position; }
+Sprite* Tile::getSprite() const { return _sprite; }
+Entity* Tile::getOccupant() const { return _occupant; }
+
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
-bool Tile::isBlocked() { return _blocked; }
-TileType Tile::getTileType() { return _tileType; }
-Vector2 Tile::getCoordinate() { return _coordinate; }
-Vector2 Tile::getPosition() { return _position; }
-Sprite* Tile::getSprite() { return _sprite; }
-Entity* Tile::getOccupant() { return _occupant; }
-bool Tile::isOccupied() { return _occupant != NULL; }
+
 void Tile::vacate() { 
 	_occupant = NULL;
 	onVacate();

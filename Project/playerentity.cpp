@@ -1,7 +1,6 @@
 #include "globals.h"
 #include "playerentity.h"
 
-
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
 	Entity(entityID, level, sprite, startTile)
 {
@@ -18,6 +17,11 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 		updateFlock();
 	}
 	return moved;
+}
+
+void PlayerEntity::updateFlock() {
+	_flock.clear();
+	getAllConnected(_flock, ENTITY_PLAYER | ENTITY_CHICKEN);
 }
 
 void PlayerEntity::sortFlock(Vector2 direction) {
@@ -50,8 +54,4 @@ void PlayerEntity::sortFlock(Vector2 direction) {
 			}
 		}
 	}
-}
-void PlayerEntity::updateFlock() {
-	_flock.clear();
-	getAllConnected(_flock, ENTITY_PLAYER | ENTITY_CHICKEN);
 }

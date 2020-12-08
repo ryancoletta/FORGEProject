@@ -14,12 +14,13 @@ public:
 	Game();
 	~Game();
 	void play();
+
 private:
 	void draw();
 	void update(int deltaTime);
 
-	SDL_Event _event;
 	int _turn;
+	SDL_Event _event;
 	Uint32 _nextLevelEvent;
 	LevelManager* _levelManager;
 	EntityManager* _entityManager;
