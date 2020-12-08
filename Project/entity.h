@@ -2,6 +2,7 @@
 #include <stack>
 #include <vector>
 #include "globals.h"
+
 class Level;
 class Tile;
 class Sprite;
@@ -21,6 +22,7 @@ class Entity
 {
 public:
 	Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile);
+	virtual ~Entity() {}
 	int getEntityID();
 	Tile* getTile();
 	Vector2 getCoordinate();

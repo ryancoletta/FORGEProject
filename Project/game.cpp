@@ -26,15 +26,16 @@ Game::Game() :
 }
 
 void Game::play() {
+	// load the next level
 	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
 		// find the player
 		Entity* playerEntity = _entityManager->GetPlayerEntity();
 		if (!playerEntity) { return; }
 
-		// play the level
+		// main loop
 		int lastUpdateTimeMs = SDL_GetTicks();
-		bool complete = false;
-		while (!complete) {
+		bool levelComplete = false;
+		while (!levelComplete) {
 			_input->beginNewFrame();
 
 			if (SDL_PollEvent(&_event)) {
@@ -47,16 +48,13 @@ void Game::play() {
 					_input->keyUpEvent(_event);
 				}
 				if (_event.type == _nextLevelEvent) {
-					complete = true;
+					levelComplete = true;
 				}
 				if (_event.type == SDL_QUIT) {
-					// TODO mem leak here on level
 					return;
 				}
 			}
-
 			if (_input->isKeyDown(SDL_SCANCODE_ESCAPE)) {
-				// TODO mem leak here on level
 				return;
 			}
 			else if (_input->isKeyDown(SDL_SCANCODE_UP)) {
@@ -89,9 +87,14 @@ void Game::play() {
 			draw();
 		}
 		
-		//SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT); // TODO you can queue up a bunch of moves during this delay, want to prevent
+		
 
-		// reset data
+		// pause, victorious
+		SDL_Delay(500);
+		SDL_PumpEvents();
+		SDL_FlushEvents(SDL_FIRSTEVENT, SDL_LASTEVENT);
+
+		// reset
 		_turn = 0;
 		_entityManager->clearEntities();
 	} 
