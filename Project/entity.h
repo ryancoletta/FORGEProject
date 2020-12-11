@@ -30,17 +30,18 @@ public:
 	bool canMove(Vector2 direction) const;
 
 	virtual bool move(int turn, Vector2 direction);
+	virtual void undo(int turn);
+	virtual void reset();
 
 	void draw();
 	void update(int deltaTime);
-	void undo(int turn);
-	void reset();
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
 
+protected:
+	Level* _level;
+	std::stack<Tile*> _tileHistory;
 private:
 	EntityType _entityID;
-	Level* _level;
 	Sprite* _sprite;
-	std::stack<Tile*> _tileHistory;
 	std::stack<int> _lastTurnMoved;
 };

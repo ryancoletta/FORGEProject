@@ -66,8 +66,6 @@ void EntityManager::undoAll(int turn) {
 	{
 		it->second->undo(turn);
 	}
-	Entity* player = GetPlayerEntity();
-	static_cast<PlayerEntity*>(player)->updateFlock();
 }
 
 void EntityManager::resetAll() {
@@ -76,8 +74,6 @@ void EntityManager::resetAll() {
 	{
 		it->second->reset();
 	}
-	Entity* player = GetPlayerEntity();
-	static_cast<PlayerEntity*>(player)->updateFlock();
 }
 
 void EntityManager::clearEntities() {

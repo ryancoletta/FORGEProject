@@ -29,8 +29,7 @@ public:
 	void draw();
 
 private:
-	int _rows;
-	int _cols;
+	Vector2 _levelSize;
 	EntityManager* _entityManager;
 	SpriteManager* _spriteManager;
 	std::vector<std::vector<Tile*>> _tiles;

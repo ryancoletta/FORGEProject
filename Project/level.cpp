@@ -31,7 +31,7 @@ Tile* Level::getTile(int x, int y) const { return _tiles[x][y]; }
 
 Tile* Level::getTile(Vector2 coordinate) const { return getTile(coordinate.x, coordinate.y); }
 
-bool Level::isCoordinateInRange(int x, int y) const { return (x >= 0) && (y >= 0) && (x < _cols) && (y < _rows); }
+bool Level::isCoordinateInRange(int x, int y) const { return (x >= 0) && (y >= 0) && (x < _levelSize.x) && (y < _levelSize.y); }
 
 bool Level::isCoordinateInRange(Vector2 coordinate) const { return isCoordinateInRange(coordinate.x, coordinate.y); }
 
@@ -42,12 +42,12 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 	doc.LoadFile(ss.str().c_str());
 
 	XMLElement* mapNode = doc.FirstChildElement("map");
-	mapNode->QueryIntAttribute("width", &_cols);
-	mapNode->QueryIntAttribute("height", &_rows);
+	mapNode->QueryIntAttribute("width", &_levelSize.x);
+	mapNode->QueryIntAttribute("height", &_levelSize.y);
 
-	_tiles.resize(_cols);
-	for (int x = 0; x < _cols; x++) {
-		_tiles[x].resize(_rows);
+	_tiles.resize(_levelSize.x);
+	for (int x = 0; x < _levelSize.x; x++) {
+		_tiles[x].resize(_levelSize.y);
 	}
 
 	int tileWidth, tileHeight;
@@ -107,8 +107,8 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							int spriteSheetGid = gid - spriteSheet.firstGid;
 
 							// get the position of tile in the level
-							int x = tileCounter % _cols;
-							int y = tileCounter / _cols;
+							int x = tileCounter % _levelSize.x;
+							int y = tileCounter / _levelSize.x;
 							int posX = x * tileWidth * globals::SPRITE_SCALE;
 							int posY = y * tileHeight * globals::SPRITE_SCALE;
 							Vector2 finalTilePosition = Vector2(posX, posY);
