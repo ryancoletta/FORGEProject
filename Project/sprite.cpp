@@ -2,8 +2,9 @@
 #include "sprite.h"
 #include "graphics.h"
 
-Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) : 
-	_graphics(graphics)
+Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) : 
+	_graphics(graphics),
+	_origin(origin)
 {
 	_sourceRect.x = sourcePosition.x;
 	_sourceRect.y = sourcePosition.y;
@@ -15,8 +16,8 @@ Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePo
 }
 void Sprite::draw(Vector2 position) {
 	SDL_Rect destRect = { 
-		position.x,
-		position.y,
+		position.x - _origin.x,
+		position.y - _origin.y,
 		_sourceRect.w * globals::SPRITE_SCALE, 
 		_sourceRect.h * globals::SPRITE_SCALE 
 	};

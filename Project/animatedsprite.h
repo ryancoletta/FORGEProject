@@ -9,7 +9,7 @@ class Animation;
 class AnimatedSprite : public Sprite
 {
 public:
-	AnimatedSprite(Graphics* graphics, const std::string &filePath, Vector2 sourcePosition, Vector2 sourceScale);
+	AnimatedSprite(Graphics* graphics, const std::string &filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin = Vector2::zero());
 
 	void setVisible(bool visible);
 

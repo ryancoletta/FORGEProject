@@ -1,4 +1,5 @@
 #pragma once
+#include "globals.h"
 #include <map>
 #include <vector>
 #include <memory>
@@ -18,7 +19,7 @@ public:
 	std::vector<Entity*> GetEntitiesByType(EntityType entityType);
 	Entity* GetPlayerEntity();
 
-	void addEntity(EntityType entityType, Level* grid, Sprite* sprite, Tile* startTile);
+	void addEntity(EntityType entityType, Level* grid, Sprite* sprite, Tile* startTile, Vector2 facing = Vector2::down());
 	void draw();
 	void update(int deltaTime);
 	void undoAll(int turn);

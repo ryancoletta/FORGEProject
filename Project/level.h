@@ -13,6 +13,17 @@ class SpriteManager;
 class Graphics;
 struct SpriteSheet;
 
+// defines gids which are supposed to create special elements
+enum GidElements {
+	GID_BOX = 21,
+	GID_CHICKEN = 22,
+	GID_PLAYER_UP = 42,
+	GID_PLAYER_RIGHT = 45,
+	GID_PLAYER_DOWN = 48,
+	GID_PLAYER_LEFT = 51,
+};
+
+
 class Level
 {
 public:

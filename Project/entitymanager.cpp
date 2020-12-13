@@ -30,11 +30,11 @@ Entity* EntityManager::GetPlayerEntity() {
 	return playerEntities[0];
 }
 
-void EntityManager::addEntity(EntityType entityType, Level* level, Sprite* sprite, Tile* startTile) {
+void EntityManager::addEntity(EntityType entityType, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
 	Entity* newEntity;
 	switch (entityType) {
 		case ENTITY_PLAYER:
-			newEntity = DBG_NEW PlayerEntity(entityType, level, sprite, startTile);
+			newEntity = DBG_NEW PlayerEntity(entityType, level, sprite, startTile, Vector2::down());
 			break;
 		default:
 			newEntity = DBG_NEW Entity(entityType, level, sprite, startTile);

@@ -3,8 +3,8 @@
 #include "graphics.h"
 #include "animation.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) :
-	Sprite(graphics, filePath, sourcePosition, sourceScale), 
+AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) :
+	Sprite(graphics, filePath, sourcePosition, sourceScale, origin), 
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -47,7 +47,6 @@ void AnimatedSprite::update(int deltaTime) {
 		}
 		else {
 			if (!_isLoop) {
-				setVisible(false);
 				onAnimationDone(_currentAnimationName);
 			}
 			_frameIndex = 0;
@@ -56,15 +55,15 @@ void AnimatedSprite::update(int deltaTime) {
 }
 
 void AnimatedSprite::draw(Vector2 position) {
-	if (_animations.empty()) {
+	if (_animations.empty() || _currentAnimationName == "") {
 		Sprite::draw(position);
 		return;
 	}
 
 	if (_visible) {
 		SDL_Rect destRect = {
-			position.x,
-			position.y,
+			position.x - _origin.x,
+			position.y - _origin.y,
 			_sourceRect.w * globals::SPRITE_SCALE,
 			_sourceRect.h * globals::SPRITE_SCALE
 		};

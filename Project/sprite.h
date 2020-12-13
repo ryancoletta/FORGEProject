@@ -8,13 +8,14 @@ class Graphics;
 class Sprite
 {
 public:
-	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
+	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin = Vector2::zero());
 	virtual ~Sprite() {}
 
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position);
 
 protected:
+	Vector2 _origin;
 	Graphics* _graphics;
 	SDL_Rect _sourceRect;
 	SDL_Texture* _spriteSheet;

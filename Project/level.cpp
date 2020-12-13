@@ -8,6 +8,7 @@
 #include "graphics.h"
 #include "spritemanager.h"
 #include "exittile.h"
+#include "entity.h"
 #include "levelmanager.h"
 
 using namespace tinyxml2;
@@ -135,9 +136,27 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 								}
 							}
 							else {
-								_entityManager->addEntity(static_cast<EntityType>(gid), this, tileSprite, _tiles[x][y]);
+								switch (gid) {
+									case GID_BOX:
+										_entityManager->addEntity(ENTITY_BOX, this, tileSprite, _tiles[x][y]);
+										break;
+									case GID_CHICKEN:
+										_entityManager->addEntity(ENTITY_CHICKEN, this, tileSprite, _tiles[x][y]);
+										break;
+									case GID_PLAYER_UP:
+										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y]);
+										break;
+									case GID_PLAYER_RIGHT:
+										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::right());
+										break;
+									case GID_PLAYER_DOWN:
+										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::up());
+										break;
+									case GID_PLAYER_LEFT:
+										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::left());
+										break;
+								}
 							}
-
 
 							tileCounter++;
 

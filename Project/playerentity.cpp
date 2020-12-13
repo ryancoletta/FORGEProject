@@ -2,11 +2,12 @@
 #include "level.h"
 #include "tile.h"
 #include "playerentity.h"
+#include "animatedsprite.h"
 
-PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
+PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	Entity(entityID, level, sprite, startTile)
 {
-	_facingHistory.push(Vector2::down());
+	_facingHistory.push(facing);
 }
 
 bool PlayerEntity::move(int turn, Vector2 direction) {
@@ -14,20 +15,24 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 	switch (dot) {
 		case 0:
 			return turnTowards(turn, direction);
-		case 1:
-			if (!Entity::canMove(direction * 2)) { return false; } // TODO many things wrong with this
+		case 1: {
+			Vector2 aheadCoordinate = _tileHistory.top()->getCoordinate() + direction * 2;
+			Tile* aheadTile = _level->getTile(aheadCoordinate);
+			if (aheadTile->isBlocked()) {
+				return false;
+			}
+			else if (aheadTile->isOccupied()) {
+				Entity* toPush = aheadTile->getOccupant();
+				if (!toPush->move(turn, direction)) {
+					return false;
+				}
+			}
+		}
 		default:
 			return Entity::move(turn, direction);
 	}
 }
 
-void PlayerEntity::undo(int turn) {
-	if (_facingHistory.size() > 1 && _lastTurnTurned.top() == turn) {
-		_facingHistory.pop();
-		_lastTurnTurned.pop();
-	}
-	Entity::undo(turn);
-}
 bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	
 	Vector2 currentCoordinate = _tileHistory.top()->getCoordinate();
@@ -59,9 +64,37 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 		}
 	}
 
+	playTurnAnimation(direction);
+
 	_facingHistory.push(direction);
 	_lastTurnTurned.push(turn);
 	return true;
+}
+
+void PlayerEntity::playTurnAnimation(Vector2 direction) {
+	if (direction == Vector2::up()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("down");
+	}
+	else if (direction == Vector2::right()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("right");
+	}
+	else if (direction == Vector2::down()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("up");
+	}
+	else if (direction == Vector2::left()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("left");
+	}
+}
+
+// TODO bug when hitting undo after having pushed and adjacent object; the stack appears to change values!!!
+void PlayerEntity::undo(int turn) {
+	if (_facingHistory.size() > 1 && _lastTurnTurned.top() == turn) {
+		_facingHistory.pop();
+		_lastTurnTurned.pop();
+		playTurnAnimation(_facingHistory.top());
+	}
+
+	Entity::undo(turn);
 }
 
 void PlayerEntity::reset() {
@@ -69,5 +102,6 @@ void PlayerEntity::reset() {
 		_facingHistory.pop();
 		_lastTurnTurned.pop();
 	}
+	playTurnAnimation(_facingHistory.top());
 	Entity::reset();
 }

@@ -8,14 +8,19 @@ class Tile;
 class Sprite;
 
 enum EntityType {
-	ENTITY_PLAYER	= 19,
-	ENTITY_BOX		= 21,
-	ENTITY_CHICKEN	= 22,
+	ENTITY_BOX		= 1 << 0,
+	ENTITY_CHICKEN	= 1 << 1,
+	ENTITY_PLAYER	= 1 << 2,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)
 {
-	return static_cast<EntityType>((1 << static_cast<int>(a)) | (1 << static_cast<int>(b)));
+	return static_cast<EntityType>(static_cast<int>(a) |static_cast<int>(b));
+}
+
+inline EntityType operator&(EntityType a, EntityType b)
+{
+	return static_cast<EntityType>(static_cast<int>(a) & static_cast<int>(b));
 }
 
 class Entity
@@ -39,9 +44,10 @@ public:
 
 protected:
 	Level* _level;
+	Sprite* _sprite;
 	std::stack<Tile*> _tileHistory;
+
 private:
 	EntityType _entityID;
-	Sprite* _sprite;
 	std::stack<int> _lastTurnMoved;
 };
