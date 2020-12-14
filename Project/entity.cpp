@@ -80,6 +80,7 @@ void Entity::undo(int turn) {
 	}
 }
 
+// TODO bug, this isn't safe, possibility of vacating the space another entity now occupies
 void Entity::reset() {
 	_tileHistory.top()->vacate();
 	while (_lastTurnMoved.size() > 0) {
