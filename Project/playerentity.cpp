@@ -35,6 +35,8 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 
 bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	
+	// store top up here so we can use throughout without fear of modifying the stack and for speed, also for readability
+
 	Vector2 currentCoordinate = _tileHistory.top()->getCoordinate();
 	Vector2 diagonalCoordinate = currentCoordinate + _facingHistory.top() + direction;
 	if (_level->isCoordinateInRange(diagonalCoordinate)) {
@@ -58,7 +60,8 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 		}
 		else if (adjacentTile->isOccupied()) {
 			Entity* toPush = adjacentTile->getOccupant();
-			if (!toPush->move(turn, -_facingHistory.top())) {
+			Vector2 pushDir = _facingHistory.top();
+			if (!toPush->move(turn, -pushDir)) { // This returns a REF so I'm modifying the value IN the stack
 				return false;
 			}
 		}

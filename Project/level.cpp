@@ -149,6 +149,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 		}
 	}
 	doc.Clear();
+	// TODO store all nails, don't construct until after everything is read, that way you have access to entire length
 }
 
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
