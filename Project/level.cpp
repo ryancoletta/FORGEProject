@@ -71,8 +71,6 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 					int tileCounter = 0;
 					if (pTile) {
 						while (pTile) {
-
-							
 							int gid;
 							XMLError result = pTile->QueryIntAttribute("gid", &gid);
 							
@@ -122,40 +120,21 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							spriteSheetY *= tileHeight;
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
 
-							Sprite* tileSprite = _spriteManager->loadSprite(gid, spriteSheet.path, finalTilesetPosition, tileSize);
+							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
 							
 							if (std::string(layerName) == "BG") {
-								if (gid <= static_cast<TileType>(TILE_WALL)) {
+								if (gid <= GID_TILE_WALL_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
 								}
-								else if (gid <= static_cast<TileType>(TILE_OPEN)) {
+								else if (gid <= GID_TILE_OPEN_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
-								else if (gid <= static_cast<TileType>(TILE_GOAL)) {
+								else if (gid <= GID_TILE_GOAL) {
 									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 							}
 							else {
-								switch (gid) {
-									case GID_BOX:
-										_entityManager->addEntity(ENTITY_BOX, this, tileSprite, _tiles[x][y]);
-										break;
-									case GID_CHICKEN:
-										_entityManager->addEntity(ENTITY_CHICKEN, this, tileSprite, _tiles[x][y]);
-										break;
-									case GID_PLAYER_UP:
-										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y]);
-										break;
-									case GID_PLAYER_RIGHT:
-										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::right());
-										break;
-									case GID_PLAYER_DOWN:
-										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::up());
-										break;
-									case GID_PLAYER_LEFT:
-										_entityManager->addEntity(ENTITY_PLAYER, this, tileSprite, _tiles[x][y], Vector2::left());
-										break;
-								}
+								_entityManager->addEntity(static_cast<GidElement>(gid), this, tileSprite, _tiles[x][y]);
 							}
 
 							tileCounter++;

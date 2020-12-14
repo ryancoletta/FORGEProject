@@ -6,6 +6,7 @@
 class Sprite;
 class Graphics;
 class AnimationManager;
+enum GidElement;
 
 class SpriteManager
 {
@@ -13,7 +14,7 @@ public:
 	SpriteManager(Graphics* graphics, AnimationManager* animationManager);
 	~SpriteManager();
 
-	Sprite* loadSprite(int spriteID, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
+	Sprite* loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 
 private:
 	Graphics* _graphics;

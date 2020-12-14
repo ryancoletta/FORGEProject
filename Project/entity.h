@@ -29,7 +29,7 @@ public:
 	Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile);
 	virtual ~Entity() {}
 
-	int getEntityID() const;
+	EntityType getEntityType() const;
 	Tile* getTile() const;
 	Vector2 getCoordinate() const;
 	bool canMove(Vector2 direction) const;
@@ -48,6 +48,6 @@ protected:
 	std::stack<Tile*> _tileHistory;
 
 private:
-	EntityType _entityID;
+	EntityType _entityType;
 	std::stack<int> _lastTurnMoved;
 };

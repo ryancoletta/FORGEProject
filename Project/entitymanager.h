@@ -9,6 +9,7 @@ class Level;
 class Sprite;
 class Tile;
 
+enum GidElement;
 enum EntityType;
 
 class EntityManager 
@@ -19,7 +20,7 @@ public:
 	std::vector<Entity*> GetEntitiesByType(EntityType entityType);
 	Entity* GetPlayerEntity();
 
-	void addEntity(EntityType entityType, Level* grid, Sprite* sprite, Tile* startTile, Vector2 facing = Vector2::down());
+	void addEntity(GidElement gid, Level* grid, Sprite* sprite, Tile* startTile);
 	void draw();
 	void update(int deltaTime);
 	void undoAll(int turn);

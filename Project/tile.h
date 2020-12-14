@@ -5,9 +5,9 @@ class Entity;
 class Sprite;
 
 enum TileType {
-	TILE_WALL = 13,
-	TILE_OPEN = 14,
-	TILE_GOAL = 15,
+	TILE_WALL = 1 << 0,
+	TILE_OPEN = 1 << 1,
+	TILE_GOAL = 1 << 2,
 };
 
 class Tile

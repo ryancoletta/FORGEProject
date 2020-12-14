@@ -5,7 +5,7 @@
 #include "tile.h"
 
 Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
-	_entityID(entityID),
+	_entityType(entityID),
 	_level(level),
 	_sprite(sprite)
 {
@@ -18,7 +18,7 @@ Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTil
 	}
 }
 
-int Entity::getEntityID() const { return _entityID; }
+EntityType Entity::getEntityType() const { return _entityType; }
 
 Tile* Entity::getTile() const { return _tileHistory.top(); }
 
@@ -108,7 +108,7 @@ void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {
 			if (adjacentTile->isOccupied()) {
 				Entity* neighbor = adjacentTile->getOccupant();
 				if ((std::count(entities.begin(), entities.end(), neighbor) == 0) &&
-					(((1 << neighbor->getEntityID()) & flags) > 0))
+					(((1 << neighbor->getEntityType()) & flags) > 0))
 				{
 					neighbor->getAllConnected(entities, flags);
 				}

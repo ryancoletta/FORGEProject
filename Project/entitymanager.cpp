@@ -30,18 +30,31 @@ Entity* EntityManager::GetPlayerEntity() {
 	return playerEntities[0];
 }
 
-void EntityManager::addEntity(EntityType entityType, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
-	Entity* newEntity;
-	switch (entityType) {
-		case ENTITY_PLAYER:
-			newEntity = DBG_NEW PlayerEntity(entityType, level, sprite, startTile, Vector2::down());
+void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile) {
+	Entity* newEntity = NULL;
+	switch (gid) {
+		case GID_ENTITY_BOX:
+			newEntity = DBG_NEW Entity(ENTITY_BOX, level, sprite, startTile);
 			break;
-		default:
-			newEntity = DBG_NEW Entity(entityType, level, sprite, startTile);
+		case GID_ENTITY_CHICKEN:
+			newEntity = DBG_NEW Entity(ENTITY_CHICKEN, level, sprite, startTile);
+			break;
+		case GID_ENTITY_PLAYER_UP:
+			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::down());
+			break;
+		case GID_ENTITY_PLAYER_RIGHT:
+			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::right());
+			break;
+		case GID_ENTITY_PLAYER_DOWN:
+			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::up());
+			break;
+		case GID_ENTITY_PLAYER_LEFT:
+			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::left());
 			break;
 	}
-
-	_allEntities.insert(std::pair<EntityType, Entity*>(entityType, newEntity));
+	if (newEntity) { 
+		_allEntities.insert(std::pair<EntityType, Entity*>(newEntity->getEntityType(), newEntity)); 
+	}
 }
 
 void EntityManager::draw() {
