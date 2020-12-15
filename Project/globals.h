@@ -43,8 +43,7 @@ struct Vector2 {
 
 	//ASSINGMENT AND EQUALITY OPERATIONS
 	inline Vector2& operator = (const Vector2& v) { x = v.x; y = v.y; return *this; }
-	inline Vector2& operator = (const int& f) { x = f; y = f; return *this; }
-	inline Vector2& operator - (void) { x = -x; y = -y; return *this; }
+	inline Vector2 operator - (void) { return Vector2(-x, -y); }
 	inline bool operator == (const Vector2& v) const { return (x == v.x) && (y == v.y); }
 	inline bool operator != (const Vector2& v) const { return (x != v.x) || (y != v.y); }
 

@@ -36,36 +36,42 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	
 	// store top up here so we can use throughout without fear of modifying the stack and for speed, also for readability
-
+	Vector2 playerFacingDirection = _facingHistory.top();
 	Vector2 currentCoordinate = _tileHistory.top()->getCoordinate();
-	Vector2 diagonalCoordinate = currentCoordinate + _facingHistory.top() + direction;
+
+	Vector2 diagonalCoordinate = currentCoordinate + playerFacingDirection + direction;
+	Entity* diagonalEntity = NULL;
 	if (_level->isCoordinateInRange(diagonalCoordinate)) {
 		Tile* diagonalTile = _level->getTile(diagonalCoordinate);
 		if (diagonalTile->isBlocked()) {
 			return false;
 		}
 		else if (diagonalTile->isOccupied()) {
-			Entity* toPush = diagonalTile->getOccupant();
-			if (!toPush->move(turn, direction)) {
+			diagonalEntity = diagonalTile->getOccupant();
+			if (!diagonalEntity->canMove(direction)) {
 				return false;
 			}
 		}
 	}
 
 	Vector2 adjacentCoordinate = currentCoordinate + direction;
+	Entity* adjacentEntity = NULL;
 	if (_level->isCoordinateInRange(adjacentCoordinate)) {
 		Tile* adjacentTile = _level->getTile(adjacentCoordinate);
 		if (adjacentTile->isBlocked()) {
 			return false;
 		}
 		else if (adjacentTile->isOccupied()) {
-			Entity* toPush = adjacentTile->getOccupant();
-			Vector2 pushDir = _facingHistory.top();
-			if (!toPush->move(turn, -pushDir)) { // This returns a REF so I'm modifying the value IN the stack
+			adjacentEntity = adjacentTile->getOccupant();
+
+			if (!adjacentEntity->canMove(-playerFacingDirection)) {
 				return false;
 			}
 		}
 	}
+
+	if (diagonalEntity) { diagonalEntity->move(turn, direction); }
+	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection); }
 
 	playTurnAnimation(direction);
 
