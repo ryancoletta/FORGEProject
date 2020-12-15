@@ -66,7 +66,7 @@ bool Entity::move(int turn, Vector2 direction) {
 }
 
 void Entity::undo(int turn) {
-	if (_tileHistory.size() > 1 && _lastTurnMoved.top() == turn) {
+	while (_tileHistory.size() > 1 && _lastTurnMoved.top() >= turn) {
 		_tileHistory.top()->vacate();
 		_tileHistory.pop();
 
@@ -80,13 +80,17 @@ void Entity::undo(int turn) {
 	}
 }
 
-// TODO bug, this isn't safe, possibility of vacating the space another entity now occupies
 void Entity::reset() {
 	_tileHistory.top()->vacate();
 	while (_lastTurnMoved.size() > 0) {
 		_tileHistory.pop();
 		_lastTurnMoved.pop();
 	}
+	// if someone is in this spot, make sure they perform their reset first
+	if (_tileHistory.top()->isOccupied()) {
+		_tileHistory.top()->getOccupant()->reset();
+	}
+
 	_tileHistory.top()->occupy(this);
 }
 
