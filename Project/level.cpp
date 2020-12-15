@@ -71,9 +71,10 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 					int tileCounter = 0;
 					if (pTile) {
 						while (pTile) {
-							int gid;
-							XMLError result = pTile->QueryIntAttribute("gid", &gid);
-							
+							unsigned gid;
+							XMLError result = pTile->QueryUnsignedAttribute("gid", &gid);
+
+							int rotation = getGidRotation(gid);
 
 							// handle empty gids
 							if (result == XML_NO_ATTRIBUTE) {
@@ -121,7 +122,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
 
 							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
-							
+
 							if (std::string(layerName) == "BG") {
 								if (gid <= GID_TILE_WALL_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
@@ -134,7 +135,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 								}
 							}
 							else {
-								_entityManager->addEntity(static_cast<GidElement>(gid), this, tileSprite, _tiles[x][y]);
+								_entityManager->addEntity(static_cast<GidElement>(gid), this, tileSprite, _tiles[x][y], Vector2::rotate(Vector2::up(), rotation));
 							}
 
 							tileCounter++;
@@ -150,6 +151,31 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 	}
 	doc.Clear();
 	// TODO store all nails, don't construct until after everything is read, that way you have access to entire length
+}
+int Level::getGidRotation(unsigned &gid) {
+	const unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
+	const unsigned FLIPPED_VERTICALLY_FLAG = 0x40000000;
+	const unsigned FLIPPED_DIAGONALLY_FLAG = 0x20000000;
+
+	bool flippedHorizontally = (gid & FLIPPED_HORIZONTALLY_FLAG);
+	bool flippedVertically = (gid & FLIPPED_VERTICALLY_FLAG);
+	bool flippedDiagonally = (gid & FLIPPED_DIAGONALLY_FLAG);
+	bool clockWise90 = flippedHorizontally && flippedDiagonally;
+	bool clockWise180 = flippedHorizontally && flippedVertically;
+	bool clockWise270 = flippedDiagonally && flippedVertically;
+
+	gid &= ~(FLIPPED_HORIZONTALLY_FLAG | FLIPPED_VERTICALLY_FLAG | FLIPPED_DIAGONALLY_FLAG);
+
+	if (clockWise90) {
+		return 90;
+	}
+	else if (clockWise180) {
+		return 180;
+	}
+	else if (clockWise270) {
+		return 270;
+	}
+	else return 0;
 }
 
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {

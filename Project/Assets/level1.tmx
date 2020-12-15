@@ -9,8 +9,8 @@
  <tileset firstgid="19" name="entity_sprites" tilewidth="16" tileheight="16" tilecount="10" columns="5">
   <image source="entity_sprites.png" width="80" height="32"/>
  </tileset>
- <tileset firstgid="29" name="player_sprites" tilewidth="16" tileheight="16" tilecount="36" columns="12">
-  <image source="player_sprites.png" width="192" height="48"/>
+ <tileset firstgid="29" name="player_sprites" tilewidth="16" tileheight="16" tilecount="9" columns="3">
+  <image source="player_sprites.png" width="48" height="48"/>
  </tileset>
  <layer id="2" name="BG" width="20" height="15" locked="1">
   <data>
@@ -404,11 +404,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="3221225498"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="21"/>
    <tile/>
    <tile/>
    <tile/>
@@ -424,6 +424,7 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="3221225497"/>
    <tile/>
    <tile/>
    <tile/>
@@ -443,12 +444,12 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="3221225496"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="21"/>
    <tile/>
    <tile/>
    <tile/>
@@ -464,8 +465,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="1610612760"/>
+   <tile gid="1610612762"/>
    <tile/>
    <tile/>
+   <tile gid="24"/>
    <tile/>
    <tile/>
    <tile/>
@@ -485,9 +489,8 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="25"/>
    <tile/>
-   <tile gid="21"/>
-   <tile gid="21"/>
    <tile/>
    <tile/>
    <tile/>
@@ -502,8 +505,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="2684354586"/>
+   <tile gid="2684354584"/>
    <tile/>
    <tile/>
+   <tile gid="26"/>
    <tile/>
    <tile/>
    <tile/>
@@ -541,13 +547,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="45"/>
+   <tile gid="1610612769"/>
    <tile/>
    <tile/>
    <tile/>

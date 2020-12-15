@@ -2,7 +2,7 @@
 #include "sprite.h"
 #include "graphics.h"
 
-Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) : 
+Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) :
 	_graphics(graphics),
 	_origin(origin)
 {
@@ -14,12 +14,12 @@ Sprite::Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePo
 	_spriteSheet = SDL_CreateTextureFromSurface(graphics->getRenderer(), graphics->loadImage(filePath));
 	if (_spriteSheet == NULL) { printf("Error: unable to load image\n"); }
 }
-void Sprite::draw(Vector2 position) {
+void Sprite::draw(Vector2 position, int clockWiseAngleRotation) {
 	SDL_Rect destRect = { 
 		position.x - _origin.x,
 		position.y - _origin.y,
 		_sourceRect.w * globals::SPRITE_SCALE, 
 		_sourceRect.h * globals::SPRITE_SCALE 
 	};
-	_graphics->blitSurface(_spriteSheet, &_sourceRect, &destRect);
+	_graphics->blitSurface(_spriteSheet, &_sourceRect, &destRect, clockWiseAngleRotation);
 }

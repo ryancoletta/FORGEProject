@@ -12,7 +12,7 @@ public:
 	virtual ~Sprite() {}
 
 	virtual void update(int deltaTime) {};
-	virtual void draw(Vector2 position);
+	virtual void draw(Vector2 position, int clockWiseAngleRotation = 0);
 
 protected:
 	Vector2 _origin;

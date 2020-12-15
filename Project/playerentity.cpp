@@ -5,10 +5,8 @@
 #include "animatedsprite.h"
 
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
-	Entity(entityID, level, sprite, startTile)
-{
-	_facingHistory.push(facing);
-}
+	DirectionalEntity(entityID, level, sprite, startTile, facing)
+{}
 
 bool PlayerEntity::move(int turn, Vector2 direction) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
@@ -73,44 +71,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	if (diagonalEntity) { diagonalEntity->move(turn, direction); }
 	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection); }
 
-	playTurnAnimation(direction);
-
 	_facingHistory.push(direction);
 	_lastTurnTurned.push(turn);
 	return true;
-}
-
-void PlayerEntity::playTurnAnimation(Vector2 direction) {
-	if (direction == Vector2::up()) {
-		static_cast<AnimatedSprite*>(_sprite)->playAnimation("down");
-	}
-	else if (direction == Vector2::right()) {
-		static_cast<AnimatedSprite*>(_sprite)->playAnimation("right");
-	}
-	else if (direction == Vector2::down()) {
-		static_cast<AnimatedSprite*>(_sprite)->playAnimation("up");
-	}
-	else if (direction == Vector2::left()) {
-		static_cast<AnimatedSprite*>(_sprite)->playAnimation("left");
-	}
-}
-
-// TODO bug when hitting undo after having pushed and adjacent object; the stack appears to change values!!!
-void PlayerEntity::undo(int turn) {
-	if (_facingHistory.size() > 1 && _lastTurnTurned.top() == turn) {
-		_facingHistory.pop();
-		_lastTurnTurned.pop();
-		playTurnAnimation(_facingHistory.top());
-	}
-
-	Entity::undo(turn);
-}
-
-void PlayerEntity::reset() {
-	while (_lastTurnTurned.size() > 0) {
-		_facingHistory.pop();
-		_lastTurnTurned.pop();
-	}
-	playTurnAnimation(_facingHistory.top());
-	Entity::reset();
 }

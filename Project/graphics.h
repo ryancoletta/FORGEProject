@@ -12,7 +12,7 @@ public:
 	SDL_Renderer* getRenderer() const;
 
 	SDL_Surface* loadImage(const std::string& filePath);
-	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect);
+	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect, const int clockWiseAngleRotation = 0);
 	void render();
 	void clear();
 

@@ -148,6 +148,7 @@
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationmanager.cpp" />
+    <ClCompile Include="directionalentity.cpp" />
     <ClCompile Include="entitymanager.cpp" />
     <ClCompile Include="exittile.cpp" />
     <ClCompile Include="game.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationmanager.h" />
+    <ClInclude Include="directionalentity.h" />
     <ClInclude Include="entitymanager.h" />
     <ClInclude Include="exittile.h" />
     <ClInclude Include="game.h" />

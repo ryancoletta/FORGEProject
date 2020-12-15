@@ -4,7 +4,7 @@
 #include "animation.h"
 
 AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) :
-	Sprite(graphics, filePath, sourcePosition, sourceScale, origin), 
+	Sprite(graphics, filePath, sourcePosition, sourceScale, origin),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -54,7 +54,7 @@ void AnimatedSprite::update(int deltaTime) {
 	}
 }
 
-void AnimatedSprite::draw(Vector2 position) {
+void AnimatedSprite::draw(Vector2 position, int clockWiseAngleRotation) {
 	if (_animations.empty() || _currentAnimationName == "") {
 		Sprite::draw(position);
 		return;
@@ -68,6 +68,6 @@ void AnimatedSprite::draw(Vector2 position) {
 			_sourceRect.h * globals::SPRITE_SCALE
 		};
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
-		_graphics->blitSurface(_spriteSheet, &sourceRect, &destRect);
+		_graphics->blitSurface(_spriteSheet, &sourceRect, &destRect, clockWiseAngleRotation);
 	}
 }

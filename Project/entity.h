@@ -8,9 +8,12 @@ class Tile;
 class Sprite;
 
 enum EntityType {
-	ENTITY_BOX		= 1 << 0,
-	ENTITY_CHICKEN	= 1 << 1,
-	ENTITY_PLAYER	= 1 << 2,
+	ENTITY_BOX			= 1 << 0,
+	ENTITY_CHICKEN		= 1 << 1,
+	ENTITY_PLAYER		= 1 << 2,
+	ENTITY_NAIL_END		= 1 << 3,
+	ENTITY_NAIL_MID		= 1 << 4,
+	ENTITY_NAIL			= ENTITY_NAIL_END | ENTITY_NAIL_MID,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)
@@ -37,8 +40,8 @@ public:
 	virtual bool move(int turn, Vector2 direction);
 	virtual void undo(int turn);
 	virtual void reset();
-
-	void draw();
+	virtual void draw();
+	
 	void update(int deltaTime);
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
 

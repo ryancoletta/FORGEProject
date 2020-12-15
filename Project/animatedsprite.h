@@ -20,7 +20,7 @@ public:
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;
-	void draw(Vector2 position) override;
+	void draw(Vector2 position, int clockWiseAngleRotation = 0) override;
 
 private:
 	int _frameIndex;

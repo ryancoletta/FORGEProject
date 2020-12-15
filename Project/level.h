@@ -20,10 +20,10 @@ enum GidElement {
 	GID_TILE_GOAL = 15,
 	GID_ENTITY_BOX = 21,
 	GID_ENTITY_CHICKEN = 22,
-	GID_ENTITY_PLAYER_UP = 42,
-	GID_ENTITY_PLAYER_RIGHT = 45,
-	GID_ENTITY_PLAYER_DOWN = 48,
-	GID_ENTITY_PLAYER_LEFT = 51,
+	GID_ENTITY_NAIL_HEAD = 24,
+	GID_ENTITY_NAIL_BODY = 25,
+	GID_ENTITY_NAIL_TAIL = 26,
+	GID_ENTITY_PLAYER = 33,
 };
 
 
@@ -41,6 +41,7 @@ public:
 	void loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 	void draw();
+	int getGidRotation(unsigned &gid);
 
 private:
 	Vector2 _levelSize;

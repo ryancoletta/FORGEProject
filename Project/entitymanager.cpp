@@ -5,6 +5,7 @@
 #include "sprite.h"
 #include "tile.h"
 #include "playerentity.h"
+#include "directionalentity.h"
 
 EntityManager::~EntityManager() { clearEntities(); }
 
@@ -30,8 +31,9 @@ Entity* EntityManager::GetPlayerEntity() {
 	return playerEntities[0];
 }
 
-void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile) {
+void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
 	Entity* newEntity = NULL;
+
 	switch (gid) {
 		case GID_ENTITY_BOX:
 			newEntity = DBG_NEW Entity(ENTITY_BOX, level, sprite, startTile);
@@ -39,17 +41,15 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 		case GID_ENTITY_CHICKEN:
 			newEntity = DBG_NEW Entity(ENTITY_CHICKEN, level, sprite, startTile);
 			break;
-		case GID_ENTITY_PLAYER_UP:
-			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::down());
+		case GID_ENTITY_PLAYER:
+			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, facing);
 			break;
-		case GID_ENTITY_PLAYER_RIGHT:
-			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::right());
+		case GID_ENTITY_NAIL_BODY:
+			newEntity = DBG_NEW DirectionalEntity(ENTITY_NAIL_MID, level, sprite, startTile, facing);
 			break;
-		case GID_ENTITY_PLAYER_DOWN:
-			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::up());
-			break;
-		case GID_ENTITY_PLAYER_LEFT:
-			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, Vector2::left());
+		case GID_ENTITY_NAIL_TAIL:
+		case GID_ENTITY_NAIL_HEAD:
+			newEntity = DBG_NEW DirectionalEntity(ENTITY_NAIL_END, level, sprite, startTile, facing);
 			break;
 	}
 	if (newEntity) { 

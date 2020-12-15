@@ -27,29 +27,8 @@ SpriteManager::~SpriteManager() {
 
 Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
 	Sprite* newSprite = NULL;
-	if (gid == GID_ENTITY_PLAYER_UP || gid == GID_ENTITY_PLAYER_RIGHT || gid == GID_ENTITY_PLAYER_DOWN || gid == GID_ENTITY_PLAYER_LEFT) {
-		switch (gid) {
-			case GID_ENTITY_PLAYER_UP:
-				newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(0, 0), Vector2(48, 48), Vector2(48, 48));
-				break;
-			case GID_ENTITY_PLAYER_RIGHT:
-				newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(48, 0), Vector2(48, 48), Vector2(48, 48));
-				break;
-			case GID_ENTITY_PLAYER_DOWN:
-				newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(96, 0), Vector2(48, 48), Vector2(48, 48));
-				break;
-			case GID_ENTITY_PLAYER_LEFT:
-				newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(144, 0), Vector2(48, 48), Vector2(48, 48));
-				break;
-		}
-		Animation* up = _animationManager->loadAnimation("up", 1, 500, Vector2(0, 0), Vector2(48, 48));
-		Animation* right = _animationManager->loadAnimation("right", 1, 500, Vector2(48, 0), Vector2(48, 48));
-		Animation* down = _animationManager->loadAnimation("down", 1, 500, Vector2(96, 0), Vector2(48, 48));
-		Animation* left = _animationManager->loadAnimation("left", 1, 500, Vector2(144, 0), Vector2(48, 48));
-		static_cast<AnimatedSprite*>(newSprite)->addAnimation(up);
-		static_cast<AnimatedSprite*>(newSprite)->addAnimation(right);
-		static_cast<AnimatedSprite*>(newSprite)->addAnimation(down);
-		static_cast<AnimatedSprite*>(newSprite)->addAnimation(left);
+	if (gid == GID_ENTITY_PLAYER) {
+		newSprite = DBG_NEW Sprite(_graphics, filePath, Vector2(0, 0), Vector2(48, 48), Vector2(48, 48));
 	}
 	else if (gid == GID_ENTITY_CHICKEN) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(48, 0), sourceScale);
@@ -62,7 +41,7 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& filePath, V
 		newSprite = DBG_NEW Sprite(_graphics, filePath, sourcePosition, sourceScale);
 	}
 	else { 
-		return _loadedSprites.find(gid)->second; 
+		return _loadedSprites.find(gid)->second; // gids which should be rotated are NOT, instead using the non rotated sprite
 	}
 
 	if (newSprite) {
