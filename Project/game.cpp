@@ -11,8 +11,7 @@
 #include "entity.h"
 #include "animationmanager.h"
 #include "levelmanager.h"
-#include "font.h"
-#include "text.h"
+#include "hudmanager.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
@@ -25,6 +24,7 @@ Game::Game() :
 	_spriteManager = DBG_NEW SpriteManager(_graphics, _animationManager);
 	_levelManager = DBG_NEW LevelManager(_nextLevelEvent);
 	_input = DBG_NEW Input();
+	_hudManager = DBG_NEW HudManager(_graphics);
 }
 
 Game::~Game() {
@@ -33,18 +33,17 @@ Game::~Game() {
 	delete _spriteManager;
 	delete _levelManager;
 	delete _input;
+	delete _hudManager;
 
 	_graphics = NULL;
 	_entityManager = NULL;
 	_spriteManager = NULL;
 	_levelManager = NULL;
 	_input = NULL;
+	_hudManager = NULL;
 }
 
 void Game::play() {
-
-	Font* pixelFont = DBG_NEW Font(_graphics, "Assets/font.png", Vector2(8, 8));
-	_text = DBG_NEW Text(pixelFont, "Ryan Coletta", Vector2(globals::WINDOW_WIDTH / 2.0, globals::WINDOW_HEIGHT / 2.0), MIDDLE_ALIGNED);
 
 	// load the next level
 	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
@@ -123,7 +122,7 @@ void Game::draw() {
 
 	_levelManager->draw();
 	_entityManager->draw();
-	_text->draw();
+	_hudManager->draw();
 
 	_graphics->render();
 }
