@@ -11,6 +11,8 @@ public:
 	Sprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin = Vector2::zero());
 	virtual ~Sprite() {}
 
+	SDL_Rect getSourceRect();
+
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position, int clockWiseAngleRotation = 0);
 

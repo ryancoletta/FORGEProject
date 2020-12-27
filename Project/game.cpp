@@ -11,6 +11,8 @@
 #include "entity.h"
 #include "animationmanager.h"
 #include "levelmanager.h"
+#include "font.h"
+#include "text.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
@@ -40,6 +42,10 @@ Game::~Game() {
 }
 
 void Game::play() {
+
+	Font* pixelFont = DBG_NEW Font(_graphics, "Assets/font.png", Vector2(8, 8));
+	_text = DBG_NEW Text(pixelFont, "Ryan Coletta", Vector2(globals::WINDOW_WIDTH / 2.0, globals::WINDOW_HEIGHT / 2.0), MIDDLE_ALIGNED);
+
 	// load the next level
 	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
 		// find the player
@@ -117,6 +123,7 @@ void Game::draw() {
 
 	_levelManager->draw();
 	_entityManager->draw();
+	_text->draw();
 
 	_graphics->render();
 }

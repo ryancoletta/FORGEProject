@@ -151,6 +151,7 @@
     <ClCompile Include="directionalentity.cpp" />
     <ClCompile Include="entitymanager.cpp" />
     <ClCompile Include="exittile.cpp" />
+    <ClCompile Include="font.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="level.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="playerentity.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
+    <ClCompile Include="text.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
   </ItemGroup>
@@ -173,6 +175,7 @@
     <ClInclude Include="directionalentity.h" />
     <ClInclude Include="entitymanager.h" />
     <ClInclude Include="exittile.h" />
+    <ClInclude Include="font.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="graphics.h" />
@@ -183,6 +186,7 @@
     <ClInclude Include="playerentity.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
+    <ClInclude Include="text.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tinyxml2.h" />
   </ItemGroup>

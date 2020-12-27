@@ -13,7 +13,7 @@ class SpriteManager;
 class Graphics;
 struct SpriteSheet;
 
-// defines gids which are supposed to create special elements
+// maps gids to specific game elements (tiles, entities, sprites, etc)
 enum GidElement {
 	GID_TILE_WALL_END = 13,
 	GID_TILE_OPEN_END = 14,

@@ -8,6 +8,7 @@ class AnimationManager;
 class SpriteManager;
 class LevelManager;
 class Input;
+class Text; // TODO remove
 
 class Game {
 public:
@@ -28,5 +29,8 @@ private:
 	AnimationManager* _animationManager;
 	SpriteManager* _spriteManager;
 	Input* _input;
+
+	// TODO temp, remove
+	Text* _text;
 };
 
