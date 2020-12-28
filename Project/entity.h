@@ -35,8 +35,8 @@ public:
 	EntityType getEntityType() const;
 	Tile* getTile() const;
 	Vector2 getCoordinate() const;
-	bool canMove(Vector2 direction) const;
 
+	virtual bool canMove(Vector2 direction) const;
 	virtual bool move(int turn, Vector2 direction);
 	virtual void undo(int turn);
 	virtual void reset();

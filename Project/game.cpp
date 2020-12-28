@@ -43,8 +43,7 @@ Game::~Game() {
 	_hudManager = NULL;
 }
 
-void Game::play() {
-
+void Game::play() {		
 	// load the next level
 	while (_levelManager->loadNextLevel(_graphics, _entityManager, _spriteManager)) {
 		// find the player

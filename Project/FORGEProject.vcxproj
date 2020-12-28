@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_ttf-2.0.15\include;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2_ttf-2.0.15\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -119,13 +119,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,11 +158,13 @@
     <ClCompile Include="level.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="levelmanager.cpp" />
+    <ClCompile Include="linkedentity.cpp" />
     <ClCompile Include="main.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
     </ClCompile>
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="playerentity.cpp" />
+    <ClCompile Include="shader.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
     <ClCompile Include="text.cpp" />
@@ -185,12 +187,18 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="levelmanager.h" />
+    <ClInclude Include="linkedentity.h" />
     <ClInclude Include="playerentity.h" />
+    <ClInclude Include="shader.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tinyxml2.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="test.frag" />
+    <None Include="test.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

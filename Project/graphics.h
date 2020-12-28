@@ -4,6 +4,8 @@
 #include <string>
 #include <map>
 
+class Shader;
+
 class Graphics {
 public:
 	Graphics();
@@ -16,7 +18,11 @@ public:
 	void render();
 	void clear();
 
+	bool initGL();
+
 private:
+	Shader* _shader;
+
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
 	std::map<std::string, SDL_Surface*> _spriteSheets;

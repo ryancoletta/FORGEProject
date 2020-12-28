@@ -7,6 +7,8 @@ class DirectionalEntity : public Entity
 {
 public:
 	DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
+	virtual ~DirectionalEntity() {}
+
 	Vector2 getDirectionFacing();
 	void undo(int turn) override;
 	void reset() override;
