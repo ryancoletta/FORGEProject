@@ -155,6 +155,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="hudmanager.cpp" />
+    <ClCompile Include="indexbuffer.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="levelmanager.cpp" />
@@ -164,12 +165,17 @@
     </ClCompile>
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="playerentity.cpp" />
+    <ClCompile Include="renderer.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
     <ClCompile Include="text.cpp" />
+    <ClCompile Include="texture.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="tinyxml2.cpp" />
+    <ClCompile Include="vertexarray.cpp" />
+    <ClCompile Include="vertexbuffer.cpp" />
+    <ClCompile Include="vertexbufferlayout.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="animatedsprite.h" />
@@ -183,18 +189,25 @@
     <ClInclude Include="globals.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="hudmanager.h" />
+    <ClInclude Include="indexbuffer.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="levelmanager.h" />
     <ClInclude Include="linkedentity.h" />
     <ClInclude Include="playerentity.h" />
+    <ClInclude Include="renderer.h" />
     <ClInclude Include="shader.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="text.h" />
+    <ClInclude Include="texture.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="tinyxml2.h" />
+    <ClInclude Include="vertexarray.h" />
+    <ClInclude Include="vertexbuffer.h" />
+    <ClInclude Include="vertexbufferlayout.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="test.frag" />

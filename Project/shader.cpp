@@ -1,49 +1,78 @@
 #include "shader.h"
 #include <Windows.h>
 
-Shader::Shader(std::string vertexFileName, std::string fragmentFileName) :
-	_vertFileName(vertexFileName),
-	_fragFileName(fragmentFileName)
+Shader::Shader(std::string vertexFileName, std::string fragmentFileName)
 {
-	_ready = false;
-	if (!Load()) {
+	if (!load(vertexFileName, fragmentFileName)) {
 		printf("Error loading shader");
 		return;
 	}
-	if (!Compile()) {
+	if (!compile()) {
 		printf("Error compiling shader");
 		return;
 	}
-	if (!Link()) {
+	if (!link()) {
 		printf("Error linking shader");
 		return;
 	}
-	_ready = true;
 }
 
 Shader::~Shader() {
-
+	glDeleteProgram(_shaderProgram);
 }
 
-GLint Shader::getAttribute(std::string attributeName) {
-	return glGetAttribLocation(_shaderProgram, attributeName.c_str());
+void Shader::bind() const {
+	glUseProgram(_shaderProgram);
 }
 
-bool Shader::Use() {
-	if (_ready) {
-		glUseProgram(_shaderProgram);
+void Shader::unbind() const {
+	glUseProgram(0);
+}
+
+void Shader::setUniform1i(const std::string& name, GLint value)
+{
+	glUniform1i(getUniformLocation(name), value);
+}
+
+void Shader::setUniform1f(const std::string& name, GLfloat value)
+{
+	glUniform1f(getUniformLocation(name), value);
+}
+
+void Shader::setUniform2f(const std::string& name, GLfloat x, GLfloat y)
+{
+	glUniform2f(getUniformLocation(name), x, y);
+}
+
+void Shader::setUniform4f(const std::string& name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
+	glUniform4f(getUniformLocation(name), x, y, z, w);
+}
+
+int Shader::getUniformLocation(const std::string& name)
+{
+	if (_uniformLocationCache.find(name) != _uniformLocationCache.end()) {
+		return _uniformLocationCache[name];
 	}
-	return _ready;
+
+	int location = glGetUniformLocation(_shaderProgram, name.c_str());
+	if (location == -1) {
+		printf("Warning: uniform %s does not exist OR is unused\n", name.c_str());
+	}
+	_uniformLocationCache[name] = location;
+	return location;
 }
 
-bool Shader::Load() {
-	_vertFile.open(_vertFileName, std::ios::in);
+bool Shader::load(std::string vertFileName, std::string fragFileName) {
+	std::ifstream _vertFile, _fragFile;
+	
+	std::stringstream _vertSourceStream, _fragSourceStream;
+	_vertFile.open(vertFileName, std::ios::in);
 	if (!_vertFile) {
 		return false;
 	}
 	_vertSourceStream << _vertFile.rdbuf();
 
-	_fragFile.open(_fragFileName, std::ios::in);
+	_fragFile.open(fragFileName, std::ios::in);
 	if (!_fragFile) {
 		return false;
 	}
@@ -55,7 +84,7 @@ bool Shader::Load() {
 	return true;
 }
 
-bool Shader::Compile() {
+bool Shader::compile() {
 
 	const char* tempSource = _vertSource.c_str();
 	_vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -97,7 +126,7 @@ bool Shader::Compile() {
 	return true;
 }
 
-bool Shader::Link() {
+bool Shader::link() {
 	_shaderProgram = glCreateProgram();
 	glAttachShader(_shaderProgram, _vertexShader);
 	glAttachShader(_shaderProgram, _fragmentShader);

@@ -5,6 +5,10 @@
 #include <map>
 
 class Shader;
+class IndexBuffer;
+class VertexBuffer;
+class VertexArray;
+class Renderer;
 
 class Graphics {
 public:
@@ -21,7 +25,11 @@ public:
 	bool initGL();
 
 private:
-	Shader* _shader;
+	Renderer* _rendererer;
+	IndexBuffer* _indexBuffer;		// allocates space for data on the GPU regarding which verticies to use when drawing tris
+	VertexBuffer* _vertexBuffer;	// allocates space for data on the GPU regarding verticies
+	VertexArray* _vertexArray;		// describes the layout of the data bound in the vertex buffer, so the GPU knows how to interperet it
+	Shader* _shader;				// program that runs on the gpu using the provided data to display each pixel
 
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
