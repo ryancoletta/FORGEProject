@@ -6,7 +6,6 @@
 layout(location = 0) out vec4 frag_Color;
 
 in vec2 v_TexCoord;
-in float v_TexIdx;
 
 uniform sampler2D u_Texture;
 
@@ -51,6 +50,7 @@ vec2 calcUV(vec2 uv, float scrollDirX, float scrollDirY, float scrollSpeed, int 
 
 void main()
 {
-	vec2 uv = calcUV(v_TexCoord, u_MovementDirection.x, u_MovementDirection.y, u_MovementSpeed, u_OscillationVariant, u_OscillationSpeed, u_OscillationAmplitude, u_OscillationDelay);
+	vec2 uv = v_TexCoord; 
+	//uv = calcUV(v_TexCoord, u_MovementDirection.x, u_MovementDirection.y, u_MovementSpeed, u_OscillationVariant, u_OscillationSpeed, u_OscillationAmplitude, u_OscillationDelay);
 	frag_Color = texture(u_Texture, uv);
 }

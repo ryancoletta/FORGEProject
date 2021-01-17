@@ -8,6 +8,14 @@ Material::Material(Texture* texture, Shader* shader, Vector2 sourcePosition, Vec
 	_texture(texture),
 	_shader(shader)
 {
+	// TODO wrapping behaviour whenever the source position is invalid, kinda weird, maybe refactor
+	int w = texture->getWidth();
+	int h = texture->getHeight();
+	while (sourcePosition.x + sourceScale.x > w || sourcePosition.y + sourceScale.y > h) {
+		sourcePosition.x -= w;
+		sourcePosition.y += sourceScale.y;
+	}
+
 	_sourceRect.x = sourcePosition.x;
 	_sourceRect.y = sourcePosition.y;
 	_sourceRect.w = sourceScale.x;
@@ -22,6 +30,11 @@ Shader* Material::getShader()
 SDL_Rect Material::getSourceRect()
 {
 	return _sourceRect;
+}
+
+Texture* Material::getTexture()
+{
+	return _texture;
 }
 
 void Material::applyProperties()

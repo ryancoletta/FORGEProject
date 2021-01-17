@@ -8,7 +8,7 @@ class Material;
 class SpriteInstance
 {
 public:
-	SpriteInstance(Graphics* graphics, Material* material, Vector2 screenPosition);
+	SpriteInstance(Graphics* graphics, Material* material);
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position, int clockWiseAngleRotation = 0);
 

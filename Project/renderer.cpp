@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "material.h"
+#include "texture.h"
 
 Renderer::~Renderer()
 {
@@ -62,19 +63,36 @@ bool Renderer::glCheckError(const char* function, const char* file, int line) {
 	return true;
 }
 
-void Renderer::draw(Material* material, Vector2 position)
+void Renderer::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect) // TODO pass sourceRect
 {
 	_vertexArray->bind();
 	_indexBuffer->bind();
 
 	material->applyProperties();
 
+	// sprite transform 
+	glm::vec3 uvSpacePosition = glm::vec3((float)destinationRect.x / globals::WINDOW_WIDTH, (float)destinationRect.y / globals::WINDOW_HEIGHT, 0.0f);
+	glm::vec3 uvSpaceScale = glm::vec3((float)destinationRect.w / globals::WINDOW_WIDTH, (float)destinationRect.h / globals::WINDOW_HEIGHT, 0.0f);
+
 	glm::mat4 projectionMatrix = glm::ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
-	material->getShader()->setUniformMat4f("u_MVP", projectionMatrix);
-	
-	// How do I turn a pos (vec2) into a matrix?
-	glm::mat4 modelViewMatrix = glm::ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
-	material->getShader()->setUniformMat4f("u_MVM", modelViewMatrix);
+	glm::mat4 modelPositionMatrix = glm::translate(glm::mat4(1.0f), uvSpacePosition);
+	glm::mat4 modelScaleMatrix = glm::scale(glm::mat4(1.0f), uvSpaceScale);
+	glm::mat4 mvp = projectionMatrix * modelPositionMatrix * modelScaleMatrix;
+
+	material->getShader()->setUniformMat4f("u_MVP", mvp);
+
+	// find which sprite to use within the sprite sheet
+	float w = material->getTexture()->getWidth();
+	float h = material->getTexture()->getHeight();
+
+	// accounts for the fact that GL coords start from the bottom left and SDL coords start from the top left
+	glm::vec2 uvOffset = glm::vec2((float)(sourceRect.x / w), (float)((h - sourceRect.y - sourceRect.h) / h)); // TODO WRONG
+	glm::vec2 uvScale = glm::vec2((float)sourceRect.w / w, (float)sourceRect.h / h); // RIGHT!
+	material->getShader()->setUniform2f("u_UVOffset", uvOffset.x, uvOffset.y);
+	material->getShader()->setUniform2f("u_UVScale", uvScale.x, uvScale.y);
+
+
+	material->getShader()->setUniform1f("u_Time", SDL_GetTicks() * 0.01f);
 
 	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, NULL));
 }

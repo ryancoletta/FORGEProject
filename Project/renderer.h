@@ -1,6 +1,7 @@
 #pragma once
 #include "globals.h"
 #include <GL/glew.h>
+#include <SDL_rect.h>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GLCall(x) Renderer::glClearError();\
@@ -16,7 +17,7 @@ class Renderer {
 public:
 	~Renderer();
 	void init();
-	void draw(Material* material, Vector2 position);
+	void draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect);
 	void clear() const;
 
 	// stores all of the things I wish to draw and draws them

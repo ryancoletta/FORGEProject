@@ -26,7 +26,7 @@ public:
 	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect, const int clockWiseAngleRotation = 0);
 	void render();
 	void clear();
-	void draw(Material* material, Vector2 position);
+	void draw(Material* material, SDL_Rect destRect);
 
 	bool initGL();
 private:

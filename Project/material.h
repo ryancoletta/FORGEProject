@@ -13,6 +13,7 @@ public:
 
 	Shader* getShader();
 	SDL_Rect getSourceRect();
+	Texture* getTexture();
 
 	void applyProperties();
 

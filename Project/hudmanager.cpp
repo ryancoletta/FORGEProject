@@ -7,13 +7,10 @@ HudManager::HudManager(Graphics* graphics) {
 	_font = DBG_NEW Font(graphics, "Assets/font.png", Vector2(8, 8)); // TODO hardcoded for now, don't really need more than one font though...
 
 	//TODO temporary text
-	Text* newText = DBG_NEW Text(_font, "Very text.", Vector2(globals::WINDOW_WIDTH / 2.0, globals::WINDOW_HEIGHT / 6.0), MIDDLE_ALIGNED);
+	Text* newText = DBG_NEW Text(_font, "Nevermind, I figured it out!", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f), MIDDLE_ALIGNED);
 	_allText.push_back(newText);
 
-	newText = DBG_NEW Text(_font, "Much type.", Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT / 2.0), RIGHT_ALIGNED);
-	_allText.push_back(newText);
-
-	newText = DBG_NEW Text(_font, "Wow!", Vector2(20, globals::WINDOW_HEIGHT - globals::WINDOW_HEIGHT / 7.0));
+	newText = DBG_NEW Text(_font, ":)", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 3.0f), MIDDLE_ALIGNED);
 	_allText.push_back(newText);
 }
 HudManager::~HudManager() {

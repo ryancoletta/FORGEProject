@@ -102,10 +102,11 @@ void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect*
 }
 
 // TODO with THIS
-void Graphics::draw(Material* material, Vector2 position)
+void Graphics::draw(Material* material, SDL_Rect destRect)
 {
+
 	// pass in a material and a transform position
-	_rendererer->draw(material, position);
+	_rendererer->draw(material, material->getSourceRect(), destRect);
 }
 
 void Graphics::render() {
