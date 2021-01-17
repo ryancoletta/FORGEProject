@@ -1,4 +1,5 @@
 #pragma once
+#include "globals.h"
 #include <GL/glew.h>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
@@ -6,15 +7,29 @@
 	x;\
 	ASSERT(Renderer::glCheckError(#x, __FILE__, __LINE__))
 
-class VertexArray;
 class IndexBuffer;
-class Shader;
+class VertexBuffer;
+class VertexArray;
+class Material;
 
 class Renderer {
 public:
-	void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader);
+	~Renderer();
+	void init();
+	void draw(Material* material, Vector2 position);
 	void clear() const;
+
+	// stores all of the things I wish to draw and draws them
+	// submit(va, material, transform)
+	// vedrtex AND index buffers are all the same for a 2d game (quads)
+	// sprite needs a UV transform and a positionary Transform
+
 private:
+
+	IndexBuffer* _indexBuffer;		// allocates space for data on the GPU regarding which verticies to use when drawing tris
+	VertexBuffer* _vertexBuffer;	// allocates space for data on the GPU regarding verticies
+	VertexArray* _vertexArray;		// describes the layout of the data bound in the vertex buffer, so the GPU knows how to interperet it
+
 	void glClearError();
 	bool glCheckError(const char* function, const char* file, int line);
 };

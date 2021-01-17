@@ -8,8 +8,8 @@ public:
 	Texture(const std::string& path);
 	~Texture();
 
-	void bind(unsigned int slot = 0) const;
-	void unbind() const;
+	void bind(unsigned int slot) const;
+	//void unbind() const;
 
 	inline int getWidth() { return _width; }
 	inline int getHeight() { return _height; }

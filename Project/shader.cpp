@@ -3,6 +3,8 @@
 
 Shader::Shader(std::string vertexFileName, std::string fragmentFileName)
 {
+	// TODO just initialize, do these elsewhere or else you'll get a broken class
+
 	if (!load(vertexFileName, fragmentFileName)) {
 		printf("Error loading shader");
 		return;
@@ -22,11 +24,16 @@ Shader::~Shader() {
 }
 
 void Shader::bind() const {
-	glUseProgram(_shaderProgram);
+	glUseProgram(_shaderProgram); // opaque pointer
 }
 
 void Shader::unbind() const {
 	glUseProgram(0);
+}
+
+void Shader::setUniform1iv(const std::string& name, const unsigned int& count, GLint* value)
+{
+	glUniform1iv(getUniformLocation(name), count, value);
 }
 
 void Shader::setUniform1i(const std::string& name, GLint value)
@@ -46,6 +53,11 @@ void Shader::setUniform2f(const std::string& name, GLfloat x, GLfloat y)
 
 void Shader::setUniform4f(const std::string& name, GLfloat x, GLfloat y, GLfloat z, GLfloat w) {
 	glUniform4f(getUniformLocation(name), x, y, z, w);
+}
+
+void Shader::setUniformMat4f(const std::string& name, const glm::mat4& matrix)
+{
+	glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 }
 
 int Shader::getUniformLocation(const std::string& name)

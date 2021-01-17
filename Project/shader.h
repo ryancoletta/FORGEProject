@@ -5,6 +5,7 @@
 #include <iostream>
 #include <fstream>
 #include <unordered_map>
+#include <glm/glm.hpp>
 
 class Shader
 {
@@ -14,9 +15,11 @@ public:
 	void bind() const;
 	void unbind() const;
 	void setUniform1i(const std::string& name, GLint value);
+	void setUniform1iv(const std::string& name, const unsigned int& count, GLint* value);
 	void setUniform1f(const std::string& name, GLfloat value);
 	void setUniform2f(const std::string& name, GLfloat x, GLfloat y);
 	void setUniform4f(const std::string& name, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+	void setUniformMat4f(const std::string& name, const glm::mat4& matrix);
 
 private:
 	std::string _vertSource, _fragSource;

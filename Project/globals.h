@@ -10,15 +10,15 @@
 #include <stdlib.h>
 #include <crtdbg.h> // replaces malloc with a way to track
 #include <math.h>
-
+#include <map>
 namespace globals {
 	const float PI = 3.14159265359;
 	const float TAU = 6.28318530718;
 	const int FPS = 50;
 	const int MAX_FRAME_TIME = 5 * 1000 / FPS;
-	const int WINDOW_WIDTH = 960;
-	const int WINDOW_HEIGHT = 720;
 	const int SPRITE_SCALE = 3;
+	const int WINDOW_WIDTH = 256 * SPRITE_SCALE;
+	const int WINDOW_HEIGHT = 256 * SPRITE_SCALE;
 }
 
 struct Vector2 {

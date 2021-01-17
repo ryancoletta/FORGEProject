@@ -1,6 +1,8 @@
 #include "text.h"
 #include "font.h"
 #include "sprite.h"
+#include "spriteinstance.h"
+#include "material.h"
 
 Text::Text(Font* font, std::string text, Vector2 position, TextAlignment alignment)
 {
@@ -8,7 +10,7 @@ Text::Text(Font* font, std::string text, Vector2 position, TextAlignment alignme
 		_charSprites.push_back(font->getCharSprite(text[i]));
 	}
 
-	SDL_Rect charRect = _charSprites[0]->getSourceRect();
+	SDL_Rect charRect = _charSprites[0]->getMaterial()->getSourceRect();
 
 	_rect.x = position.x;
 	_rect.y = position.y;

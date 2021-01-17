@@ -7,9 +7,11 @@
 #include "indexbuffer.h"
 #include "vertexarray.h"
 #include "texture.h"
+#include "material.h"
 
 Graphics::Graphics()
 {
+	//_window = SDL_CreateWindow("FORGE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	SDL_CreateWindowAndRenderer(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN, &_window, &_renderer);
 	//SDL_SetRenderDrawColor(_renderer, 0xFF, 0x69, 0xB4, 0xFF); // debug pink
 	SDL_SetWindowTitle(_window, "FORGE Project");
@@ -21,9 +23,6 @@ Graphics::~Graphics() {
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
 	delete _shader;
-	delete _vertexBuffer;
-	delete _indexBuffer;
-	delete _vertexArray;
 	delete _rendererer;
 }
 
@@ -40,6 +39,7 @@ bool Graphics::initGL() {
 		return false;
 	}
 
+	// set gl version, don't using anything beyond that
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
@@ -50,33 +50,7 @@ bool Graphics::initGL() {
 	//glBlendEquation(GL_FUNC_SUBTRACT);
 
 	// what version of open GL is being used
-	printf("%s\n", glGetString(GL_VERSION));
-
-	// vertex data - raw data defining each of the vertices (which can contain position, normal, uv, etc)
-	float size = 1.0f;
-	const int NUM_VERT = 4;
-	float positions[NUM_VERT * 4] = {
-		-size, -size, 0.0f, 0.0f,
-		 size, -size, 1.0f, 0.0f,
-		 size,  size, 1.0f, 1.0f,
-		-size,  size, 0.0f, 1.0f,
-	};
-	// index data - which vertices to use when drawing each tri
-	unsigned int indices[] = {
-		0, 1, 2,
-		2, 3, 0
-	};
-
-	_vertexBuffer = DBG_NEW VertexBuffer(positions, NUM_VERT * 4 * sizeof(float)); // vertex buffer - allocates space for our vertex data on the GPU
-
-	// describes the actual layout of our vertces, so the gpu knows how to interperet
-	VertexBufferLayout layout;
-	layout.push<float>(2); // organized as TWO floats, for position
-	layout.push<float>(2); // uvs
-	_vertexArray = DBG_NEW VertexArray(); // TODO still don't understand the vertex array???
-	_vertexArray->AddBuffer(*_vertexBuffer, layout);
-
-	_indexBuffer = DBG_NEW IndexBuffer(indices, 6); // vertex buffer - allocates space for our index data on the GPU
+	printf("%s\n", glGetString(GL_VERSION)); // TODO why is this not 3.3?
 
 	// program to be run on the GPU to interperet the above data
 	// vertex shader - how vertex positions are placed in the window
@@ -84,20 +58,8 @@ bool Graphics::initGL() {
 	_shader = DBG_NEW Shader("test.vert", "test.frag");
 	_shader->bind();
 
-	Texture* texture = DBG_NEW Texture("Assets/pika.png");
-	int textureSlot = 0;
-	texture->bind(textureSlot);
-	_shader->setUniform1i("u_Texture", textureSlot);
-	_shader->setUniform2f("u_Direction", 1.0f, 1.0f);
-	_shader->setUniform1f("u_Speed", 0.1f);
-
-	// TODO unbind everything now, why???
-	_shader->unbind();
-	_vertexArray->unbind();
-	_indexBuffer->unbind();
-	_vertexBuffer->unbind();
-
 	_rendererer = DBG_NEW Renderer();
+	_rendererer->init();
 
 	return true;
 }
@@ -112,21 +74,49 @@ SDL_Surface* Graphics::loadImage(const std::string& filePath) {
 	return _spriteSheets[filePath];
 }
 
+Texture* Graphics::loadTexture(const std::string& filePath) {
+	if (_textures.count(filePath) == 0) {
+		_textures[filePath] = DBG_NEW Texture(filePath);
+	}
+	return _textures[filePath];
+}
+
+Shader* Graphics::loadShader(const std::string& vertPath, const std::string& fragPath)
+{
+	if (_shaders.count(vertPath) == 0) { // TODO cache should account for frag path as well
+		_shaders[vertPath] = DBG_NEW Shader(vertPath, fragPath);
+	}
+	return _shaders[vertPath];
+}
+
+Material* Graphics::loadMaterial(const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale)
+{
+	Texture* texture = loadTexture(texturePath);
+	Shader* shader = loadShader(vertPath, fragPath);
+	return DBG_NEW Material(texture, shader, sourcePosition, sourceScale);
+}
+
+// TODO replace THIS
 void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect, const int clockwiseRotationAngle) {
 	SDL_RenderCopyEx(_renderer, texture, sourceRect, destRect, clockwiseRotationAngle, NULL, SDL_FLIP_NONE);
 }
 
+// TODO with THIS
+void Graphics::draw(Material* material, Vector2 position)
+{
+	// pass in a material and a transform position
+	_rendererer->draw(material, position);
+}
+
 void Graphics::render() {
-	_rendererer->clear();
-
-	_shader->bind();
-	_shader->setUniform1f("u_Time", SDL_GetTicks() * 0.001f);
-
-	_rendererer->draw(*_vertexArray, *_indexBuffer, *_shader);
-
 	SDL_GL_SwapWindow(_window);
-
+	
 	//SDL_RenderPresent(_renderer);
 }
 
-void Graphics::clear() { SDL_RenderClear(_renderer); }
+void Graphics::clear() { 
+	//SDL_RenderClear(_renderer); 
+	_rendererer->clear();
+}
+
+

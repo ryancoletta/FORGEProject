@@ -5,7 +5,7 @@
 #include <SDL.h>
 
 
-class Sprite;
+class SpriteInstance;
 class Font;
 
 enum TextAlignment {
@@ -22,6 +22,6 @@ public:
 
 private:
 	SDL_Rect _rect;
-	std::vector<Sprite*> _charSprites;
+	std::vector<SpriteInstance*> _charSprites;
 };
 

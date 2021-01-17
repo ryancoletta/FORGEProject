@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 
-class Sprite;
+class SpriteInstance;
 class Graphics;
 
 class Font
@@ -12,8 +12,8 @@ public:
 	Font(Graphics* graphics, const std::string& filePath, Vector2 charSize);
 	~Font();
 
-	Sprite* getCharSprite(char c);
+	SpriteInstance* getCharSprite(char c);
 private:
-	std::map<char, Sprite*> _fontMap;
+	std::map<char, SpriteInstance*> _fontMap;
 };
 
