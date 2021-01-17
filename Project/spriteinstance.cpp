@@ -2,14 +2,13 @@
 #include "graphics.h"
 #include "material.h"
 
-SpriteInstance::SpriteInstance(Graphics* graphics, Material* material) :
+SpriteInstance::SpriteInstance(Graphics* graphics, Material* material, Vector2 origin) :
 	_graphics(graphics),
 	_material(material),
-	_position(Vector2::zero())
-{
-}
+	_origin(origin)
+{}
 
-void SpriteInstance::draw(Vector2 position, int clockWiseAngleRotation)
+void SpriteInstance::draw(Vector2 position, const float clockWiseAngleRotation)
 {
 	SDL_Rect destRect = {
 		position.x,
@@ -17,7 +16,7 @@ void SpriteInstance::draw(Vector2 position, int clockWiseAngleRotation)
 		_material->getSourceRect().w * globals::SPRITE_SCALE,
 		_material->getSourceRect().h * globals::SPRITE_SCALE
 	};
-	_graphics->draw(_material, destRect);
+	_graphics->draw(_material, destRect, clockWiseAngleRotation);
 }
 
 Material* SpriteInstance::getMaterial()

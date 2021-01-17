@@ -2,7 +2,7 @@
 #include "globals.h"
 
 class Entity;
-class Sprite;
+class SpriteInstance;
 
 enum TileType {
 	TILE_WALL = 1 << 0,
@@ -13,13 +13,13 @@ enum TileType {
 class Tile
 {
 public:
-	Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
+	Tile(TileType tileType, SpriteInstance* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
 	virtual ~Tile() {}
 
 	TileType getTileType() const;
 	Vector2 getCoordinate() const;
 	Vector2 getPosition() const;
-	Sprite* getSprite() const;
+	SpriteInstance* getSprite() const;
 	Entity* getOccupant() const;
 	bool isBlocked() const;
 	bool isOccupied() const;
@@ -37,7 +37,7 @@ protected:
 	bool _blocked;
 	TileType _tileType;
 	Entity* _occupant;
-	Sprite* _sprite;
+	SpriteInstance* _sprite;
 	Vector2 _coordinate;
 	Vector2 _position;
 };

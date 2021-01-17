@@ -121,8 +121,8 @@ void Game::play() {
 void Game::draw() {
 	_graphics->clear();
 
-	//_levelManager->draw();
-	//_entityManager->draw();
+	_levelManager->draw();
+	_entityManager->draw();
 	_hudManager->draw();
 
 	_graphics->render();

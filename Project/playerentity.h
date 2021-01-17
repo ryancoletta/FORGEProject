@@ -6,7 +6,7 @@
 class PlayerEntity : public DirectionalEntity
 {
 public:
-	PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
+	PlayerEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing);
 
 	bool move(int turn, Vector2 direction) override;
 

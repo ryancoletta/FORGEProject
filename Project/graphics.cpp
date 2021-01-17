@@ -22,7 +22,6 @@ Graphics::Graphics()
 Graphics::~Graphics() {
 	SDL_DestroyWindow(_window);
 	SDL_DestroyRenderer(_renderer);
-	delete _shader;
 	delete _rendererer;
 }
 
@@ -44,10 +43,10 @@ bool Graphics::initGL() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 
-	// transparency - don't need, even with transparent pngs??
-	//glEnable(GL_BLEND);
-	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	//glBlendEquation(GL_FUNC_SUBTRACT);
+	// transparency - TODO doesn't work!
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glBlendEquation(GL_FUNC_SUBTRACT);
 
 	// what version of open GL is being used
 	printf("%s\n", glGetString(GL_VERSION)); // TODO why is this not 3.3?
@@ -55,8 +54,6 @@ bool Graphics::initGL() {
 	// program to be run on the GPU to interperet the above data
 	// vertex shader - how vertex positions are placed in the window
 	// fragment shader - the color of each pixel in the window
-	_shader = DBG_NEW Shader("test.vert", "test.frag");
-	_shader->bind();
 
 	_rendererer = DBG_NEW Renderer();
 	_rendererer->init();
@@ -102,11 +99,11 @@ void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect*
 }
 
 // TODO with THIS
-void Graphics::draw(Material* material, SDL_Rect destRect)
+void Graphics::draw(Material* material, SDL_Rect destRect, const float clockwiseRotationAngle)
 {
 
 	// pass in a material and a transform position
-	_rendererer->draw(material, material->getSourceRect(), destRect);
+	_rendererer->draw(material, material->getSourceRect(), destRect, clockwiseRotationAngle);
 }
 
 void Graphics::render() {

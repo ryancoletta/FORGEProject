@@ -63,7 +63,7 @@ bool Renderer::glCheckError(const char* function, const char* file, int line) {
 	return true;
 }
 
-void Renderer::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect) // TODO pass sourceRect
+void Renderer::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle)
 {
 	_vertexArray->bind();
 	_indexBuffer->bind();
@@ -71,13 +71,16 @@ void Renderer::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinatio
 	material->applyProperties();
 
 	// sprite transform 
-	glm::vec3 uvSpacePosition = glm::vec3((float)destinationRect.x / globals::WINDOW_WIDTH, (float)destinationRect.y / globals::WINDOW_HEIGHT, 0.0f);
+	glm::vec3 uvSpacePosition = glm::vec3((float)destinationRect.x / globals::WINDOW_WIDTH, (float)(globals::WINDOW_HEIGHT - destinationRect.y - destinationRect.h) / globals::WINDOW_HEIGHT, 0.0f);
 	glm::vec3 uvSpaceScale = glm::vec3((float)destinationRect.w / globals::WINDOW_WIDTH, (float)destinationRect.h / globals::WINDOW_HEIGHT, 0.0f);
 
 	glm::mat4 projectionMatrix = glm::ortho(0.0f, 1.0f, 0.0f, 1.0f, -1.0f, 1.0f);
 	glm::mat4 modelPositionMatrix = glm::translate(glm::mat4(1.0f), uvSpacePosition);
 	glm::mat4 modelScaleMatrix = glm::scale(glm::mat4(1.0f), uvSpaceScale);
 	glm::mat4 mvp = projectionMatrix * modelPositionMatrix * modelScaleMatrix;
+
+	// pivot is currently the lower left, we want it to be the CENTER
+	mvp = glm::rotate(mvp, (float)glm::radians(-clockwiseRotationAngle), glm::vec3(0, 0, 1));
 
 	material->getShader()->setUniformMat4f("u_MVP", mvp);
 

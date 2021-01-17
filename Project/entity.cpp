@@ -1,10 +1,10 @@
 #include "globals.h"
 #include "entity.h"
 #include "level.h"
-#include "sprite.h"
+#include "spriteinstance.h"
 #include "tile.h"
 
-Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
+Entity::Entity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile) :
 	_entityType(entityID),
 	_level(level),
 	_sprite(sprite)

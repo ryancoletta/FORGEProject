@@ -8,14 +8,17 @@ class Material;
 class SpriteInstance
 {
 public:
-	SpriteInstance(Graphics* graphics, Material* material);
-	virtual void update(int deltaTime) {};
-	virtual void draw(Vector2 position, int clockWiseAngleRotation = 0);
+	SpriteInstance(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());
+	virtual ~SpriteInstance() {}
 
 	Material* getMaterial();
-private:
+
+	virtual void update(int deltaTime) {};
+	virtual void draw(Vector2 position, const float clockWiseAngleRotation = 0.0f);
+
+protected:
 	Graphics* _graphics;
-	Vector2 _position;
 	Material* _material;
+	Vector2 _origin;
 };
 

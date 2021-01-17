@@ -2,7 +2,7 @@
 #include "entitymanager.h"
 #include "entity.h"
 #include "level.h"
-#include "sprite.h"
+#include "spriteinstance.h"
 #include "tile.h"
 #include "playerentity.h"
 #include "directionalentity.h"
@@ -31,7 +31,7 @@ Entity* EntityManager::GetPlayerEntity() {
 	return playerEntities[0];
 }
 
-void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
+void EntityManager::addEntity(GidElement gid, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing) {
 	Entity* newEntity = NULL;
 
 	switch (gid) {

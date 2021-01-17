@@ -1,8 +1,8 @@
 #include "directionalentity.h"
-#include "sprite.h"
+#include "spriteinstance.h"
 #include "tile.h"
 
-DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
+DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing) :
 	Entity(entityID, level, sprite, startTile)
 {
 	_facingHistory.push(facing);
@@ -13,7 +13,7 @@ Vector2 DirectionalEntity::getDirectionFacing() {
 }
 
 void DirectionalEntity::draw() {
-	int rotationalOffset = Vector2::angle(Vector2::up(), getDirectionFacing());
+	float rotationalOffset = Vector2::angle(Vector2::up(), getDirectionFacing());
 	_sprite->draw(_tileHistory.top()->getPosition(), rotationalOffset);
 }
 

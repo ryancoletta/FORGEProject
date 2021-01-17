@@ -26,14 +26,10 @@ public:
 	void blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect, const int clockWiseAngleRotation = 0);
 	void render();
 	void clear();
-	void draw(Material* material, SDL_Rect destRect);
-
+	void draw(Material* material, SDL_Rect destRect, const float clockwiseRotationAngle);
 	bool initGL();
 private:
 	Renderer* _rendererer;
-
-	Shader* _shader;				// program that runs on the gpu using the provided data to display each pixel
-
 	SDL_Window* _window;
 	SDL_Renderer* _renderer;
 	std::map<std::string, SDL_Surface*> _spriteSheets;

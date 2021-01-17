@@ -10,6 +10,7 @@
 #include "exittile.h"
 #include "entity.h"
 #include "levelmanager.h"
+#include "spriteinstance.h"
 
 using namespace tinyxml2;
 
@@ -121,7 +122,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							spriteSheetY *= tileHeight;
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
 
-							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
+							SpriteInstance* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
 
 							if (std::string(layerName) == "BG") {
 								if (gid <= GID_TILE_WALL_END) {

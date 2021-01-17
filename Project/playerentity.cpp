@@ -4,7 +4,7 @@
 #include "playerentity.h"
 #include "animatedsprite.h"
 
-PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
+PlayerEntity::PlayerEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
 {}
 

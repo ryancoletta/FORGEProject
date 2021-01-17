@@ -17,7 +17,7 @@ class Renderer {
 public:
 	~Renderer();
 	void init();
-	void draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect);
+	void draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle);
 	void clear() const;
 
 	// stores all of the things I wish to draw and draws them

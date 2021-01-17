@@ -17,9 +17,9 @@ public:
 	virtual void draw(Vector2 position, int clockWiseAngleRotation = 0);
 
 protected:
-	Vector2 _origin;
 	Graphics* _graphics;
 	SDL_Rect _sourceRect;
 	SDL_Texture* _spriteSheet;
+	Vector2 _origin;
 };
 
