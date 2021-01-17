@@ -5,11 +5,11 @@
 class Graphics;
 class Material;
 
-class SpriteInstance
+class Sprite
 {
 public:
-	SpriteInstance(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());
-	virtual ~SpriteInstance() {}
+	Sprite(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());
+	virtual ~Sprite() {}
 
 	Material* getMaterial();
 

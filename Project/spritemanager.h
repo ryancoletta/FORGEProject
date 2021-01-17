@@ -3,7 +3,7 @@
 #include "globals.h"
 #include <string>
 
-class SpriteInstance;
+class Sprite;
 class Graphics;
 class AnimationManager;
 enum GidElement;
@@ -14,11 +14,11 @@ public:
 	SpriteManager(Graphics* graphics, AnimationManager* animationManager);
 	~SpriteManager();
 
-	SpriteInstance* loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
+	Sprite* loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
 
 private:
 	Graphics* _graphics;
 	AnimationManager* _animationManager;
-	std::multimap<int, SpriteInstance*> _loadedSprites;
+	std::multimap<int, Sprite*> _loadedSprites;
 };
 

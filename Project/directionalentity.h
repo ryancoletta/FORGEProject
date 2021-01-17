@@ -6,7 +6,7 @@
 class DirectionalEntity : public Entity
 {
 public:
-	DirectionalEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing);
+	DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
 	virtual ~DirectionalEntity() {}
 
 	Vector2 getDirectionFacing();

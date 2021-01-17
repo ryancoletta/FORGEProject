@@ -2,7 +2,7 @@
 #include "spriteinstance.h"
 #include "tile.h"
 
-DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing) :
+DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	Entity(entityID, level, sprite, startTile)
 {
 	_facingHistory.push(facing);

@@ -7,7 +7,7 @@
 
 class Animation;
 
-class AnimatedSprite : public SpriteInstance
+class AnimatedSprite : public Sprite
 {
 public:
 	AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());

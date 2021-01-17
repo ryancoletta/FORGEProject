@@ -5,7 +5,7 @@
 
 class Level;
 class Tile;
-class SpriteInstance;
+class Sprite;
 
 enum EntityType {
 	ENTITY_BOX			= 1 << 0,
@@ -29,7 +29,7 @@ inline EntityType operator&(EntityType a, EntityType b)
 class Entity
 {
 public:
-	Entity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile);
+	Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile);
 	virtual ~Entity() {}
 
 	EntityType getEntityType() const;
@@ -47,7 +47,7 @@ public:
 
 protected:
 	Level* _level;
-	SpriteInstance* _sprite;
+	Sprite* _sprite;
 	std::stack<Tile*> _tileHistory;
 
 private:

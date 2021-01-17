@@ -16,7 +16,7 @@ SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationMana
 
 SpriteManager::~SpriteManager() {
 
-	std::multimap<int, SpriteInstance*>::iterator it;
+	std::multimap<int, Sprite*>::iterator it;
 	for (it = _loadedSprites.begin(); it != _loadedSprites.end(); it++)
 	{
 		delete it->second;
@@ -26,12 +26,12 @@ SpriteManager::~SpriteManager() {
 	delete _animationManager;
 }
 
-SpriteInstance* SpriteManager::loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
-	SpriteInstance* newSprite = NULL;
+Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
+	Sprite* newSprite = NULL;
 	Material* newMaterial = _graphics->loadMaterial(filePath, "test.vert", "test.frag", sourcePosition, sourceScale);
 
 	if (gid == GID_ENTITY_PLAYER) {
-		newSprite = DBG_NEW SpriteInstance(_graphics, newMaterial, Vector2(48, 48));
+		newSprite = DBG_NEW Sprite(_graphics, newMaterial, Vector2(48, 48));
 	}
 	else if (gid == GID_ENTITY_CHICKEN) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, newMaterial);
@@ -41,14 +41,14 @@ SpriteInstance* SpriteManager::loadSprite(GidElement gid, const std::string& fil
 	}
 	// these sprites all are uniform (no branching animations) so theres no need to create individual instances
 	else if (_loadedSprites.count(gid) == 0) {
-		newSprite = DBG_NEW SpriteInstance(_graphics, newMaterial);
+		newSprite = DBG_NEW Sprite(_graphics, newMaterial);
 	}
 	else { 
 		return _loadedSprites.find(gid)->second; // gids which should be rotated are NOT, instead using the non rotated sprite
 	}
 
 	if (newSprite) {
-		_loadedSprites.insert(std::pair<int, SpriteInstance*>(gid, newSprite));
+		_loadedSprites.insert(std::pair<int, Sprite*>(gid, newSprite));
 	}
 	return newSprite;
 }

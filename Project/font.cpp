@@ -10,13 +10,13 @@ Font::Font(Graphics* graphics, const std::string& filePath, Vector2 charSize) {
 		char thisChar = static_cast<char>(i + CHAR_START_IDX);
 
 		Material* material = graphics->loadMaterial(filePath, "test.vert", "test.frag", Vector2(i * charSize.x, 0), charSize);
-		SpriteInstance* newCharSprite = DBG_NEW SpriteInstance(graphics, material);
-		_fontMap.insert(std::pair<char, SpriteInstance*>(thisChar, newCharSprite));
+		Sprite* newCharSprite = DBG_NEW Sprite(graphics, material);
+		_fontMap.insert(std::pair<char, Sprite*>(thisChar, newCharSprite));
 	}
 }
 
 Font::~Font() {
-	std::map<char, SpriteInstance*>::iterator it;
+	std::map<char, Sprite*>::iterator it;
 	for (it = _fontMap.begin(); it != _fontMap.end(); it++)
 	{
 		delete it->second;
@@ -25,6 +25,6 @@ Font::~Font() {
 	_fontMap.clear();
 }
 
-SpriteInstance* Font::getCharSprite(char c) {
+Sprite* Font::getCharSprite(char c) {
 	return _fontMap[c];
 }

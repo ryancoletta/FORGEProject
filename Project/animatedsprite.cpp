@@ -5,7 +5,7 @@
 #include "material.h"
 
 AnimatedSprite::AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin) :
-	SpriteInstance(graphics, material, origin),
+	Sprite(graphics, material, origin),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -33,7 +33,7 @@ void AnimatedSprite::stopAnimation() {
 }
 
 void AnimatedSprite::update(int deltaTime) {
-	SpriteInstance::update(deltaTime);
+	Sprite::update(deltaTime);
 
 	if (_currentAnimationName == "") { return; }
 
@@ -57,7 +57,7 @@ void AnimatedSprite::update(int deltaTime) {
 
 void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) {
 	if (_animations.empty() || _currentAnimationName == "") {
-		SpriteInstance::draw(position);
+		Sprite::draw(position);
 		return;
 	}
 

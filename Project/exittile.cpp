@@ -6,7 +6,7 @@
 #include "levelmanager.h"
 #include "spriteinstance.h"
 
-ExitTile::ExitTile(LevelManager* levelManager, SpriteInstance* sprite, Vector2 coordinate, Vector2 position) :
+ExitTile::ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinate, Vector2 position) :
 	Tile(TILE_GOAL, sprite, coordinate, position),
 	_levelManager(levelManager)
 {}

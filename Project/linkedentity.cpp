@@ -2,7 +2,7 @@
 #include "tile.h"
 #include "level.h"
 
-LinkedEntity::LinkedEntity(EntityType entityID, Level* level, SpriteInstance* sprite, Tile* startTile, Vector2 facing) :
+LinkedEntity::LinkedEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing) 
 {}
 

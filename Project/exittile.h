@@ -6,7 +6,7 @@ class LevelManager;
 class ExitTile : public Tile
 {
 public:
-	ExitTile(LevelManager* levelManager, SpriteInstance* sprite, Vector2 coordinate, Vector2 position);
+	ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinate, Vector2 position);
 
 protected:
 	void onOccupy() override;

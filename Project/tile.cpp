@@ -3,7 +3,7 @@
 #include "SDL.h"
 #include "spriteinstance.h"
 
-Tile::Tile(TileType tileType, SpriteInstance* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
+Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
 	_tileType(tileType),
 	_sprite(sprite), 
 	_coordinate(coordinate), 
@@ -18,7 +18,7 @@ bool Tile::isOccupied() const { return _occupant != NULL; }
 TileType Tile::getTileType() const { return _tileType; }
 Vector2 Tile::getCoordinate() const { return _coordinate; }
 Vector2 Tile::getPosition() const { return _position; }
-SpriteInstance* Tile::getSprite() const { return _sprite; }
+Sprite* Tile::getSprite() const { return _sprite; }
 Entity* Tile::getOccupant() const { return _occupant; }
 
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
