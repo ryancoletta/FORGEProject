@@ -7,7 +7,7 @@
 #include "animationmanager.h"
 #include "level.h"
 #include "material.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 
 SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationManager) :
 	_graphics(graphics),

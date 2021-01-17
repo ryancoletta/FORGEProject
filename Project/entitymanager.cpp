@@ -2,7 +2,7 @@
 #include "entitymanager.h"
 #include "entity.h"
 #include "level.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 #include "tile.h"
 #include "playerentity.h"
 #include "directionalentity.h"

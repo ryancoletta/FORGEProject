@@ -1,6 +1,6 @@
 #include "text.h"
 #include "font.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 #include "material.h"
 
 Text::Text(Font* font, std::string text, Vector2 position, TextAlignment alignment)

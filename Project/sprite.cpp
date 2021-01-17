@@ -1,4 +1,4 @@
-#include "spriteinstance.h"
+#include "sprite.h"
 #include "graphics.h"
 #include "material.h"
 

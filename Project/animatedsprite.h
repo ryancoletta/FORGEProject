@@ -3,7 +3,7 @@
 #include <map>
 #include <string>
 #include "globals.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 
 class Animation;
 

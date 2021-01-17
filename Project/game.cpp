@@ -12,7 +12,7 @@
 #include "animationmanager.h"
 #include "levelmanager.h"
 #include "hudmanager.h"
-#include "SpriteInstance.h"
+#include "sprite.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),

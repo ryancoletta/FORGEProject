@@ -9,7 +9,7 @@
 #include "exittile.h"
 #include "entity.h"
 #include "levelmanager.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 
 using namespace tinyxml2;
 

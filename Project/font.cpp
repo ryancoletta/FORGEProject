@@ -1,6 +1,6 @@
 #include "font.h"
 #include "graphics.h"
-#include "spriteinstance.h"
+#include "sprite.h"
 #include "material.h"
 #include <SDL.h>
 
