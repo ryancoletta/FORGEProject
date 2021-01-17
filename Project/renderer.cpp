@@ -89,8 +89,8 @@ void Renderer::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinatio
 	float h = material->getTexture()->getHeight();
 
 	// accounts for the fact that GL coords start from the bottom left and SDL coords start from the top left
-	glm::vec2 uvOffset = glm::vec2((float)(sourceRect.x / w), (float)((h - sourceRect.y - sourceRect.h) / h)); // TODO WRONG
-	glm::vec2 uvScale = glm::vec2((float)sourceRect.w / w, (float)sourceRect.h / h); // RIGHT!
+	glm::vec2 uvOffset = glm::vec2((float)(sourceRect.x / w), (float)((h - sourceRect.y - sourceRect.h) / h));
+	glm::vec2 uvScale = glm::vec2((float)sourceRect.w / w, (float)sourceRect.h / h);
 	material->getShader()->setUniform2f("u_UVOffset", uvOffset.x, uvOffset.y);
 	material->getShader()->setUniform2f("u_UVScale", uvScale.x, uvScale.y);
 

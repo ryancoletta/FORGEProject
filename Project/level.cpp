@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <cmath>
 #include "entitymanager.h"
-#include "sprite.h"
 #include "graphics.h"
 #include "spritemanager.h"
 #include "exittile.h"

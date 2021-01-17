@@ -16,7 +16,7 @@ void SpriteInstance::draw(Vector2 position, const float clockWiseAngleRotation)
 		_material->getSourceRect().w * globals::SPRITE_SCALE,
 		_material->getSourceRect().h * globals::SPRITE_SCALE
 	};
-	_graphics->draw(_material, destRect, clockWiseAngleRotation);
+	_graphics->draw(_material, _material->getSourceRect(), destRect, clockWiseAngleRotation);
 }
 
 Material* SpriteInstance::getMaterial()

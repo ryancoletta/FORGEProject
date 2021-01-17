@@ -2,9 +2,10 @@
 #include "animatedsprite.h"
 #include "graphics.h"
 #include "animation.h"
+#include "material.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin) :
-	Sprite(graphics, filePath, sourcePosition, sourceScale, origin),
+AnimatedSprite::AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin) :
+	SpriteInstance(graphics, material, origin),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -32,7 +33,7 @@ void AnimatedSprite::stopAnimation() {
 }
 
 void AnimatedSprite::update(int deltaTime) {
-	Sprite::update(deltaTime);
+	SpriteInstance::update(deltaTime);
 
 	if (_currentAnimationName == "") { return; }
 
@@ -54,9 +55,9 @@ void AnimatedSprite::update(int deltaTime) {
 	}
 }
 
-void AnimatedSprite::draw(Vector2 position, int clockWiseAngleRotation) {
+void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) {
 	if (_animations.empty() || _currentAnimationName == "") {
-		Sprite::draw(position);
+		SpriteInstance::draw(position);
 		return;
 	}
 
@@ -64,10 +65,10 @@ void AnimatedSprite::draw(Vector2 position, int clockWiseAngleRotation) {
 		SDL_Rect destRect = {
 			position.x - _origin.x,
 			position.y - _origin.y,
-			_sourceRect.w * globals::SPRITE_SCALE,
-			_sourceRect.h * globals::SPRITE_SCALE
+			_material->getSourceRect().w* globals::SPRITE_SCALE,
+			_material->getSourceRect().h* globals::SPRITE_SCALE
 		};
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
-		_graphics->blitSurface(_spriteSheet, &sourceRect, &destRect, clockWiseAngleRotation);
+		_graphics->draw(_material, sourceRect, destRect, clockWiseAngleRotation); // TODO this is why we must pass source rect in a draw!!
 	}
 }

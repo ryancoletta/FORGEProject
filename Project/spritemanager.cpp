@@ -1,7 +1,6 @@
 #include "globals.h"
 #include "spritemanager.h"
 #include "animatedsprite.h"
-#include "sprite.h"
 #include "animation.h"
 #include "graphics.h"
 #include "entity.h"
@@ -34,13 +33,12 @@ SpriteInstance* SpriteManager::loadSprite(GidElement gid, const std::string& fil
 	if (gid == GID_ENTITY_PLAYER) {
 		newSprite = DBG_NEW SpriteInstance(_graphics, newMaterial, Vector2(48, 48));
 	}
-	/*
 	else if (gid == GID_ENTITY_CHICKEN) {
-		newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, Vector2(48, 0), sourceScale);
+		newSprite = DBG_NEW AnimatedSprite(_graphics, newMaterial);
 		Animation* newAnimation = _animationManager->loadAnimation("chicken_idle", 2, 500, Vector2(48, 0), Vector2(16, 16));
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 		static_cast<AnimatedSprite*>(newSprite)->playAnimation("chicken_idle", true);
-	}*/
+	}
 	// these sprites all are uniform (no branching animations) so theres no need to create individual instances
 	else if (_loadedSprites.count(gid) == 0) {
 		newSprite = DBG_NEW SpriteInstance(_graphics, newMaterial);

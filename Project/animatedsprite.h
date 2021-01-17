@@ -1,15 +1,16 @@
 #pragma once
 #include <vector>
 #include <map>
+#include <string>
 #include "globals.h"
-#include "sprite.h"
+#include "spriteinstance.h"
 
 class Animation;
 
-class AnimatedSprite : public Sprite
+class AnimatedSprite : public SpriteInstance
 {
 public:
-	AnimatedSprite(Graphics* graphics, const std::string &filePath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 origin = Vector2::zero());
+	AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());
 
 	void setVisible(bool visible);
 
@@ -20,7 +21,7 @@ public:
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;
-	void draw(Vector2 position, int clockWiseAngleRotation = 0) override;
+	void draw(Vector2 position, const float clockWiseAngleRotation = 0) override;
 
 private:
 	int _frameIndex;

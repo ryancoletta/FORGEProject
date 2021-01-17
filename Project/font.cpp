@@ -1,5 +1,4 @@
 #include "font.h"
-#include "sprite.h"
 #include "graphics.h"
 #include "spriteinstance.h"
 #include "material.h"

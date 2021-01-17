@@ -1,7 +1,6 @@
 #include "globals.h"
 #include "tile.h"
 #include "SDL.h"
-#include "sprite.h"
 #include "spriteinstance.h"
 
 Tile::Tile(TileType tileType, SpriteInstance* sprite, Vector2 coordinate, Vector2 position, bool blocked) :

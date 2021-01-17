@@ -1,6 +1,5 @@
 #include "text.h"
 #include "font.h"
-#include "sprite.h"
 #include "spriteinstance.h"
 #include "material.h"
 

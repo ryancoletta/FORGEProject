@@ -11,30 +11,26 @@
 
 Graphics::Graphics()
 {
-	//_window = SDL_CreateWindow("FORGE", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-	SDL_CreateWindowAndRenderer(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN, &_window, &_renderer);
-	//SDL_SetRenderDrawColor(_renderer, 0xFF, 0x69, 0xB4, 0xFF); // debug pink
-	SDL_SetWindowTitle(_window, "FORGE Project");
+	_window = SDL_CreateWindow("FORGE Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 
 	initGL();
 }
 
 Graphics::~Graphics() {
 	SDL_DestroyWindow(_window);
-	SDL_DestroyRenderer(_renderer);
-	delete _rendererer;
+	delete _renderer;
 }
 
 bool Graphics::initGL() {
-	// GLEW requires a valid openGL context befor initialization
+	// GLEW requires a valid openGL context before initialization
 	if (SDL_GL_CreateContext(_window) == NULL)
 	{
-		printf("OpenGL context could not be created!");
+		printf("OpenGL context could not be created");
 		return false;
 	}
 	if (glewInit() != GLEW_OK)
 	{
-		printf("Error initializing GLEW!");
+		printf("Error initializing GLEW");
 		return false;
 	}
 
@@ -42,34 +38,19 @@ bool Graphics::initGL() {
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+	printf("%s\n", glGetString(GL_VERSION)); // TODO why is this not 3.3?
 
 	// transparency - TODO doesn't work!
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquation(GL_FUNC_SUBTRACT);
 
-	// what version of open GL is being used
-	printf("%s\n", glGetString(GL_VERSION)); // TODO why is this not 3.3?
-
-	// program to be run on the GPU to interperet the above data
-	// vertex shader - how vertex positions are placed in the window
-	// fragment shader - the color of each pixel in the window
-
-	_rendererer = DBG_NEW Renderer();
-	_rendererer->init();
+	_renderer = DBG_NEW Renderer();
+	_renderer->init();
 
 	return true;
 }
 
-SDL_Renderer* Graphics::getRenderer() const { return _renderer; }
-
-SDL_Surface* Graphics::loadImage(const std::string& filePath) {
-	if (_spriteSheets.count(filePath) == 0) {
-		_spriteSheets[filePath] = IMG_Load(filePath.c_str());
-		SDL_SetColorKey(_spriteSheets[filePath], SDL_TRUE, SDL_MapRGB(_spriteSheets[filePath]->format, 0, 0xFF, 0xFF));
-	}
-	return _spriteSheets[filePath];
-}
 
 Texture* Graphics::loadTexture(const std::string& filePath) {
 	if (_textures.count(filePath) == 0) {
@@ -93,28 +74,14 @@ Material* Graphics::loadMaterial(const std::string& texturePath, const std::stri
 	return DBG_NEW Material(texture, shader, sourcePosition, sourceScale);
 }
 
-// TODO replace THIS
-void Graphics::blitSurface(SDL_Texture* texture, SDL_Rect* sourceRect, SDL_Rect* destRect, const int clockwiseRotationAngle) {
-	SDL_RenderCopyEx(_renderer, texture, sourceRect, destRect, clockwiseRotationAngle, NULL, SDL_FLIP_NONE);
-}
 
-// TODO with THIS
-void Graphics::draw(Material* material, SDL_Rect destRect, const float clockwiseRotationAngle)
+void Graphics::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
 {
-
-	// pass in a material and a transform position
-	_rendererer->draw(material, material->getSourceRect(), destRect, clockwiseRotationAngle);
+	_renderer->draw(material, sourceRect, destRect, clockwiseRotationAngle);
 }
 
-void Graphics::render() {
-	SDL_GL_SwapWindow(_window);
-	
-	//SDL_RenderPresent(_renderer);
-}
+void Graphics::render() { SDL_GL_SwapWindow(_window); }
 
-void Graphics::clear() { 
-	//SDL_RenderClear(_renderer); 
-	_rendererer->clear();
-}
+void Graphics::clear() { _renderer->clear(); }
 
 
