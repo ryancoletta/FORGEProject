@@ -19,13 +19,14 @@ Game::Game() :
 	_turn(0)
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
-	_graphics = DBG_NEW Graphics();
-	_entityManager = DBG_NEW EntityManager();
-	_animationManager = DBG_NEW AnimationManager();
-	_spriteManager = DBG_NEW SpriteManager(_graphics, _animationManager);
-	_levelManager = DBG_NEW LevelManager(_nextLevelEvent);
-	_input = DBG_NEW Input();
-	_hudManager = DBG_NEW HudManager(_graphics);
+	_graphics			= DBG_NEW Graphics();
+	_entityManager		= DBG_NEW EntityManager();
+	_animationManager	= DBG_NEW AnimationManager();
+	_spriteManager		= DBG_NEW SpriteManager(_graphics, _animationManager);
+	_levelManager		= DBG_NEW LevelManager(_nextLevelEvent);
+	_input				= DBG_NEW Input();
+	_hudManager			= DBG_NEW HudManager(_graphics);
+	_background			= _spriteManager->loadSprite((GidElement)-1, "Assets/249.png", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 }
 
 Game::~Game() {
@@ -36,12 +37,12 @@ Game::~Game() {
 	delete _input;
 	delete _hudManager;
 
-	_graphics = NULL;
-	_entityManager = NULL;
-	_spriteManager = NULL;
-	_levelManager = NULL;
-	_input = NULL;
-	_hudManager = NULL;
+	_graphics		= NULL;
+	_entityManager	= NULL;
+	_spriteManager	= NULL;
+	_levelManager	= NULL;
+	_input			= NULL;
+	_hudManager		= NULL;
 }
 
 void Game::play() {	
@@ -120,7 +121,9 @@ void Game::play() {
 
 void Game::draw() {
 	_graphics->clear();
+	_graphics->begin();
 
+	_background->draw(Vector2(0,0));
 	_levelManager->draw();
 	_entityManager->draw();
 	_hudManager->draw();

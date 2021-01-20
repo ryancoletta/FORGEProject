@@ -4,6 +4,7 @@
 #include "indexbuffer.h"
 #include "shader.h"
 #include <iostream>
+#include <SDL.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "texture.h"
@@ -88,6 +89,9 @@ void Renderer::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_R
 	glm::vec2 uvScale = glm::vec2((float)sourceRect.w / w, (float)sourceRect.h / h);
 	shader->setUniform2f("u_UVOffset", uvOffset.x, uvOffset.y);
 	shader->setUniform2f("u_UVScale", uvScale.x, uvScale.y);
+
+	// TODO move elsewhere, "global shader constants"
+	shader->setUniform1f("u_Time", SDL_GetTicks() * 0.01f);
 
 	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, NULL));
 }

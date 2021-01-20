@@ -1,7 +1,7 @@
 #version 330 core
 
 // runs on each vertex
-// where would you like each vertex to be in the window
+// where would you like each vertex to be within the window
 
 layout(location = 0) in vec4 in_Position;
 layout(location = 1) in vec2 in_TexCoord;

@@ -30,5 +30,6 @@ private:
 	SpriteManager* _spriteManager;
 	Input* _input;
 	HudManager* _hudManager;
+	Sprite* _background;
 };
 

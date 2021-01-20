@@ -73,16 +73,22 @@ Texture* Graphics::loadTexture(const std::string& filePath) {
 
 Shader* Graphics::loadShader(const std::string& vertPath, const std::string& fragPath)
 {
-	if (_shaders.count(vertPath) == 0) { // TODO cache should account for frag path as well
-		_shaders[vertPath] = DBG_NEW Shader(vertPath, fragPath);
+	std::string shaderName = vertPath + fragPath; // TODO kinda weird way to cache, having a name might be appropriate
+	if (_shaders.count(shaderName) == 0) {
+		_shaders[shaderName] = DBG_NEW Shader(vertPath, fragPath);
 	}
-	return _shaders[vertPath];
+	return _shaders[shaderName];
 }
 
 
 void Graphics::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
 {
 	_renderer->draw(texture, shader, sourceRect, destRect, clockwiseRotationAngle);
+}
+
+void Graphics::begin()
+{
+	// TODO set global shader constants
 }
 
 void Graphics::render() { SDL_GL_SwapWindow(_window); }

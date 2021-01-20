@@ -19,6 +19,7 @@ public:
 	Texture* loadTexture(const std::string& filePath);
 	Shader* loadShader(const std::string& vertPath, const std::string& fragPath);
 
+	void begin();
 	void render();
 	void clear();
 	void draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
