@@ -53,15 +53,16 @@ private:
 
 struct SpriteSheet {
 	int firstGid;
-	int width;
+	int width, height;
 	std::string path;
 	SpriteSheet() {
 		this->firstGid = 0;
 		this->path = "";
 	}
- 	SpriteSheet(int firstGid, int width, std::string path) {
+ 	SpriteSheet(int firstGid, int width, int height, std::string path) {
 		this->firstGid = firstGid;
 		this->width = width;
+		this->height = height;
 		this->path = path;
 	}
 };

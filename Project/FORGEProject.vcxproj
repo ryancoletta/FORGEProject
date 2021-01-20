@@ -165,7 +165,6 @@
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
     </ClCompile>
     <ClCompile Include="entity.cpp" />
-    <ClCompile Include="material.cpp" />
     <ClCompile Include="Maths\glm\detail\glm.cpp" />
     <ClCompile Include="playerentity.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -198,7 +197,6 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="levelmanager.h" />
     <ClInclude Include="linkedentity.h" />
-    <ClInclude Include="material.h" />
     <ClInclude Include="Maths\glm\common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_vector_relational.hpp" />

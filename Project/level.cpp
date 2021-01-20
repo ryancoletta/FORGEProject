@@ -113,13 +113,13 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							int posY = y * tileHeight * globals::SPRITE_SCALE;
 							Vector2 finalTilePosition = Vector2(posX, posY);
 
-							// calculate the position of the tile in the tileset
+							// calculate the position of the tile in the tileset, reading from the top left
 							int spriteSheetWidth = spriteSheet.width;
 							int spriteSheetX = spriteSheetGid % (spriteSheetWidth / tileWidth);
 							spriteSheetX *= tileWidth;
 							int spriteSheetY = spriteSheetGid / (spriteSheetWidth / tileWidth);
 							spriteSheetY *= tileHeight;
-							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheetY);
+							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheet.height - tileHeight - spriteSheetY);
 
 							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
 
@@ -188,10 +188,11 @@ void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 
 			const char* source = pSpriteSheet->FirstChildElement("image")->Attribute("source");
 			int width = pSpriteSheet->FirstChildElement("image")->IntAttribute("width");
+			int height = pSpriteSheet->FirstChildElement("image")->IntAttribute("height");
 
 			std::stringstream ss;
 			ss << "Assets/" << source;
-			SpriteSheet spriteSheet = SpriteSheet(firstGid, width, ss.str());
+			SpriteSheet spriteSheet = SpriteSheet(firstGid, width, height, ss.str());
 			_spriteSheets.push_back(spriteSheet);
 
 			pSpriteSheet = pSpriteSheet->NextSiblingElement("tileset");

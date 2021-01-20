@@ -11,18 +11,17 @@ class Texture;
 class Renderer;
 class Material;
 
-class Graphics {
+class Graphics { // TODO merge graphics and renderer
 public:
 	Graphics();
 	~Graphics();
 
 	Texture* loadTexture(const std::string& filePath);
 	Shader* loadShader(const std::string& vertPath, const std::string& fragPath);
-	Material* loadMaterial(const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale);
 
 	void render();
 	void clear();
-	void draw(Material* material, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
+	void draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
 	bool initGL();
 private:
 	Renderer* _renderer;

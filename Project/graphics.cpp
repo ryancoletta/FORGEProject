@@ -7,18 +7,30 @@
 #include "indexbuffer.h"
 #include "vertexarray.h"
 #include "texture.h"
-#include "material.h"
 
 Graphics::Graphics()
 {
 	_window = SDL_CreateWindow("FORGE Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-
 	initGL();
 }
 
 Graphics::~Graphics() {
 	SDL_DestroyWindow(_window);
 	delete _renderer;
+
+	std::map<std::string, Texture*>::iterator it1;
+	for (it1 = _textures.begin(); it1 != _textures.end(); it1++)
+	{
+		delete it1->second;
+	}
+	_textures.clear();
+
+	std::map<std::string, Shader*>::iterator it2;
+	for (it2 = _shaders.begin(); it2 != _shaders.end(); it2++)
+	{
+		delete it2->second;
+	}
+	_shaders.clear();
 }
 
 bool Graphics::initGL() {
@@ -43,7 +55,7 @@ bool Graphics::initGL() {
 	// transparency - TODO doesn't work!
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBlendEquation(GL_FUNC_SUBTRACT);
+	glBlendEquation(GL_FUNC_ADD);
 
 	_renderer = DBG_NEW Renderer();
 	_renderer->init();
@@ -67,17 +79,10 @@ Shader* Graphics::loadShader(const std::string& vertPath, const std::string& fra
 	return _shaders[vertPath];
 }
 
-Material* Graphics::loadMaterial(const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale)
-{
-	Texture* texture = loadTexture(texturePath);
-	Shader* shader = loadShader(vertPath, fragPath);
-	return DBG_NEW Material(texture, shader, sourcePosition, sourceScale);
-}
 
-
-void Graphics::draw(Material* material, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
+void Graphics::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
 {
-	_renderer->draw(material, sourceRect, destRect, clockwiseRotationAngle);
+	_renderer->draw(texture, shader, sourceRect, destRect, clockwiseRotationAngle);
 }
 
 void Graphics::render() { SDL_GL_SwapWindow(_window); }

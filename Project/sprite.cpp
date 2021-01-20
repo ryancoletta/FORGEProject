@@ -1,25 +1,45 @@
 #include "sprite.h"
 #include "graphics.h"
-#include "material.h"
+#include "texture.h"
+#include "shader.h"
 
-Sprite::Sprite(Graphics* graphics, Material* material, Vector2 origin) :
-	_graphics(graphics),
-	_material(material),
-	_origin(origin)
-{}
+Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale) :
+	_graphics(graphics)
+{
+	_texture = _graphics->loadTexture(texturePath);
+	_shader = _graphics->loadShader(vertPath, fragPath);
+
+	_sourceRect.x = sourcePosition.x;
+	_sourceRect.y = sourcePosition.y;
+	_sourceRect.w = sourceScale.x;
+	_sourceRect.h = sourceScale.y;
+}
 
 void Sprite::draw(Vector2 position, const float clockWiseAngleRotation)
 {
+	_shader->bind();
+	_texture->bind(0);
+
 	SDL_Rect destRect = {
 		position.x,
 		position.y,
-		_material->getSourceRect().w * globals::SPRITE_SCALE,
-		_material->getSourceRect().h * globals::SPRITE_SCALE
+		_sourceRect.w * globals::SPRITE_SCALE,
+		_sourceRect.h * globals::SPRITE_SCALE
 	};
-	_graphics->draw(_material, _material->getSourceRect(), destRect, clockWiseAngleRotation);
+	_graphics->draw(_texture, _shader, _sourceRect, destRect, clockWiseAngleRotation);
 }
 
-Material* Sprite::getMaterial()
+Shader* Sprite::getShader()
 {
-	return _material;
+	return _shader;
+}
+
+Texture* Sprite::getTexture()
+{
+	return _texture;
+}
+
+SDL_Rect Sprite::getSourceRect()
+{
+	return _sourceRect;
 }

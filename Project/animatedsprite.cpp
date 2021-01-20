@@ -2,10 +2,9 @@
 #include "animatedsprite.h"
 #include "graphics.h"
 #include "animation.h"
-#include "material.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin) :
-	Sprite(graphics, material, origin),
+AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale) :
+	Sprite(graphics, texturePath, vertPath, fragPath, sourcePosition, sourceScale),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -63,12 +62,12 @@ void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) 
 
 	if (_visible) {
 		SDL_Rect destRect = {
-			position.x - _origin.x,
-			position.y - _origin.y,
-			_material->getSourceRect().w* globals::SPRITE_SCALE,
-			_material->getSourceRect().h* globals::SPRITE_SCALE
+			position.x,
+			position.y,
+			_sourceRect.w* globals::SPRITE_SCALE,
+			_sourceRect.h* globals::SPRITE_SCALE
 		};
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
-		_graphics->draw(_material, sourceRect, destRect, clockWiseAngleRotation); // TODO this is why we must pass source rect in a draw!!
+		_graphics->draw(_texture, _shader, sourceRect, destRect, clockWiseAngleRotation); // TODO this is why we must pass source rect in a draw!!
 	}
 }

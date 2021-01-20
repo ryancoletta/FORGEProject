@@ -11,13 +11,14 @@
 class IndexBuffer;
 class VertexBuffer;
 class VertexArray;
-class Material;
+class Texture;
+class Shader;
 
 class Renderer {
 public:
 	~Renderer();
 	void init();
-	void draw(Material* material, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle);
+	void draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle);
 	void clear() const;
 
 	// stores all of the things I wish to draw and draws them

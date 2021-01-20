@@ -10,7 +10,7 @@ class Animation;
 class AnimatedSprite : public Sprite
 {
 public:
-	AnimatedSprite(Graphics* graphics, Material* material, Vector2 origin = Vector2::zero());
+	AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale);
 
 	void setVisible(bool visible);
 
