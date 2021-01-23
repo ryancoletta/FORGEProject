@@ -171,6 +171,7 @@
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="spritemanager.cpp" />
+    <ClCompile Include="statemachine.cpp" />
     <ClCompile Include="text.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="tile.cpp" />
@@ -487,6 +488,8 @@
     <ClInclude Include="shader.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="spritemanager.h" />
+    <ClInclude Include="state.h" />
+    <ClInclude Include="statemachine.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="text.h" />
     <ClInclude Include="texture.h" />

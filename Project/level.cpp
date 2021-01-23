@@ -121,7 +121,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							spriteSheetY *= tileHeight;
 							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheet.height - tileHeight - spriteSheetY);
 
-							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, finalTilesetPosition, tileSize);
+							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, "base.vert", "base.frag", finalTilesetPosition, tileSize);
 
 							if (std::string(layerName) == "BG") {
 								if (gid <= GID_TILE_WALL_END) {

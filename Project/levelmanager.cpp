@@ -14,6 +14,11 @@ LevelManager::~LevelManager() {
 	clear();
 }
 
+int LevelManager::getLevelIndex()
+{
+	return _levelIndex;
+}
+
 bool LevelManager::loadLevel(int levelIndex, Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager) {
 	if (levelIndex >= _levelPaths.size()) { return false; }
 
@@ -36,7 +41,9 @@ void LevelManager::levelComplete() {
 }
 
 void LevelManager::draw() {
-	_currentLevel->draw();
+	if (_currentLevel) {
+		_currentLevel->draw();
+	}
 }
 
 void LevelManager::clear() {

@@ -14,6 +14,7 @@ public:
 	LevelManager(Uint32 nextLevelEvent);
 	~LevelManager();
 
+	int getLevelIndex();
 	bool loadLevel(int levelIndex, Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	bool loadNextLevel(Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	void levelComplete();

@@ -14,7 +14,7 @@ public:
 	SpriteManager(Graphics* graphics, AnimationManager* animationManager);
 	~SpriteManager();
 
-	Sprite* loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale);
+	Sprite* loadSprite(GidElement gid, const std::string& filePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale);
 
 private:
 	Graphics* _graphics;

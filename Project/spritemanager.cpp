@@ -26,26 +26,22 @@ SpriteManager::~SpriteManager() {
 }
 
 // TODO eww, I hate all of this
-Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& filePath, Vector2 sourcePosition, Vector2 sourceScale) {
+Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale) {
 	Sprite* newSprite = NULL;
 	if (gid == GID_ENTITY_PLAYER) {
-		newSprite = DBG_NEW Sprite(_graphics, filePath, "base.vert", "base.frag", sourcePosition - Vector2(16, 16), Vector2(48, 48));
+		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), Vector2(48, 48));
 	}
 	else if (gid == GID_ENTITY_CHICKEN) {
-		newSprite = DBG_NEW AnimatedSprite(_graphics, filePath, "base.vert", "base.frag", sourcePosition, sourceScale);
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 		Animation* newAnimation = _animationManager->loadAnimation("chicken_idle", 2, 500, sourcePosition, sourceScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 		static_cast<AnimatedSprite*>(newSprite)->playAnimation("chicken_idle", true);
 	}
-	else if (gid == -1) {
-		newSprite = DBG_NEW Sprite(_graphics, filePath, "base.vert", "background.frag", sourcePosition, sourceScale);
-	}
-	// these sprites all are uniform (no branching animations) so theres no need to create individual instances
 	else if (_loadedSprites.count(gid) == 0) {
-		newSprite = DBG_NEW Sprite(_graphics, filePath, "base.vert", "base.frag", sourcePosition, sourceScale);
+		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 	}
 	else { 
-		return _loadedSprites.find(gid)->second; // gids which should be rotated are NOT, instead using the non rotated sprite
+		return _loadedSprites.find(gid)->second;
 	}
 
 	if (newSprite) {

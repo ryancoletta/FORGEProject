@@ -10,7 +10,7 @@ in vec2 v_TexCoord;
 uniform sampler2D u_Texture;
 
 uniform float u_Time;
-uniform vec2 u_MovementDirection = vec2(0.0f, 1.0f);
+uniform vec2 u_MovementDirection = vec2(0.5f, 1.0f);
 uniform float u_MovementSpeed = 0.01f;
 uniform int u_OscillationVariant = 3;
 uniform float u_OscillationSpeed = 0.09f;
