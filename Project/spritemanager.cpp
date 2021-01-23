@@ -51,6 +51,11 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		Vector2 entityScale = Vector2(16, 32);
 		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -24));
 	}
+	else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
+		Animation* newAnimation = _animationManager->loadAnimation("spikes_on", 4, 100, sourcePosition, sourceScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+	}
 	else if (_loadedSprites.count(gid) == 0) {
 		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 	}

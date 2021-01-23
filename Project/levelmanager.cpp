@@ -19,6 +19,13 @@ int LevelManager::getLevelIndex()
 	return _levelIndex;
 }
 
+void LevelManager::update(int deltaTimeMs)
+{
+	if (_currentLevel) {
+		_currentLevel->update(deltaTimeMs);
+	}
+}
+
 bool LevelManager::loadLevel(int levelIndex, Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager) {
 	if (levelIndex >= _levelPaths.size()) { return false; }
 

@@ -5,11 +5,11 @@ class Entity;
 class Sprite;
 
 enum TileType {
-	TILE_WALL = 1 << 0,
-	TILE_OPEN = 1 << 1,
-	TILE_GOAL = 1 << 2,
+	TILE_WALL	= 1 << 0,
+	TILE_OPEN	= 1 << 1,
+	TILE_GOAL	= 1 << 2,
 	TILE_SWITCH = 1 << 3,
-	TILE_SPIKE = 1 << 4,
+	TILE_SPIKE	= 1 << 4,
 };
 
 class Tile
@@ -31,6 +31,7 @@ public:
 	void vacate();
 	void occupy(Entity* entityToOccupy);
 	void draw();
+	void update(int deltaTimeMs);
 
 protected:
 	virtual void onVacate();

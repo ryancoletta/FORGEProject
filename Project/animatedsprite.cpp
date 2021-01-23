@@ -11,18 +11,31 @@ AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePat
 	_timeElapsed(0), 
 	_visible(true), 
 	_isLoop(false), 
-	_currentAnimationName("")
+	_currentAnimationName(""),
+	_active(false)
 {}
 
 void AnimatedSprite::setVisible(bool visible) { _visible = visible; }
 
 void AnimatedSprite::addAnimation(Animation* animation) { _animations.insert(std::pair<std::string, Animation*>(animation->getName(), animation)); }
 
-void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool resetFrameIndex) {
+void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool resetFrameIndex, bool inReverse) {
+	if (_animations.count(animationName) == 0) {
+		printf("Error: animation not found");
+	}
+	_active = true;
 	_isLoop = isLoop;
+	_inReverse = inReverse;
 	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
 		_currentAnimationName = animationName;
-		if (resetFrameIndex) { _frameIndex = 0; }
+	}
+	if (resetFrameIndex) { 
+		if (_inReverse) {
+			_frameIndex = _animations[_currentAnimationName]->getFrames() - 1;
+		}
+		else {
+			_frameIndex = 0;
+		}
 	}
 }
 
@@ -34,9 +47,7 @@ void AnimatedSprite::stopAnimation() {
 }
 
 void AnimatedSprite::update(int deltaTime) {
-	Sprite::update(deltaTime);
-
-	if (_currentAnimationName == "") { return; }
+	if (_currentAnimationName == "" && !_active) { return; }
 
 	_timeElapsed += deltaTime;
 
@@ -44,14 +55,34 @@ void AnimatedSprite::update(int deltaTime) {
 	if (_timeElapsed > currentAnimation->getMilisecondsPerFrame()) {
 		_timeElapsed -= currentAnimation->getMilisecondsPerFrame();
 		int totalFrames = currentAnimation->getFrames() - 1;
-		if (_frameIndex < totalFrames) {
-			_frameIndex++;
+		
+		if (_inReverse) {
+			if (_frameIndex > 0) {
+				_frameIndex--;
+			}
+			else {
+				if (!_isLoop) {
+					_active = false;
+					onAnimationDone(_currentAnimationName);
+				}
+				else {
+					_frameIndex = totalFrames;
+				}
+			}
 		}
 		else {
-			if (!_isLoop) {
-				onAnimationDone(_currentAnimationName);
+			if (_frameIndex < totalFrames) {
+				_frameIndex++;
 			}
-			_frameIndex = 0;
+			else {
+				if (!_isLoop) {
+					_active = false;
+					onAnimationDone(_currentAnimationName);
+				}
+				else {
+					_frameIndex = 0;
+				}
+			}
 		}
 	}
 }

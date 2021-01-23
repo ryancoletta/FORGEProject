@@ -17,7 +17,7 @@ public:
 	virtual void onAnimationDone(std::string currentAnimationName) {}
 
 	void addAnimation(Animation* animation);
-	void playAnimation(std::string animation, bool isLoop = false, bool resetFrameIndex = false);
+	void playAnimation(std::string animation, bool isLoop = false, bool resetFrameIndex = false, bool inReverse = false);
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;
@@ -28,6 +28,8 @@ private:
 	int _timeElapsed;
 	bool _visible;
 	bool _isLoop;
+	bool _active;
+	bool _inReverse;
 	std::string _currentAnimationName;
 	std::map<std::string, Animation*> _animations;
 };

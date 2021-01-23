@@ -15,10 +15,12 @@ public:
 	~LevelManager();
 
 	int getLevelIndex();
+	
 	bool loadLevel(int levelIndex, Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	bool loadNextLevel(Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	void levelComplete();
 	void draw();
+	void update(int deltaTimeMs);
 
 private:
 	void clear();

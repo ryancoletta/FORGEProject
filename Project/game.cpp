@@ -29,7 +29,7 @@ Game::Game() :
 	_input				= DBG_NEW Input();
 	_hudManager			= DBG_NEW HudManager(_graphics);
 	_stateMachine		= DBG_NEW StateMachine();
-	_background			= _spriteManager->loadSprite((GidElement)-1, "Assets/249.png", "base.vert", "background.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
+	_background			= _spriteManager->loadSprite((GidElement)-1, "Assets/background.png", "base.vert", "background.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
 	_levelState			= DBG_NEW LevelState(this);
 }
@@ -83,6 +83,7 @@ void Game::draw() {
 
 void Game::update(int deltaTime) {
 	_entityManager->update(deltaTime);
+	_levelManager->update(deltaTime);
 }
 
 // ----------------------------------------------------------------------------------------------------------

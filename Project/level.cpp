@@ -10,6 +10,8 @@
 #include "entity.h"
 #include "levelmanager.h"
 #include "sprite.h"
+#include "switchtile.h"
+#include "spiketile.h"
 
 using namespace tinyxml2;
 
@@ -18,6 +20,7 @@ Level::Level(LevelManager* levelManager, Graphics* graphics, const std::string* 
 	_spriteManager(spriteManager)
 {
 	loadMap(levelManager, graphics, levelPath);
+	connectTiles();
 }
 
 Level::~Level() {
@@ -35,6 +38,11 @@ Tile* Level::getTile(Vector2 coordinate) const { return getTile(coordinate.x, co
 bool Level::isCoordinateInRange(int x, int y) const { return (x >= 0) && (y >= 0) && (x < _levelSize.x) && (y < _levelSize.y); }
 
 bool Level::isCoordinateInRange(Vector2 coordinate) const { return isCoordinateInRange(coordinate.x, coordinate.y); }
+
+Vector2 Level::getLevelSize() const
+{
+	return _levelSize;
+}
 
 void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath) {
 	XMLDocument doc;
@@ -131,13 +139,13 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_SWITCH) {
-									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW SwitchTile(tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_GOAL) {
 									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
-									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW SpikeTile(tileSprite, Vector2(x, y), finalTilePosition, gid == GID_TILE_SPIKE_ON);
 								}
 							}
 							else {
@@ -156,7 +164,6 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 		}
 	}
 	doc.Clear();
-	// TODO store all nails, don't construct until after everything is read, that way you have access to entire length
 }
 int Level::getGidRotation(unsigned &gid) {
 	const unsigned FLIPPED_HORIZONTALLY_FLAG = 0x80000000;
@@ -182,6 +189,18 @@ int Level::getGidRotation(unsigned &gid) {
 		return 270;
 	}
 	else return 0;
+}
+
+void Level::connectTiles()
+{
+	for (int y = 0; y < _tiles.size(); y++) {
+		for (int x = 0; x < _tiles[y].size(); x++) {
+			Tile* tile = _tiles[x][y];
+			if (tile && tile->getTileType() == TILE_SWITCH) {
+				static_cast<SwitchTile*>(tile)->findAllSpikeTiles(this);
+			}
+		}
+	}
 }
 
 void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
@@ -210,6 +229,15 @@ void Level::draw() {
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
 			if (_tiles[x][y]) { _tiles[x][y]->draw(); }
+		}
+	}
+}
+
+void Level::update(int deltaTimeMs)
+{
+	for (int x = 0; x < _tiles.size(); x++) {
+		for (int y = 0; y < _tiles[x].size(); y++) {
+			if (_tiles[x][y]) { _tiles[x][y]->update(deltaTimeMs); }
 		}
 	}
 }

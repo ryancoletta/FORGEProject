@@ -108,6 +108,12 @@
     <ClCompile Include="statemachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="switchtile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spiketile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -1059,6 +1065,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="switchtile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spiketile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

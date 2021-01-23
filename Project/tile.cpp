@@ -35,3 +35,8 @@ void Tile::onVacate() { }
 void Tile::onOccupy() { }
 void Tile::draw() { _sprite->draw(_position); }
 
+void Tile::update(int deltaTimeMs)
+{
+	_sprite->update(deltaTimeMs);
+}
+

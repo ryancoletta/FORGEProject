@@ -10,11 +10,11 @@ in vec2 v_TexCoord;
 uniform sampler2D u_Texture;
 
 uniform float u_Time;
-uniform vec2 u_MovementDirection = vec2(0.5f, 1.0f);
+uniform vec2 u_MovementDirection = vec2(0.1f, 0.3f);
 uniform float u_MovementSpeed = 0.01f;
-uniform int u_OscillationVariant = 3;
+uniform int u_OscillationVariant = 2;
 uniform float u_OscillationSpeed = 0.09f;
-uniform float u_OscillationAmplitude = 10.0f;
+uniform float u_OscillationAmplitude = 50.0f;
 uniform float u_OscillationDelay = 150.0f;
 
 vec2 calcUV(vec2 uv, float scrollDirX, float scrollDirY, float scrollSpeed, int oscillationVariant, float oscillationSpeed, float oscillationAmplitude, float oscillationDelay)

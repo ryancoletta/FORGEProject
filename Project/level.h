@@ -36,11 +36,14 @@ public:
 	Tile* getTile(Vector2 coordinate) const;
 	bool isCoordinateInRange(int x, int y) const;
 	bool isCoordinateInRange(Vector2 coordinate) const;
+	Vector2 getLevelSize() const;
 
 	void loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 	void draw();
+	void update(int deltaTimeMs);
 	int getGidRotation(unsigned &gid);
+	void connectTiles();
 
 private:
 	Vector2 _levelSize;
