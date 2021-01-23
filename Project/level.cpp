@@ -130,8 +130,14 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 								else if (gid <= GID_TILE_OPEN_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
-								else if (gid <= GID_TILE_GOAL) {
+								else if (gid == GID_TILE_SWITCH) {
+									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
+								}
+								else if (gid == GID_TILE_GOAL) {
 									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, Vector2(x, y), finalTilePosition);
+								}
+								else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
+									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
 							}
 							else {

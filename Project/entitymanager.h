@@ -26,9 +26,10 @@ public:
 	void undoAll(int turn);
 	void resetAll();
 	void clearEntities();
+	void sortEntities();
 
 private:
-	std::multimap<EntityType, Entity*> _allEntities;
+	std::vector<Entity*> _allEntities;
 };
 
 

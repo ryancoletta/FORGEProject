@@ -31,6 +31,25 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 	}
 }
 
+void PlayerEntity::draw()
+{
+	Vector2 facing = _facingHistory.top();
+	if (facing == Vector2::up()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_down", true);
+	}
+	else if (facing == Vector2::left()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_left", true);
+	}
+	else if (facing == Vector2::down()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_up", true);
+	}
+	else if (facing == Vector2::right()) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_right", true);
+	}
+		
+	Entity::draw();
+}
+
 bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	
 	// store top up here so we can use throughout without fear of modifying the stack and for speed, also for readability

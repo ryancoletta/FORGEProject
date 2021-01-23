@@ -9,11 +9,7 @@ class Sprite;
 
 enum EntityType {
 	ENTITY_BOX			= 1 << 0,
-	ENTITY_CHICKEN		= 1 << 1,
 	ENTITY_PLAYER		= 1 << 2,
-	ENTITY_NAIL_END		= 1 << 3,
-	ENTITY_NAIL_MID		= 1 << 4,
-	ENTITY_NAIL			= ENTITY_NAIL_END | ENTITY_NAIL_MID,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)

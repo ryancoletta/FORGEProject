@@ -12,7 +12,7 @@ public:
 	Vector2 getDirectionFacing();
 	void undo(int turn) override;
 	void reset() override;
-	void draw() override;
+	//void draw() override;
 protected:
 	std::stack<Vector2> _facingHistory;
 	std::stack<int> _lastTurnTurned;

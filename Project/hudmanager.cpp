@@ -20,10 +20,11 @@ void HudManager::draw() {
 	}
 }
 
-void HudManager::writeText(std::string text, Vector2 position, TextAlignment alignment)
+Text* HudManager::writeText(std::string text, Vector2 position, TextAlignment alignment)
 {
 	Text* newText = DBG_NEW Text(_font, text, position, alignment);
 	_allText.push_back(newText);
+	return newText;
 }
 
 void HudManager::clearScreen()

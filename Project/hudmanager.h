@@ -15,7 +15,7 @@ public:
 	~HudManager();
 
 	void draw();
-	void writeText(std::string text, Vector2 position, TextAlignment alignment);
+	Text* writeText(std::string text, Vector2 position, TextAlignment alignment);
 	void clearScreen();
 private:
 	Font* _font;

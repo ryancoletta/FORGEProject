@@ -12,11 +12,10 @@ EntityManager::~EntityManager() { clearEntities(); }
 std::vector<Entity*> EntityManager::GetEntitiesByType(EntityType entityID) {
 
 	std::vector<Entity*> allEntitiesOfType;
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		if (it->first == entityID) {
-			allEntitiesOfType.push_back(it->second);
+		if (_allEntities[i]->getEntityType() == entityID) {
+			allEntitiesOfType.push_back(_allEntities[i]);
 		}
 	}
 	return allEntitiesOfType;
@@ -38,63 +37,67 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 		case GID_ENTITY_BOX:
 			newEntity = DBG_NEW Entity(ENTITY_BOX, level, sprite, startTile);
 			break;
-		case GID_ENTITY_CHICKEN:
-			newEntity = DBG_NEW Entity(ENTITY_CHICKEN, level, sprite, startTile);
-			break;
 		case GID_ENTITY_PLAYER:
 			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, facing);
 			break;
-		case GID_ENTITY_NAIL_BODY:
-			newEntity = DBG_NEW DirectionalEntity(ENTITY_NAIL_MID, level, sprite, startTile, facing);
-			break;
-		case GID_ENTITY_NAIL_TAIL:
-		case GID_ENTITY_NAIL_HEAD:
-			newEntity = DBG_NEW DirectionalEntity(ENTITY_NAIL_END, level, sprite, startTile, facing);
-			break;
 	}
 	if (newEntity) { 
-		_allEntities.insert(std::pair<EntityType, Entity*>(newEntity->getEntityType(), newEntity)); 
+		_allEntities.push_back(newEntity);
 	}
 }
 
+
 void EntityManager::draw() {
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	sortEntities(); // TODO move this so it doesn't happen every frame
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		it->second->draw();
+		_allEntities[i]->draw();
 	}
 }
 
 void EntityManager::update(int deltaTime) {
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		it->second->update(deltaTime);
+		_allEntities[i]->update(deltaTime);
 	}
 }
 
 void EntityManager::undoAll(int turn) {
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		it->second->undo(turn);
+		_allEntities[i]->undo(turn);
 	}
 }
 
 void EntityManager::resetAll() {
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		it->second->reset();
+		_allEntities[i]->reset();
 	}
 }
 
 void EntityManager::clearEntities() {
-	std::multimap<EntityType, Entity*>::iterator it;
-	for (it = _allEntities.begin(); it != _allEntities.end(); it++)
+	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		delete it->second;
-		it->second = NULL;
+		delete _allEntities[i];
 	}
 	_allEntities.clear();
+}
+
+void EntityManager::sortEntities()
+{
+	int numEntities = _allEntities.size();
+	for (int i = 0; i < numEntities - 1; i++)
+	{
+		for (int j = 0; j < numEntities - i - 1; j++)
+		{
+			int a = _allEntities[j]->getCoordinate().y;
+			int b = _allEntities[j + 1]->getCoordinate().y;
+			if (a > b) {
+				Entity* temp = _allEntities[j];
+				_allEntities[j] = _allEntities[j + 1];
+				_allEntities[j + 1] = temp;
+			}
+		}
+	}
 }

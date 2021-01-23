@@ -12,10 +12,12 @@ Vector2 DirectionalEntity::getDirectionFacing() {
 	return _facingHistory.top();
 }
 
+/*
 void DirectionalEntity::draw() {
 	float rotationalOffset = Vector2::angle(Vector2::up(), getDirectionFacing());
 	_sprite->draw(_tileHistory.top()->getPosition(), rotationalOffset);
 }
+*/
 
 void DirectionalEntity::undo(int turn) {
 	while (_facingHistory.size() > 1 && _lastTurnTurned.top() >= turn) {

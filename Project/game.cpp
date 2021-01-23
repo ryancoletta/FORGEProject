@@ -14,6 +14,7 @@
 #include "hudmanager.h"
 #include "sprite.h"
 #include "text.h"
+#include <cmath>
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
@@ -44,13 +45,13 @@ Game::~Game() {
 	delete _titleState;
 	delete _levelState;
 
-	_graphics		= NULL;
-	_entityManager	= NULL;
-	_spriteManager	= NULL;
-	_levelManager	= NULL;
-	_input			= NULL;
-	_hudManager		= NULL;
-	_stateMachine	= NULL;
+	_graphics			= NULL;
+	_entityManager		= NULL;
+	_spriteManager		= NULL;
+	_levelManager		= NULL;
+	_input				= NULL;
+	_hudManager			= NULL;
+	_stateMachine		= NULL;
 }
 
 void Game::play() {
@@ -62,8 +63,8 @@ void Game::play() {
 		int elaspedUpdateTimeMs = currentUpdateTimeMs - lastUpdateTimeMs;
 		lastUpdateTimeMs = currentUpdateTimeMs;
 		_stateMachine->ExecuteStateUpdate(elaspedUpdateTimeMs);
-
 		update(std::min(elaspedUpdateTimeMs, globals::MAX_FRAME_TIME));
+
 		draw();
 	}
 }
@@ -111,16 +112,19 @@ void Game::BaseState::Execute(int deltaTimeMs)
 // Title State
 void Game::TitleState::Enter() {
 	_timer = 0;
-
-	_owner->_hudManager->writeText("Loading Game", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f), MIDDLE_ALIGNED);
+	_startText = _owner->_hudManager->writeText("Press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
 }
 
 void Game::TitleState::Execute(int deltaTimeMs)
 {
 	BaseState::Execute(deltaTimeMs);
+	
+	_timer += deltaTimeMs;
+	bool visible = floor(std::fmod(_timer / 300, 2)) == 0.0f;
+	_startText->setVisibility(visible);
+	//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
 
-	TitleState::_timer += deltaTimeMs;
-	if (TitleState::_timer > 1000) {
+	if (_owner->_input->isKeyDown(SDL_SCANCODE_SPACE)) {
 		TitleState::_owner->_stateMachine->ChangeState(_owner->_levelState);
 	}
 }
@@ -143,7 +147,7 @@ void Game::LevelState::Enter()
 		_playerEntity = _owner->_entityManager->GetPlayerEntity();
 		if (!_playerEntity) {
 			printf("Error: player not found\n");
-			return;
+			_owner->_gameOver = true;
 		}
 
 		// display the level number

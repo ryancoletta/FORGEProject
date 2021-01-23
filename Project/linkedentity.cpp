@@ -11,6 +11,7 @@ std::vector<LinkedEntity*> LinkedEntity::Link() {
 
 	// TODO pick up on this
 	// recursively add the next
+	/*
 	Vector2 facingDirection = _facingHistory.top();
 	Vector2 nextCoordinate = _tileHistory.top()->getCoordinate() + facingDirection;
 	if (_level->isCoordinateInRange(nextCoordinate)) {
@@ -27,6 +28,7 @@ std::vector<LinkedEntity*> LinkedEntity::Link() {
 	}
 	// add self
 	_allLinkedEntities.push_back(this);
+	*/
 	return _allLinkedEntities;
 }
 

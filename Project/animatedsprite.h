@@ -10,14 +10,14 @@ class Animation;
 class AnimatedSprite : public Sprite
 {
 public:
-	AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale);
+	AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset = glm::vec2(0));
 
 	void setVisible(bool visible);
 
 	virtual void onAnimationDone(std::string currentAnimationName) {}
 
 	void addAnimation(Animation* animation);
-	void playAnimation(std::string animation, bool isLoop = false);
+	void playAnimation(std::string animation, bool isLoop = false, bool resetFrameIndex = false);
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;

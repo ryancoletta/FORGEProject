@@ -3,8 +3,9 @@
 #include "texture.h"
 #include "shader.h"
 
-Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale) :
-	_graphics(graphics)
+Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
+	_graphics(graphics),
+	_offset(offset)
 {
 	_texture = _graphics->loadTexture(texturePath);
 	_shader = _graphics->loadShader(vertPath, fragPath);
@@ -21,8 +22,8 @@ void Sprite::draw(Vector2 position, const float clockWiseAngleRotation)
 	_texture->bind(0);
 
 	SDL_Rect destRect = {
-		position.x,
-		position.y,
+		position.x + _offset.x,
+		position.y + _offset.y,
 		_sourceRect.w * globals::SPRITE_SCALE,
 		_sourceRect.h * globals::SPRITE_SCALE
 	};

@@ -12,6 +12,7 @@ class LevelManager;
 class Input;
 class HudManager;
 class StateMachine;
+class Text;
 
 class Game {
 public:
@@ -42,7 +43,8 @@ private:
 		void Execute(int deltaTimeMs) override;
 		void Exit() override;
 	private:
-		int _timer;
+		Text* _startText;
+		float _timer;
 	};
 
 	class LevelState : public BaseState

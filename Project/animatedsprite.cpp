@@ -2,9 +2,11 @@
 #include "animatedsprite.h"
 #include "graphics.h"
 #include "animation.h"
+#include "shader.h"
+#include "texture.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale) :
-	Sprite(graphics, texturePath, vertPath, fragPath, sourcePosition, sourceScale),
+AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
+	Sprite(graphics, texturePath, vertPath, fragPath, sourcePosition, sourceScale, offset),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -16,11 +18,11 @@ void AnimatedSprite::setVisible(bool visible) { _visible = visible; }
 
 void AnimatedSprite::addAnimation(Animation* animation) { _animations.insert(std::pair<std::string, Animation*>(animation->getName(), animation)); }
 
-void AnimatedSprite::playAnimation(std::string animationName, bool isLoop) {
+void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool resetFrameIndex) {
 	_isLoop = isLoop;
 	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
 		_currentAnimationName = animationName;
-		_frameIndex = 0;
+		if (resetFrameIndex) { _frameIndex = 0; }
 	}
 }
 
@@ -61,13 +63,16 @@ void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) 
 	}
 
 	if (_visible) {
+		_shader->bind();
+		_texture->bind(0);
+
 		SDL_Rect destRect = {
-			position.x,
-			position.y,
+			position.x + _offset.x,
+			position.y + _offset.y,
 			_sourceRect.w* globals::SPRITE_SCALE,
 			_sourceRect.h* globals::SPRITE_SCALE
 		};
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
-		_graphics->draw(_texture, _shader, sourceRect, destRect, clockWiseAngleRotation); // TODO this is why we must pass source rect in a draw!!
+		_graphics->draw(_texture, _shader, sourceRect, destRect, clockWiseAngleRotation);
 	}
 }

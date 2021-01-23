@@ -29,13 +29,27 @@ SpriteManager::~SpriteManager() {
 Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale) {
 	Sprite* newSprite = NULL;
 	if (gid == GID_ENTITY_PLAYER) {
-		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), Vector2(48, 48));
-	}
-	else if (gid == GID_ENTITY_CHICKEN) {
-		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
-		Animation* newAnimation = _animationManager->loadAnimation("chicken_idle", 2, 500, sourcePosition, sourceScale);
+		Vector2 entityScale = Vector2(48, 48);
+		//newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16,16), entityScale);
+
+		
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), entityScale, glm::vec2(0,-8));
+		Animation* newAnimation = _animationManager->loadAnimation("player_down", 4, 100, sourcePosition - Vector2(16, 16), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
-		static_cast<AnimatedSprite*>(newSprite)->playAnimation("chicken_idle", true);
+		static_cast<AnimatedSprite*>(newSprite)->playAnimation("player_down", true);
+
+		newAnimation = _animationManager->loadAnimation("player_left", 4, 100, sourcePosition - Vector2(16, 16) + Vector2(64 * 3, 0), entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+
+		newAnimation = _animationManager->loadAnimation("player_up", 4, 100, sourcePosition - Vector2(16, 16) + Vector2(64 * 6, 0), entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+
+		newAnimation = _animationManager->loadAnimation("player_right", 4, 100, sourcePosition - Vector2(16, 16) + Vector2(64 * 9, 0), entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+	}
+	else if (gid == GID_ENTITY_BOX) {
+		Vector2 entityScale = Vector2(16, 32);
+		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -24));
 	}
 	else if (_loadedSprites.count(gid) == 0) {
 		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
