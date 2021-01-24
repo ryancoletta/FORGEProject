@@ -8,6 +8,7 @@ public:
 protected:
 	void onOccupy() override;
 private:
+	void tryHurtOccupant();
 	bool _isOn;
 };
 

@@ -24,7 +24,7 @@ std::vector<Entity*> EntityManager::GetEntitiesByType(EntityType entityID) {
 Entity* EntityManager::GetPlayerEntity() {
 	std::vector<Entity*> playerEntities = GetEntitiesByType(ENTITY_PLAYER);
 	if (playerEntities.empty()) {
-		printf("ERROR: no player found in level\n");
+		printf("Error: no player found in level\n");
 		return NULL;
 	}
 	return playerEntities[0];

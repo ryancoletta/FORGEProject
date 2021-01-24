@@ -8,6 +8,11 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
 {}
 
+bool PlayerEntity::isAlive()
+{
+	return _isAlive;
+}
+
 bool PlayerEntity::move(int turn, Vector2 direction) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
 	switch (dot) {
@@ -31,10 +36,19 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 	}
 }
 
-void PlayerEntity::draw()
+void PlayerEntity::kill()
+{
+	_isAlive = false;
+	updateAnimation();
+}
+
+void PlayerEntity::updateAnimation()
 {
 	Vector2 facing = _facingHistory.top();
-	if (facing == Vector2::up()) {
+	if (!_isAlive) {
+		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_death", false, true);
+	}
+	else if (facing == Vector2::up()) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_down", true);
 	}
 	else if (facing == Vector2::left()) {
@@ -46,8 +60,22 @@ void PlayerEntity::draw()
 	else if (facing == Vector2::right()) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_right", true);
 	}
-		
-	Entity::draw();
+}
+
+void PlayerEntity::undo(int turn)
+{
+	_isAlive = true;
+
+	DirectionalEntity::undo(turn);
+	updateAnimation();
+}
+
+void PlayerEntity::reset()
+{
+	_isAlive = true;
+	
+	DirectionalEntity::reset();
+	updateAnimation();
 }
 
 bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
@@ -92,5 +120,6 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 
 	_facingHistory.push(direction);
 	_lastTurnTurned.push(turn);
+	updateAnimation();
 	return true;
 }

@@ -29,7 +29,8 @@ private:
 	Uint32 _nextLevelEvent;
 	Level* _currentLevel;
 	std::vector<std::string> _levelPaths = { 
-		"Assets/1.tmx"
+		"Assets/1.tmx",
+		"Assets/2.tmx"
 	};
 };
 

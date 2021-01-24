@@ -46,6 +46,9 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 
 		newAnimation = _animationManager->loadAnimation("player_right", 4, 100, sourcePosition - Vector2(16, 16) + Vector2(64 * 9, 0), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+
+		newAnimation = _animationManager->loadAnimation("player_death", 9, 60, sourcePosition - Vector2(16, 16) + Vector2(64 * 12, 0), entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
 	else if (gid == GID_ENTITY_BOX) {
 		Vector2 entityScale = Vector2(16, 32);

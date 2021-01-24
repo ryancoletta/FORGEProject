@@ -13,6 +13,7 @@ class Input;
 class HudManager;
 class StateMachine;
 class Text;
+class PlayerEntity;
 
 class Game {
 public:
@@ -24,7 +25,7 @@ private:
 	class BaseState : public State
 	{
 	public:
-		BaseState(Game* owner) : _owner(owner) {};
+		BaseState(Game* owner);
 
 		virtual void Enter() override {};
 		virtual void Execute(int deltaTimeMs) override;
@@ -37,7 +38,7 @@ private:
 	class TitleState : public BaseState
 	{
 	public:
-		TitleState(Game* owner) : BaseState(owner) {};
+		TitleState(Game* owner);
 
 		void Enter() override;
 		void Execute(int deltaTimeMs) override;
@@ -50,14 +51,17 @@ private:
 	class LevelState : public BaseState
 	{
 	public:
-		LevelState(Game* owner) : BaseState(owner) {};
+		LevelState(Game* owner);
 
 		void Enter() override;
 		void Execute(int deltaTimeMs) override;
 		void Exit() override;
 	private:
 		int _turn;
-		Entity* _playerEntity;
+		PlayerEntity* _playerEntity;
+		bool _levelComplete;
+		float _fade;
+		float _maxFadeMs = 500.0f;
 	};
 
 	void draw();

@@ -29,13 +29,19 @@ void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool 
 	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
 		_currentAnimationName = animationName;
 	}
+
+	int numFrames = _animations[_currentAnimationName]->getFrames() - 1;
 	if (resetFrameIndex) { 
 		if (_inReverse) {
-			_frameIndex = _animations[_currentAnimationName]->getFrames() - 1;
+			_frameIndex = numFrames;
 		}
 		else {
 			_frameIndex = 0;
 		}
+	}
+	else {
+		// in cases of animations of differing lengths
+		_frameIndex %= numFrames;
 	}
 }
 

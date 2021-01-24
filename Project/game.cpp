@@ -15,6 +15,7 @@
 #include "sprite.h"
 #include "text.h"
 #include <cmath>
+#include "playerentity.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
@@ -86,8 +87,13 @@ void Game::update(int deltaTime) {
 	_levelManager->update(deltaTime);
 }
 
+
+
 // ----------------------------------------------------------------------------------------------------------
 // Base State
+Game::BaseState::BaseState(Game* owner) : _owner(owner)
+{}
+
 void Game::BaseState::Execute(int deltaTimeMs)
 {
 	_owner->_input->beginNewFrame();
@@ -111,6 +117,9 @@ void Game::BaseState::Execute(int deltaTimeMs)
 
 // ----------------------------------------------------------------------------------------------------------
 // Title State
+Game::TitleState::TitleState(Game* owner) : BaseState(owner)
+{}
+
 void Game::TitleState::Enter() {
 	_timer = 0;
 	_startText = _owner->_hudManager->writeText("Press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
@@ -136,8 +145,13 @@ void Game::TitleState::Exit() {
 
 // ----------------------------------------------------------------------------------------------------------
 // Level State
+Game::LevelState::LevelState(Game* owner) : BaseState(owner)
+{}
+
 void Game::LevelState::Enter()
 {
+	_fade = 0.0f;
+	_levelComplete = false;
 	_turn = 0;
 	if (!_owner->_levelManager->loadNextLevel(_owner->_graphics, _owner->_entityManager, _owner->_spriteManager)) {
 		printf("No more levels remain");
@@ -145,10 +159,12 @@ void Game::LevelState::Enter()
 	}
 	else {
 		// find the player
-		_playerEntity = _owner->_entityManager->GetPlayerEntity();
-		if (!_playerEntity) {
-			printf("Error: player not found\n");
+		Entity* playerEntity = _owner->_entityManager->GetPlayerEntity();
+		if (!playerEntity) {
 			_owner->_gameOver = true;
+		}
+		else {
+			_playerEntity = static_cast<PlayerEntity*>(playerEntity);
 		}
 
 		// display the level number
@@ -161,13 +177,40 @@ void Game::LevelState::Execute(int deltaTimeMs)
 {
 	BaseState::Execute(deltaTimeMs);
 
+	// fade in and out
+	if (!_levelComplete && _fade < 1.0f) {
+		_fade += deltaTimeMs / _maxFadeMs;
+		return;
+	}
+	else if (_levelComplete && _fade > 0.0f) {
+		_fade -= deltaTimeMs / _maxFadeMs;
+		return;
+	}
+	else if (_levelComplete) {
+		_owner->_stateMachine->ChangeState(_owner->_levelState);
+		return;
+	}
+
 	// look for a next level event
 	if (_event.type == _owner->_nextLevelEvent) {
-		_owner->_stateMachine->ChangeState(_owner->_levelState);
+		_levelComplete = true;
 	}
 
 	// handle player input
-	if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
+	if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
+		if (_turn > 0) { _owner->_entityManager->undoAll(--_turn); }
+	}
+	else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
+		if (_turn != 0) {
+			_owner->_entityManager->resetAll();
+			_turn = 0;
+		}
+	}
+	// only undo availible to dead players
+	else if (!_playerEntity->isAlive()) {
+		return;
+	}
+	else if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
 		if (_playerEntity->move(_turn, Vector2::down())) { _turn++; }
 	}
 	else if (_owner->_input->isKeyDown(SDL_SCANCODE_RIGHT)) {
@@ -178,15 +221,6 @@ void Game::LevelState::Execute(int deltaTimeMs)
 	}
 	else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
 		if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
-		if (_turn > 0) { _owner->_entityManager->undoAll(--_turn); }
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
-		if (_turn != 0) {
-			_owner->_entityManager->resetAll();
-			_turn = 0;
-		}
 	}
 }
 
