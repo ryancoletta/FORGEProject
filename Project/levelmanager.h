@@ -20,6 +20,10 @@ public:
 	bool loadNextLevel(Graphics* graphics, EntityManager* entityManager, SpriteManager* spriteManager);
 	void levelComplete();
 	void draw();
+	
+	void undo(int turn);
+	void reset();
+
 	void update(int deltaTimeMs);
 
 private:

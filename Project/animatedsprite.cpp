@@ -17,7 +17,10 @@ AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePat
 
 void AnimatedSprite::setVisible(bool visible) { _visible = visible; }
 
-void AnimatedSprite::addAnimation(Animation* animation) { _animations.insert(std::pair<std::string, Animation*>(animation->getName(), animation)); }
+void AnimatedSprite::addAnimation(Animation* animation) { 
+	std::string animationName = animation->getName();
+	_animations.insert(std::pair<std::string, Animation*>(animationName, animation));
+}
 
 void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool resetFrameIndex, bool inReverse) {
 	if (_animations.count(animationName) == 0) {
@@ -26,9 +29,7 @@ void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool 
 	_active = true;
 	_isLoop = isLoop;
 	_inReverse = inReverse;
-	if (_currentAnimationName != animationName && _animations.count(animationName) > 0) {
-		_currentAnimationName = animationName;
-	}
+	_currentAnimationName = animationName;
 
 	int numFrames = _animations[_currentAnimationName]->getFrames() - 1;
 	if (resetFrameIndex) { 
@@ -45,6 +46,22 @@ void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool 
 	}
 }
 
+void AnimatedSprite::jumpToFrame(std::string animationName, int frame)
+{
+	if (_animations.count(animationName) == 0) {
+		printf("Error: animation not found");
+	}
+	_currentAnimationName = animationName;
+
+	int totalFrames = _animations[animationName]->getFrames() - 1;
+	if (frame > totalFrames) {
+		printf("Error: attempting to jump to a nonexistant frame in %s\n", animationName.c_str());
+		return;
+	}
+	_frameIndex = frame;
+	_active = false;
+}
+
 void AnimatedSprite::resetAnimations() { _animations.clear(); }
 
 void AnimatedSprite::stopAnimation() {
@@ -53,7 +70,9 @@ void AnimatedSprite::stopAnimation() {
 }
 
 void AnimatedSprite::update(int deltaTime) {
-	if (_currentAnimationName == "" && !_active) { return; }
+	if (_currentAnimationName == "" || !_active) { 
+		return; 
+	}
 
 	_timeElapsed += deltaTime;
 

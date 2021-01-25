@@ -53,6 +53,20 @@ void LevelManager::draw() {
 	}
 }
 
+void LevelManager::undo(int turn)
+{
+	if (_currentLevel) {
+		_currentLevel->undo(turn);
+	}
+}
+
+void LevelManager::reset()
+{
+	if (_currentLevel) {
+		_currentLevel->reset();
+	}
+}
+
 void LevelManager::clear() {
 	delete _currentLevel;
 	_currentLevel = NULL;

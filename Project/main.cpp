@@ -13,7 +13,5 @@ int main(int argc, char* args[]) {
 	game->play();
 	delete game;
 
-	system("pause");
-
 	return 0;
 }

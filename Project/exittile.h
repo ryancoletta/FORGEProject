@@ -9,7 +9,7 @@ public:
 	ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinate, Vector2 position);
 
 protected:
-	void onOccupy() override;
+	void onOccupy(int turn) override;
 
 	LevelManager* _levelManager;
 };

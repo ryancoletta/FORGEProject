@@ -6,7 +6,7 @@
  <tileset firstgid="71" name="entity_sprites_final" tilewidth="16" tileheight="16" tilecount="20" columns="5">
   <image source="entity_sprites_final.png" width="80" height="64"/>
  </tileset>
- <tileset firstgid="91" name="player_sprite_sheet" tilewidth="16" tileheight="16" tilecount="243" columns="75">
+ <tileset firstgid="91" name="player_sprite_sheet" tilewidth="16" tileheight="16" tilecount="225" columns="75">
   <image source="player_sprites.png" width="1200" height="48"/>
  </tileset>
  <layer id="1" name="BG" width="16" height="16">
@@ -81,10 +81,10 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile/>
    <tile/>
@@ -97,10 +97,10 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="40"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile/>
    <tile/>
@@ -113,10 +113,10 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="36"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
@@ -129,10 +129,10 @@
    <tile gid="8"/>
    <tile gid="45"/>
    <tile gid="45"/>
-   <tile gid="30"/>
-   <tile gid="38"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="36"/>
+   <tile gid="36"/>
+   <tile gid="26"/>
    <tile gid="48"/>
    <tile gid="48"/>
    <tile gid="8"/>
@@ -145,10 +145,10 @@
    <tile gid="8"/>
    <tile gid="45"/>
    <tile gid="45"/>
-   <tile gid="30"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="36"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="48"/>
    <tile gid="48"/>
    <tile gid="8"/>
@@ -161,10 +161,10 @@
    <tile gid="8"/>
    <tile gid="45"/>
    <tile gid="45"/>
-   <tile gid="38"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
-   <tile gid="38"/>
+   <tile gid="36"/>
+   <tile gid="36"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="48"/>
    <tile gid="48"/>
    <tile gid="8"/>
@@ -177,10 +177,10 @@
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="44"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile gid="8"/>
    <tile gid="8"/>
@@ -193,10 +193,10 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="38"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile/>
    <tile/>
@@ -209,10 +209,10 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
-   <tile gid="30"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
+   <tile gid="26"/>
    <tile gid="8"/>
    <tile/>
    <tile/>
@@ -269,7 +269,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="Entities" width="16" height="16" locked="1">
+ <layer id="2" name="Entities" width="16" height="16">
   <data>
    <tile/>
    <tile/>
@@ -406,7 +406,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="90"/>
+   <tile gid="76"/>
    <tile/>
    <tile/>
    <tile/>
@@ -424,7 +424,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="90"/>
+   <tile gid="76"/>
    <tile/>
    <tile/>
    <tile/>
@@ -454,7 +454,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="90"/>
+   <tile gid="76"/>
    <tile/>
    <tile/>
    <tile/>

@@ -16,12 +16,15 @@ struct SpriteSheet;
 // maps gids to specific game elements (tiles, entities, sprites, etc)
 enum GidElement {
 	GID_TILE_WALL_END = 23,
-	GID_TILE_OPEN_END = 39,
+	GID_TILE_OPEN_END = 32,
+	GID_TILE_CRACK_1 = 36,
+	GID_TILE_CRACK_2 = 37,
+	GID_TILE_CRACK_3 = 38,
+	GID_TILE_SWITCH = 33,
 	GID_TILE_GOAL = 44,
-	GID_TILE_SWITCH = 40,
 	GID_TILE_SPIKE_OFF = 45,
 	GID_TILE_SPIKE_ON = 48,
-	GID_ENTITY_BOX = 90,
+	GID_ENTITY_BOX = 76,
 	GID_ENTITY_PLAYER = 167,
 };
 
@@ -42,6 +45,9 @@ public:
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
 	void draw();
 	void update(int deltaTimeMs);
+	void undo(int turn);
+	void reset();
+
 	int getGidRotation(unsigned &gid);
 	void connectTiles();
 

@@ -21,7 +21,7 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 		case 1: {
 			Vector2 aheadCoordinate = _tileHistory.top()->getCoordinate() + direction * 2;
 			Tile* aheadTile = _level->getTile(aheadCoordinate);
-			if (aheadTile->isBlocked()) {
+			if (aheadTile->isBlocked(ENTITY_SWORD)) {
 				return false;
 			}
 			else if (aheadTile->isOccupied()) {
@@ -88,7 +88,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	Entity* diagonalEntity = NULL;
 	if (_level->isCoordinateInRange(diagonalCoordinate)) {
 		Tile* diagonalTile = _level->getTile(diagonalCoordinate);
-		if (diagonalTile->isBlocked()) {
+		if (diagonalTile->isBlocked(ENTITY_SWORD)) {
 			return false;
 		}
 		else if (diagonalTile->isOccupied()) {
@@ -103,7 +103,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	Entity* adjacentEntity = NULL;
 	if (_level->isCoordinateInRange(adjacentCoordinate)) {
 		Tile* adjacentTile = _level->getTile(adjacentCoordinate);
-		if (adjacentTile->isBlocked()) {
+		if (adjacentTile->isBlocked(ENTITY_SWORD)) {
 			return false;
 		}
 		else if (adjacentTile->isOccupied()) {

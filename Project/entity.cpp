@@ -14,7 +14,7 @@ Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTil
 	}
 	else {
 		_tileHistory.push(startTile);
-		startTile->occupy(this);
+		startTile->occupy(this, 0);
 	}
 }
 
@@ -28,7 +28,7 @@ bool Entity::canMove(Vector2 direction) const {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
-		if (newTile->isBlocked()) {
+		if (newTile->isBlocked(_entityType)) {
 			return false;
 		}
 		else if (newTile->isOccupied()) {
@@ -46,7 +46,7 @@ bool Entity::move(int turn, Vector2 direction) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
-		if (newTile->isBlocked()) {
+		if (newTile->isBlocked(_entityType)) {
 			return false;
 		}
 		else if (newTile->isOccupied()) {
@@ -55,9 +55,9 @@ bool Entity::move(int turn, Vector2 direction) {
 				return false;
 			}
 		}
-		_tileHistory.top()->vacate();
+		_tileHistory.top()->vacate(turn);
 		_tileHistory.push(newTile);
-		_tileHistory.top()->occupy(this);
+		_tileHistory.top()->occupy(this, turn);
 		_lastTurnMoved.push(turn);
 
 		return true;
@@ -67,7 +67,7 @@ bool Entity::move(int turn, Vector2 direction) {
 
 void Entity::undo(int turn) {
 	while (_tileHistory.size() > 1 && _lastTurnMoved.top() >= turn) {
-		_tileHistory.top()->vacate();
+		_tileHistory.top()->vacate(turn, false);
 		_tileHistory.pop();
 
 		// if someone is in this spot, make sure they perform their undo first
@@ -75,13 +75,13 @@ void Entity::undo(int turn) {
 			_tileHistory.top()->getOccupant()->undo(turn);
 		}
 
-		_tileHistory.top()->occupy(this);
+		_tileHistory.top()->occupy(this, turn, false);
 		_lastTurnMoved.pop();
 	}
 }
 
 void Entity::reset() {
-	_tileHistory.top()->vacate();
+	_tileHistory.top()->vacate(0, false);
 	while (_lastTurnMoved.size() > 0) {
 		_tileHistory.pop();
 		_lastTurnMoved.pop();
@@ -91,7 +91,7 @@ void Entity::reset() {
 		_tileHistory.top()->getOccupant()->reset();
 	}
 
-	_tileHistory.top()->occupy(this);
+	_tileHistory.top()->occupy(this, 0, false);
 }
 
 void Entity::update(int deltaTime) {

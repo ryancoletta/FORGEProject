@@ -114,6 +114,12 @@
     <ClCompile Include="spiketile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="crackedtile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="boxentity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphics.h">
@@ -1071,6 +1077,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="spiketile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="crackedtile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boxentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

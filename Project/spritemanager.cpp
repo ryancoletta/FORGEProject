@@ -52,7 +52,15 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 	}
 	else if (gid == GID_ENTITY_BOX) {
 		Vector2 entityScale = Vector2(16, 32);
-		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -24));
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -24));
+		Animation* newAnimation = _animationManager->loadAnimation("box_fall", 5, 100, sourcePosition, entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+	}
+	else if (gid == GID_TILE_CRACK_1 || gid == GID_TILE_CRACK_2 || gid == GID_TILE_CRACK_3) {
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
+		Animation* newAnimation = _animationManager->loadAnimation("tile_crack", 3, 100, sourcePosition, sourceScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
+		static_cast<AnimatedSprite*>(newSprite)->jumpToFrame("tile_crack", gid - GID_TILE_CRACK_1);
 	}
 	else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);

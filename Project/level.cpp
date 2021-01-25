@@ -12,6 +12,7 @@
 #include "sprite.h"
 #include "switchtile.h"
 #include "spiketile.h"
+#include "crackedtile.h"
 
 using namespace tinyxml2;
 
@@ -138,6 +139,9 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 								else if (gid <= GID_TILE_OPEN_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
+								else if (gid == GID_TILE_CRACK_1 || gid == GID_TILE_CRACK_2 || gid == GID_TILE_CRACK_3) {
+									_tiles[x][y] = DBG_NEW CrackedTile(gid - GID_TILE_CRACK_1, tileSprite, Vector2(x, y), finalTilePosition);
+								}
 								else if (gid == GID_TILE_SWITCH) {
 									_tiles[x][y] = DBG_NEW SwitchTile(tileSprite, Vector2(x, y), finalTilePosition);
 								}
@@ -238,6 +242,24 @@ void Level::update(int deltaTimeMs)
 	for (int x = 0; x < _tiles.size(); x++) {
 		for (int y = 0; y < _tiles[x].size(); y++) {
 			if (_tiles[x][y]) { _tiles[x][y]->update(deltaTimeMs); }
+		}
+	}
+}
+
+void Level::undo(int turn)
+{
+	for (int x = 0; x < _tiles.size(); x++) {
+		for (int y = 0; y < _tiles[x].size(); y++) {
+			if (_tiles[x][y]) { _tiles[x][y]->undo(turn); }
+		}
+	}
+}
+
+void Level::reset()
+{
+	for (int x = 0; x < _tiles.size(); x++) {
+		for (int y = 0; y < _tiles[x].size(); y++) {
+			if (_tiles[x][y]) { _tiles[x][y]->reset(); }
 		}
 	}
 }

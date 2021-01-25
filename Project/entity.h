@@ -10,6 +10,7 @@ class Sprite;
 enum EntityType {
 	ENTITY_BOX			= 1 << 0,
 	ENTITY_PLAYER		= 1 << 2,
+	ENTITY_SWORD		= 1 << 3,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)
@@ -42,11 +43,12 @@ public:
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
 
 protected:
+	EntityType _entityType;
 	Level* _level;
 	Sprite* _sprite;
 	std::stack<Tile*> _tileHistory;
 
 private:
-	EntityType _entityType;
+
 	std::stack<int> _lastTurnMoved;
 };

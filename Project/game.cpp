@@ -122,6 +122,7 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 
 void Game::TitleState::Enter() {
 	_timer = 0;
+	_owner->_hudManager->writeText("Untitled FORGE Project", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f), MIDDLE_ALIGNED);
 	_startText = _owner->_hudManager->writeText("Press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
 }
 
@@ -198,11 +199,16 @@ void Game::LevelState::Execute(int deltaTimeMs)
 
 	// handle player input
 	if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
-		if (_turn > 0) { _owner->_entityManager->undoAll(--_turn); }
+		if (_turn > 0) { 
+			_turn--;
+			_owner->_entityManager->undoAll(_turn);
+			_owner->_levelManager->undo(_turn);
+		}
 	}
 	else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
 		if (_turn != 0) {
 			_owner->_entityManager->resetAll();
+			_owner->_levelManager->reset();
 			_turn = 0;
 		}
 	}

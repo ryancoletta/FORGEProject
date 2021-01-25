@@ -3,13 +3,15 @@
 
 class Entity;
 class Sprite;
+enum EntityType;
 
 enum TileType {
-	TILE_WALL	= 1 << 0,
-	TILE_OPEN	= 1 << 1,
-	TILE_GOAL	= 1 << 2,
-	TILE_SWITCH = 1 << 3,
-	TILE_SPIKE	= 1 << 4,
+	TILE_WALL		= 1 << 0,
+	TILE_OPEN		= 1 << 1,
+	TILE_GOAL		= 1 << 2,
+	TILE_SWITCH		= 1 << 3,
+	TILE_SPIKE		= 1 << 4,
+	TILE_CRACKED	= 1 << 5,
 };
 
 class Tile
@@ -23,19 +25,22 @@ public:
 	Vector2 getPosition() const;
 	Sprite* getSprite() const;
 	Entity* getOccupant() const;
-	bool isBlocked() const;
+	virtual bool isBlocked(EntityType entrant) const;
 	bool isOccupied() const;
 
 	void setBlocked(bool blocked);
 
-	void vacate();
-	void occupy(Entity* entityToOccupy);
+	void vacate(int turn, bool triggerOnVacate = true);
+	void occupy(Entity* entityToOccupy, int turn, bool triggerOnOccupy = true);
 	void draw();
 	void update(int deltaTimeMs);
 
+	virtual void undo(int turn) {}
+	virtual void reset() {}
+
 protected:
-	virtual void onVacate();
-	virtual void onOccupy();
+	virtual void onVacate(int turn);
+	virtual void onOccupy(int turn);
 
 	bool _blocked;
 	TileType _tileType;

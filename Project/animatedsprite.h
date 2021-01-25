@@ -17,7 +17,8 @@ public:
 	virtual void onAnimationDone(std::string currentAnimationName) {}
 
 	void addAnimation(Animation* animation);
-	void playAnimation(std::string animation, bool isLoop = false, bool resetFrameIndex = false, bool inReverse = false);
+	void playAnimation(std::string animationName, bool isLoop = false, bool resetFrameIndex = false, bool inReverse = false);
+	void jumpToFrame(std::string animationName, int frame);
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;
