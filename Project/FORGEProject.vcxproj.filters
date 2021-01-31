@@ -114,10 +114,13 @@
     <ClCompile Include="spiketile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="crackedtile.cpp">
+    <ClCompile Include="boxentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="boxentity.cpp">
+    <ClCompile Include="holetile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="batentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1079,10 +1082,13 @@
     <ClInclude Include="spiketile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="crackedtile.h">
+    <ClInclude Include="boxentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="boxentity.h">
+    <ClInclude Include="holetile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="batentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

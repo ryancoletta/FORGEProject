@@ -12,7 +12,7 @@ void SpikeTile::toggleSpikes(int turn)
 	_isOn = !_isOn;
 	static_cast<AnimatedSprite*>(_sprite)->playAnimation("spikes_on", false, true, !_isOn);
 	_lastTurnToggled.push(turn);
-	tryHurtOccupant();
+	tryHurtOccupant(turn);
 }
 
 void SpikeTile::undo(int turn)
@@ -33,14 +33,22 @@ void SpikeTile::reset()
 	static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("spikes_on", _isOn ? 3 : 0);
 }
 
-void SpikeTile::onOccupy(int turn)
+bool SpikeTile::isBlocked(EntityType entrant) const
 {
-	tryHurtOccupant();
+	if (_isOn && entrant == ENTITY_BOX) {
+		return true;
+	}
+	return false;
 }
 
-void SpikeTile::tryHurtOccupant()
+void SpikeTile::onOccupy(int turn)
+{
+	tryHurtOccupant(turn);
+}
+
+void SpikeTile::tryHurtOccupant(int turn)
 {
 	if (_isOn && _occupant && _occupant->getEntityType() == ENTITY_PLAYER) {
-		static_cast<PlayerEntity*>(_occupant)->kill();
+		static_cast<PlayerEntity*>(_occupant)->kill(turn);
 	}
 }

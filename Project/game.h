@@ -22,6 +22,7 @@ public:
 	void play();
 
 private:
+	// TODO move states into their own files
 	class BaseState : public State
 	{
 	public:
@@ -67,6 +68,9 @@ private:
 	void draw();
 	void update(int deltaTime);
 
+	// TODO make these singletons
+	// TODO make a singletonstructure that holds these
+	// TODO make game a global object
 	bool _gameOver;
 	Uint32 _nextLevelEvent;
 	LevelManager* _levelManager;

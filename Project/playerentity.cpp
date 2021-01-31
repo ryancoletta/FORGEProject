@@ -8,17 +8,20 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
 {}
 
-bool PlayerEntity::isAlive()
-{
-	return _isAlive;
-}
-
 bool PlayerEntity::move(int turn, Vector2 direction) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
 	switch (dot) {
+		// move to the right or left
 		case 0:
 			return turnTowards(turn, direction);
+		// move forward
 		case 1: {
+			// first check if player can move
+			if (!canMove(direction)) {
+				return false;
+			}
+
+			// then check if sword can move
 			Vector2 aheadCoordinate = _tileHistory.top()->getCoordinate() + direction * 2;
 			Tile* aheadTile = _level->getTile(aheadCoordinate);
 			if (aheadTile->isBlocked(ENTITY_SWORD)) {
@@ -26,20 +29,30 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 			}
 			else if (aheadTile->isOccupied()) {
 				Entity* toPush = aheadTile->getOccupant();
-				if (!toPush->move(turn, direction)) {
-					return false;
+				if (!toPush->canMove(direction)) {
+					if (toPush->getEntityType() == ENTITY_BAT) {
+						toPush->kill(turn);
+					}
+					else return false;
 				}
+				toPush->move(turn, direction);
+				return Entity::move(turn, direction);
 			}
 		}
-		default:
+		// move backward
+		case -1: {
+			if (!canMove(direction)) {
+				return false;
+			}
 			return Entity::move(turn, direction);
+		}
 	}
 }
 
-void PlayerEntity::kill()
+void PlayerEntity::kill(int turn)
 {
-	_isAlive = false;
 	updateAnimation();
+	Entity::kill(turn);
 }
 
 void PlayerEntity::updateAnimation()
@@ -64,16 +77,12 @@ void PlayerEntity::updateAnimation()
 
 void PlayerEntity::undo(int turn)
 {
-	_isAlive = true;
-
 	DirectionalEntity::undo(turn);
 	updateAnimation();
 }
 
 void PlayerEntity::reset()
-{
-	_isAlive = true;
-	
+{	
 	DirectionalEntity::reset();
 	updateAnimation();
 }

@@ -33,7 +33,7 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		//newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16,16), entityScale);
 
 		
-		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), entityScale, glm::vec2(0,-8));
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), entityScale, glm::vec2(0,-6));
 		Animation* newAnimation = _animationManager->loadAnimation("player_down", 4, 100, sourcePosition - Vector2(16, 16), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 		static_cast<AnimatedSprite*>(newSprite)->playAnimation("player_down", true);
@@ -52,18 +52,20 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 	}
 	else if (gid == GID_ENTITY_BOX) {
 		Vector2 entityScale = Vector2(16, 32);
-		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -24));
-		Animation* newAnimation = _animationManager->loadAnimation("box_fall", 5, 100, sourcePosition, entityScale);
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -27));
+		Animation* newAnimation = _animationManager->loadAnimation("box_fall", 6, 50, sourcePosition, entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
-	else if (gid == GID_TILE_CRACK_1 || gid == GID_TILE_CRACK_2 || gid == GID_TILE_CRACK_3) {
-		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
-		Animation* newAnimation = _animationManager->loadAnimation("tile_crack", 3, 100, sourcePosition, sourceScale);
+	else if (gid == GID_ENTITY_BAT) {
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale, glm::vec2(3, -9));
+		Animation* newAnimation = _animationManager->loadAnimation("goon_idle", 5, 100, sourcePosition, sourceScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
-		static_cast<AnimatedSprite*>(newSprite)->jumpToFrame("tile_crack", gid - GID_TILE_CRACK_1);
+		static_cast<AnimatedSprite*>(newSprite)->playAnimation("goon_idle", true);
 	}
 	else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
+
+		sourcePosition -= Vector2((gid - GID_TILE_SPIKE_OFF) * 16, 0); // TODO if its the ON spike, then the animation needs to look backward, improve this
 		Animation* newAnimation = _animationManager->loadAnimation("spikes_on", 4, 100, sourcePosition, sourceScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}

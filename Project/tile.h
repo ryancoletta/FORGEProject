@@ -11,7 +11,7 @@ enum TileType {
 	TILE_GOAL		= 1 << 2,
 	TILE_SWITCH		= 1 << 3,
 	TILE_SPIKE		= 1 << 4,
-	TILE_CRACKED	= 1 << 5,
+	TILE_HOLE		= 1 << 5,
 };
 
 class Tile

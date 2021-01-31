@@ -12,7 +12,7 @@
 #include "sprite.h"
 #include "switchtile.h"
 #include "spiketile.h"
-#include "crackedtile.h"
+#include "holetile.h"
 
 using namespace tinyxml2;
 
@@ -139,8 +139,8 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 								else if (gid <= GID_TILE_OPEN_END) {
 									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
 								}
-								else if (gid == GID_TILE_CRACK_1 || gid == GID_TILE_CRACK_2 || gid == GID_TILE_CRACK_3) {
-									_tiles[x][y] = DBG_NEW CrackedTile(gid - GID_TILE_CRACK_1, tileSprite, Vector2(x, y), finalTilePosition);
+								else if (gid == GID_TILE_HOLE) {
+									_tiles[x][y] = DBG_NEW HoleTile(tileSprite, Vector2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_SWITCH) {
 									_tiles[x][y] = DBG_NEW SwitchTile(tileSprite, Vector2(x, y), finalTilePosition);

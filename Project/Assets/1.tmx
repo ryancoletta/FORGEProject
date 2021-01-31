@@ -3,10 +3,10 @@
  <tileset firstgid="1" name="tileset_final" tilewidth="16" tileheight="16" tilecount="70" columns="7">
   <image source="tile_sprites.png" width="112" height="160"/>
  </tileset>
- <tileset firstgid="71" name="entity_sprites_final" tilewidth="16" tileheight="16" tilecount="20" columns="5">
-  <image source="entity_sprites_final.png" width="80" height="64"/>
+ <tileset firstgid="71" name="entity_sprites_final" tilewidth="16" tileheight="16" tilecount="32" columns="8">
+  <image source="entity_sprites_final.png" width="128" height="64"/>
  </tileset>
- <tileset firstgid="91" name="player_sprite_sheet" tilewidth="16" tileheight="16" tilecount="225" columns="75">
+ <tileset firstgid="103" name="player_sprite_sheet" tilewidth="16" tileheight="16" tilecount="225" columns="75">
   <image source="player_sprites.png" width="1200" height="48"/>
  </tileset>
  <layer id="1" name="BG" width="16" height="16">
@@ -95,8 +95,8 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="26"/>
-   <tile gid="26"/>
+   <tile gid="45"/>
+   <tile gid="48"/>
    <tile gid="45"/>
    <tile gid="26"/>
    <tile gid="26"/>
@@ -111,7 +111,7 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="26"/>
+   <tile gid="45"/>
    <tile gid="33"/>
    <tile gid="45"/>
    <tile gid="26"/>
@@ -160,7 +160,7 @@
    <tile/>
    <tile gid="8"/>
    <tile gid="26"/>
-   <tile gid="36"/>
+   <tile gid="38"/>
    <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="48"/>
@@ -176,7 +176,7 @@
    <tile/>
    <tile gid="8"/>
    <tile gid="26"/>
-   <tile gid="37"/>
+   <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
@@ -192,7 +192,7 @@
    <tile/>
    <tile gid="8"/>
    <tile gid="26"/>
-   <tile gid="38"/>
+   <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
@@ -340,7 +340,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="16"/>
    <tile/>
    <tile/>
    <tile/>
@@ -393,7 +392,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="76"/>
    <tile/>
    <tile/>
    <tile/>
@@ -425,9 +423,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="76"/>
    <tile/>
    <tile/>
+   <tile gid="79"/>
    <tile/>
    <tile/>
    <tile/>
@@ -453,9 +451,11 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="167"/>
    <tile/>
    <tile/>
+   <tile gid="179"/>
+   <tile/>
+   <tile gid="95"/>
    <tile/>
    <tile/>
    <tile/>

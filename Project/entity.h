@@ -9,6 +9,7 @@ class Sprite;
 
 enum EntityType {
 	ENTITY_BOX			= 1 << 0,
+	ENTITY_BAT			= 1 << 1,
 	ENTITY_PLAYER		= 1 << 2,
 	ENTITY_SWORD		= 1 << 3,
 };
@@ -32,12 +33,14 @@ public:
 	EntityType getEntityType() const;
 	Tile* getTile() const;
 	Vector2 getCoordinate() const;
+	bool isAlive() const;
 
 	virtual bool canMove(Vector2 direction) const;
 	virtual bool move(int turn, Vector2 direction);
 	virtual void undo(int turn);
 	virtual void reset();
 	virtual void draw();
+	virtual void kill(int turn);
 	
 	void update(int deltaTime);
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
@@ -47,8 +50,7 @@ protected:
 	Level* _level;
 	Sprite* _sprite;
 	std::stack<Tile*> _tileHistory;
-
+	bool _isAlive;
 private:
-
 	std::stack<int> _lastTurnMoved;
 };

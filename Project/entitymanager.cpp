@@ -6,6 +6,8 @@
 #include "tile.h"
 #include "playerentity.h"
 #include "directionalentity.h"
+#include "boxentity.h"
+#include "batentity.h"
 
 EntityManager::~EntityManager() { clearEntities(); }
 
@@ -35,7 +37,10 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 
 	switch (gid) {
 		case GID_ENTITY_BOX:
-			newEntity = DBG_NEW Entity(ENTITY_BOX, level, sprite, startTile);
+			newEntity = DBG_NEW BoxEntity(level, sprite, startTile);
+			break;
+		case GID_ENTITY_BAT:
+			newEntity = DBG_NEW BatEntity(level, sprite, startTile);
 			break;
 		case GID_ENTITY_PLAYER:
 			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, facing);
@@ -51,7 +56,9 @@ void EntityManager::draw() {
 	sortEntities(); // TODO move this so it doesn't happen every frame
 	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		_allEntities[i]->draw();
+		if (_allEntities[i]->isAlive()) {
+			_allEntities[i]->draw();
+		}
 	}
 }
 

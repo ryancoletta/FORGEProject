@@ -7,7 +7,8 @@
 Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
 	_entityType(entityID),
 	_level(level),
-	_sprite(sprite)
+	_sprite(sprite),
+	_isAlive(true)
 {
 	if (startTile->isOccupied()) {
 		printf("ERROR: attempting to place entity on an occupied tile");
@@ -23,6 +24,8 @@ EntityType Entity::getEntityType() const { return _entityType; }
 Tile* Entity::getTile() const { return _tileHistory.top(); }
 
 Vector2 Entity::getCoordinate() const { return getTile()->getCoordinate(); }
+
+bool Entity::isAlive() const { return _isAlive; }
 
 bool Entity::canMove(Vector2 direction) const {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
@@ -66,12 +69,21 @@ bool Entity::move(int turn, Vector2 direction) {
 }
 
 void Entity::undo(int turn) {
-	while (_tileHistory.size() > 1 && _lastTurnMoved.top() >= turn) {
+	while (_lastTurnMoved.size() > 0 && _lastTurnMoved.top() >= turn) {
+		// revive
+		if (!_isAlive) {
+			_lastTurnMoved.pop();
+			_isAlive = true;
+			_tileHistory.top()->occupy(this, turn, false); // TODO dangerous, this tile might be occupied alriedy
+			continue;
+		}
+
+		// undo move
 		_tileHistory.top()->vacate(turn, false);
 		_tileHistory.pop();
 
 		// if someone is in this spot, make sure they perform their undo first
-		if (_tileHistory.top()->isOccupied()) {
+		if (_tileHistory.top()->isOccupied()) { // DEAD OBJECTS REGISTER AS NON OCCUPIED
 			_tileHistory.top()->getOccupant()->undo(turn);
 		}
 
@@ -81,16 +93,27 @@ void Entity::undo(int turn) {
 }
 
 void Entity::reset() {
-	_tileHistory.top()->vacate(0, false);
+	// revive if dead
+	if (!_isAlive) {
+		_isAlive = true;
+		_lastTurnMoved.pop();
+	}
+	else {
+		_tileHistory.top()->vacate(0, false);
+	}
+
+	// find the first tile in your history
 	while (_lastTurnMoved.size() > 0) {
 		_tileHistory.pop();
 		_lastTurnMoved.pop();
 	}
-	// if someone is in this spot, make sure they perform their reset first
+
+	// if someone is in said tile, make sure they perform their reset first
 	if (_tileHistory.top()->isOccupied()) {
 		_tileHistory.top()->getOccupant()->reset();
 	}
 
+	// occupy your original tile
 	_tileHistory.top()->occupy(this, 0, false);
 }
 
@@ -100,6 +123,15 @@ void Entity::update(int deltaTime) {
 
 void Entity::draw() {
 	_sprite->draw(_tileHistory.top()->getPosition());
+}
+
+void Entity::kill(int turn)
+{
+	if (_isAlive) {
+		_isAlive = false;
+		_lastTurnMoved.push(turn);
+		_tileHistory.top()->vacate(turn);
+	}
 }
 
 void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {

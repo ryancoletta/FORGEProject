@@ -20,7 +20,7 @@ void DirectionalEntity::draw() {
 */
 
 void DirectionalEntity::undo(int turn) {
-	while (_facingHistory.size() > 1 && _lastTurnTurned.top() >= turn) {
+	while (_lastTurnTurned.size() > 0 && _lastTurnTurned.top() >= turn) {
 		_facingHistory.pop();
 		_lastTurnTurned.pop();
 	}

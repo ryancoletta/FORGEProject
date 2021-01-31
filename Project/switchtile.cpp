@@ -1,6 +1,7 @@
 #include "switchtile.h"
 #include "level.h"
 #include "spiketile.h"
+#include "entity.h"
 
 SwitchTile::SwitchTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
 	Tile(TILE_SWITCH, sprite, coordinate, position)
@@ -21,6 +22,8 @@ void SwitchTile::findAllSpikeTiles(Level* level)
 
 void SwitchTile::onOccupy(int turn)
 {
+	if (_occupant->getEntityType() == ENTITY_BAT) { return; }
+
 	for (int i = 0; i < _spikeTiles.size(); i++) {
 		_spikeTiles[i]->toggleSpikes(turn);
 	}
@@ -28,6 +31,8 @@ void SwitchTile::onOccupy(int turn)
 
 void SwitchTile::onVacate(int turn)
 {
+	if (_occupant->getEntityType() == ENTITY_BAT) { return; }
+
 	for (int i = 0; i < _spikeTiles.size(); i++) {
 		_spikeTiles[i]->toggleSpikes(turn);
 	}

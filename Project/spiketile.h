@@ -9,10 +9,11 @@ public:
 	void toggleSpikes(int turn);
 	void undo(int turn) override;
 	void reset() override;
+	bool isBlocked(EntityType entrant) const override;
 protected:
 	void onOccupy(int turn) override;
 private:
-	void tryHurtOccupant();
+	void tryHurtOccupant(int turn);
 	bool _isOn;
 	std::stack<int> _lastTurnToggled;
 };

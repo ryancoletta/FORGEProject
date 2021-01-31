@@ -149,8 +149,9 @@
     <ClCompile Include="animatedsprite.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="animationmanager.cpp" />
+    <ClCompile Include="batentity.cpp" />
     <ClCompile Include="boxentity.cpp" />
-    <ClCompile Include="crackedtile.cpp" />
+    <ClCompile Include="holetile.cpp" />
     <ClCompile Include="directionalentity.cpp" />
     <ClCompile Include="entitymanager.cpp" />
     <ClCompile Include="exittile.cpp" />
@@ -188,8 +189,9 @@
     <ClInclude Include="animatedsprite.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="animationmanager.h" />
+    <ClInclude Include="batentity.h" />
     <ClInclude Include="boxentity.h" />
-    <ClInclude Include="crackedtile.h" />
+    <ClInclude Include="holetile.h" />
     <ClInclude Include="directionalentity.h" />
     <ClInclude Include="entitymanager.h" />
     <ClInclude Include="exittile.h" />
