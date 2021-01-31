@@ -94,7 +94,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	Vector2 currentCoordinate = _tileHistory.top()->getCoordinate();
 
 	Vector2 diagonalCoordinate = currentCoordinate + playerFacingDirection + direction;
-	Entity* diagonalEntity = NULL;
+	Entity* diagonalEntity = nullptr;
 	if (_level->isCoordinateInRange(diagonalCoordinate)) {
 		Tile* diagonalTile = _level->getTile(diagonalCoordinate);
 		if (diagonalTile->isBlocked(ENTITY_SWORD)) {
@@ -109,7 +109,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 	}
 
 	Vector2 adjacentCoordinate = currentCoordinate + direction;
-	Entity* adjacentEntity = NULL;
+	Entity* adjacentEntity = nullptr;
 	if (_level->isCoordinateInRange(adjacentCoordinate)) {
 		Tile* adjacentTile = _level->getTile(adjacentCoordinate);
 		if (adjacentTile->isBlocked(ENTITY_SWORD)) {

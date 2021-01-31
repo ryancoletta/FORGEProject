@@ -35,7 +35,7 @@ Graphics::~Graphics() {
 
 bool Graphics::initGL() {
 	// GLEW requires a valid openGL context before initialization
-	if (SDL_GL_CreateContext(_window) == NULL)
+	if (SDL_GL_CreateContext(_window) == nullptr)
 	{
 		printf("OpenGL context could not be created");
 		return false;

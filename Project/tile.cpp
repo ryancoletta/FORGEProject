@@ -8,12 +8,12 @@ Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 positi
 	_sprite(sprite), 
 	_coordinate(coordinate), 
 	_position(position),
-	_occupant(NULL),
+	_occupant(nullptr),
 	_blocked(blocked)
 {}
 
 bool Tile::isBlocked(EntityType entrant) const { return _blocked; }
-bool Tile::isOccupied() const { return _occupant != NULL; }
+bool Tile::isOccupied() const { return _occupant != nullptr; }
 
 TileType Tile::getTileType() const { return _tileType; }
 Vector2 Tile::getCoordinate() const { return _coordinate; }
@@ -25,7 +25,7 @@ void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 
 void Tile::vacate(int turn, bool triggerOnVacate) {
 	if (triggerOnVacate) { onVacate(turn); }
-	_occupant = NULL;
+	_occupant = nullptr;
 }
 void Tile::occupy(Entity* entityToOccupy, int turn, bool triggerOnOccupy) {
 	_occupant = entityToOccupy; 

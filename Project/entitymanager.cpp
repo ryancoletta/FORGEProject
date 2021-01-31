@@ -27,13 +27,13 @@ Entity* EntityManager::GetPlayerEntity() {
 	std::vector<Entity*> playerEntities = GetEntitiesByType(ENTITY_PLAYER);
 	if (playerEntities.empty()) {
 		printf("Error: no player found in level\n");
-		return NULL;
+		return nullptr;
 	}
 	return playerEntities[0];
 }
 
 void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
-	Entity* newEntity = NULL;
+	Entity* newEntity = nullptr;
 
 	switch (gid) {
 		case GID_ENTITY_BOX:

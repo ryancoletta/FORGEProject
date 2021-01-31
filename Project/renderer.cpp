@@ -93,7 +93,7 @@ void Renderer::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_R
 	// TODO move elsewhere, "global shader constants"
 	shader->setUniform1f("u_Time", SDL_GetTicks() * 0.01f);
 
-	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, NULL));
+	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr));
 }
 
 void Renderer::clear() const

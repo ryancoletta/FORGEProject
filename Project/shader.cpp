@@ -101,7 +101,7 @@ bool Shader::compile() {
 	const char* tempSource = _vertSource.c_str();
 	_vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	
-	glShaderSource(_vertexShader, 1, &tempSource, NULL);
+	glShaderSource(_vertexShader, 1, &tempSource, nullptr);
 	glCompileShader(_vertexShader);
 
 	GLint compiled = GL_FALSE;

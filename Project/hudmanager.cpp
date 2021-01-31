@@ -11,7 +11,7 @@ HudManager::~HudManager() {
 	clearScreen();
 
 	delete _font;
-	_font = NULL;
+	_font = nullptr;
 }
 
 void HudManager::draw() {
@@ -31,7 +31,7 @@ void HudManager::clearScreen()
 {
 	for (int i = 0; i < _allText.size(); i++) {
 		delete _allText[i];
-		_allText[i] = NULL;
+		_allText[i] = nullptr;
 	}
 	_allText.clear();
 }

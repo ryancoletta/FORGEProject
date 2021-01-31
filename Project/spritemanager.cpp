@@ -27,7 +27,7 @@ SpriteManager::~SpriteManager() {
 
 // TODO eww, I hate all of this
 Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale) {
-	Sprite* newSprite = NULL;
+	Sprite* newSprite = nullptr;
 	if (gid == GID_ENTITY_PLAYER) {
 		Vector2 entityScale = Vector2(48, 48);
 		//newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16,16), entityScale);

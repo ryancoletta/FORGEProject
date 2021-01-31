@@ -11,7 +11,7 @@ Texture::Texture(const std::string& path) :
 	stbi_set_flip_vertically_on_load(0);
 	unsigned char* _localBuffer = stbi_load(path.c_str(), &_width, &_height, &_bpp, 4);
 
-	if (_localBuffer == NULL) {
+	if (_localBuffer == nullptr) {
 		printf("Error: could not load image %s\n", path.c_str());
 	}
 

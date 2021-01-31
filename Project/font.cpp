@@ -24,7 +24,7 @@ Font::~Font() {
 	for (it = _fontMap.begin(); it != _fontMap.end(); it++)
 	{
 		delete it->second;
-		it->second = NULL;
+		it->second = nullptr;
 	}
 	_fontMap.clear();
 }

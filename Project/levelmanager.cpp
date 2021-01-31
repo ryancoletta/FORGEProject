@@ -6,7 +6,7 @@
 #include "level.h"
 
 LevelManager::LevelManager(Uint32 nextLevelEvent) :
-	_currentLevel(NULL),
+	_currentLevel(nullptr),
 	_levelIndex(-1),
 	_nextLevelEvent(nextLevelEvent)
 {}
@@ -30,7 +30,7 @@ bool LevelManager::loadLevel(int levelIndex, Graphics* graphics, EntityManager* 
 	if (levelIndex >= _levelPaths.size()) { return false; }
 
 	_levelIndex = levelIndex;
-	if (_currentLevel != NULL) {
+	if (_currentLevel != nullptr) {
 		clear();
 	}
 	_currentLevel = DBG_NEW Level(this, graphics, &_levelPaths[_levelIndex], entityManager, spriteManager);
@@ -69,5 +69,5 @@ void LevelManager::reset()
 
 void LevelManager::clear() {
 	delete _currentLevel;
-	_currentLevel = NULL;
+	_currentLevel = nullptr;
 }

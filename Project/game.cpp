@@ -46,13 +46,13 @@ Game::~Game() {
 	delete _titleState;
 	delete _levelState;
 
-	_graphics			= NULL;
-	_entityManager		= NULL;
-	_spriteManager		= NULL;
-	_levelManager		= NULL;
-	_input				= NULL;
-	_hudManager			= NULL;
-	_stateMachine		= NULL;
+	_graphics			= nullptr;
+	_entityManager		= nullptr;
+	_spriteManager		= nullptr;
+	_levelManager		= nullptr;
+	_input				= nullptr;
+	_hudManager			= nullptr;
+	_stateMachine		= nullptr;
 }
 
 void Game::play() {
