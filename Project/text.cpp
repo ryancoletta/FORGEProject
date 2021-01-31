@@ -20,10 +20,10 @@ Text::Text(Font* font, std::string text, Vector2 position, TextAlignment alignme
 
 	switch (_alignment) {
 	case MIDDLE_ALIGNED:
-		_rect.x -= _rect.w / 2;
+		_rect.x -= _rect.w / 2.0f - charRect.w / 2.0f * globals::SPRITE_SCALE;
 		break;
 	case RIGHT_ALIGNED:
-		_rect.x -= _rect.w;
+		_rect.x -= _rect.w - charRect.w * globals::SPRITE_SCALE;
 		break;
 	}
 }

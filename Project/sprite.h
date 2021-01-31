@@ -26,6 +26,7 @@ protected:
 	SDL_Rect _sourceRect;
 	Graphics* _graphics;
 	Texture* _texture;
+	Texture* palette;
 	Shader* _shader;
 };
 

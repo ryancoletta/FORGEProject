@@ -158,6 +158,7 @@
     <ClCompile Include="font.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="hudimage.cpp" />
     <ClCompile Include="hudmanager.cpp" />
     <ClCompile Include="indexbuffer.cpp" />
     <ClCompile Include="level.cpp" />
@@ -199,6 +200,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="globals.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="hudimage.h" />
     <ClInclude Include="hudmanager.h" />
     <ClInclude Include="indexbuffer.h" />
     <ClInclude Include="level.h" />

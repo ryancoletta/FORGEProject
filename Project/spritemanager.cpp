@@ -15,7 +15,7 @@ SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationMana
 
 SpriteManager::~SpriteManager() {
 
-	std::multimap<int, Sprite*>::iterator it;
+	std::multimap<std::string, Sprite*>::iterator it;
 	for (it = _loadedSprites.begin(); it != _loadedSprites.end(); it++)
 	{
 		delete it->second;
@@ -25,14 +25,23 @@ SpriteManager::~SpriteManager() {
 	delete _animationManager;
 }
 
-// TODO eww, I hate all of this
+Sprite* SpriteManager::loadSprite(std::string spriteName, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale)
+{
+	if (_loadedSprites.count(spriteName) == 0) {
+		Sprite* newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
+		_loadedSprites.insert(std::pair<std::string, Sprite*>(spriteName, newSprite));
+		return newSprite;
+	}
+	else return _loadedSprites.find(spriteName)->second;
+}
+
+// TODO find a better way
 Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale) {
+	std::string spriteName = "GID NO. " + std::to_string((int)gid);
+	
 	Sprite* newSprite = nullptr;
 	if (gid == GID_ENTITY_PLAYER) {
 		Vector2 entityScale = Vector2(48, 48);
-		//newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16,16), entityScale);
-
-		
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), entityScale, glm::vec2(0,-6));
 		Animation* newAnimation = _animationManager->loadAnimation("player_down", 4, 100, sourcePosition - Vector2(16, 16), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
@@ -69,15 +78,15 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		Animation* newAnimation = _animationManager->loadAnimation("spikes_on", 4, 100, sourcePosition, sourceScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
-	else if (_loadedSprites.count(gid) == 0) {
+	else if (_loadedSprites.count(spriteName) == 0) {
 		newSprite = DBG_NEW Sprite(_graphics, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 	}
 	else { 
-		return _loadedSprites.find(gid)->second;
+		return _loadedSprites.find(spriteName)->second;
 	}
 
 	if (newSprite) {
-		_loadedSprites.insert(std::pair<int, Sprite*>(gid, newSprite));
+		_loadedSprites.insert(std::pair<std::string, Sprite*>(spriteName, newSprite));
 	}
 	return newSprite;
 }

@@ -28,7 +28,7 @@ Game::Game() :
 	_spriteManager		= DBG_NEW SpriteManager(_graphics, _animationManager);
 	_levelManager		= DBG_NEW LevelManager(_nextLevelEvent);
 	_input				= DBG_NEW Input();
-	_hudManager			= DBG_NEW HudManager(_graphics);
+	_hudManager			= DBG_NEW HudManager(_graphics, _spriteManager);
 	_stateMachine		= DBG_NEW StateMachine();
 	_background			= _spriteManager->loadSprite((GidElement)-1, "Assets/background.png", "base.vert", "background.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
@@ -122,8 +122,8 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 
 void Game::TitleState::Enter() {
 	_timer = 0;
-	_owner->_hudManager->writeText("Untitled FORGE Project", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f), MIDDLE_ALIGNED);
-	_startText = _owner->_hudManager->writeText("Press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
+	_startText = _owner->_hudManager->writeText("press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);	
+	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "base.vert", "base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
 void Game::TitleState::Execute(int deltaTimeMs)
