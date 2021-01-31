@@ -197,6 +197,10 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		_levelComplete = true;
 	}
 
+	if (_owner->_input->anyKeyDown()) {
+		_owner->_entityManager->sortEntities();
+	}
+
 	// handle player input
 	if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
 		if (_turn > 0) { 

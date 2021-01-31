@@ -5,12 +5,10 @@ class BoxEntity : public Entity
 public:
 	BoxEntity(Level* level, Sprite* sprite, Tile* startTile);
 
-	void fall(int turn);
+	void kill(int turn) override;
 
 	bool canMove(Vector2 direction) const override;
 	void undo(int turn) override;
 	void reset() override;
-private:
-	int _fallenTurn;
 };
 

@@ -6,14 +6,12 @@
 
 BoxEntity::BoxEntity(Level* level, Sprite* sprite, Tile* startTile) :
 	Entity(ENTITY_BOX, level, sprite, startTile)
-{
-	_fallenTurn = 0;
-}
+{}
 
-void BoxEntity::fall(int turn)
+void BoxEntity::kill(int turn)
 {
 	static_cast<AnimatedSprite*>(_sprite)->playAnimation("box_fall", false);
-	_fallenTurn = turn;
+	Entity::kill(turn);
 }
 
 bool BoxEntity::canMove(Vector2 direction) const
@@ -27,7 +25,7 @@ bool BoxEntity::canMove(Vector2 direction) const
 
 void BoxEntity::undo(int turn)
 {
-	if (turn <= _fallenTurn) {
+	if (!_isAlive && _lastTurnMoved.size() > 0 && _lastTurnMoved.top() >= turn) {
 		static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("box_fall", 0);
 	}
 	Entity::undo(turn);

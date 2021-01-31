@@ -4,6 +4,8 @@
 
 class Input {
 public:
+	bool anyKeyDown();
+
 	bool isKeyHeld(SDL_Scancode key);
 	bool isKeyDown(SDL_Scancode key);
 	bool isKeyUp(SDL_Scancode key);

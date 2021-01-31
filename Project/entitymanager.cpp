@@ -53,12 +53,9 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 
 
 void EntityManager::draw() {
-	sortEntities(); // TODO move this so it doesn't happen every frame
 	for (int i = 0; i < _allEntities.size(); i++)
 	{
-		if (_allEntities[i]->isAlive()) {
-			_allEntities[i]->draw();
-		}
+		_allEntities[i]->draw();
 	}
 }
 
@@ -74,6 +71,7 @@ void EntityManager::undoAll(int turn) {
 	{
 		_allEntities[i]->undo(turn);
 	}
+	sortEntities();
 }
 
 void EntityManager::resetAll() {
@@ -81,6 +79,7 @@ void EntityManager::resetAll() {
 	{
 		_allEntities[i]->reset();
 	}
+	sortEntities();
 }
 
 void EntityManager::clearEntities() {

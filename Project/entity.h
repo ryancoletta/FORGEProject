@@ -50,7 +50,6 @@ protected:
 	Level* _level;
 	Sprite* _sprite;
 	std::stack<Tile*> _tileHistory;
-	bool _isAlive;
-private:
 	std::stack<int> _lastTurnMoved;
+	bool _isAlive;
 };

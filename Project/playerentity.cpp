@@ -51,8 +51,8 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 
 void PlayerEntity::kill(int turn)
 {
-	updateAnimation();
 	Entity::kill(turn);
+	updateAnimation();
 }
 
 void PlayerEntity::updateAnimation()

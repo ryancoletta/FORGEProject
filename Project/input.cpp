@@ -1,6 +1,8 @@
 #include "globals.h"
 #include "input.h"
 
+bool Input::anyKeyDown() { return !_downKeys.empty(); }
+
 bool Input::isKeyHeld(SDL_Scancode key) { return _heldKeys[key]; }
 
 bool Input::isKeyDown(SDL_Scancode key) { return _downKeys[key]; }
