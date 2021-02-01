@@ -4,7 +4,7 @@
   <image source="tile_sprites.png" width="112" height="160"/>
  </tileset>
  <tileset firstgid="71" name="entity_sprites_final" tilewidth="16" tileheight="16" tilecount="32" columns="8">
-  <image source="entity_sprites_final.png" width="128" height="64"/>
+  <image source="entity_sprites.png" width="128" height="64"/>
  </tileset>
  <tileset firstgid="103" name="player_sprite_sheet" tilewidth="16" tileheight="16" tilecount="225" columns="75">
   <image source="player_sprites.png" width="1200" height="48"/>

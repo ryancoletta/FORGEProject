@@ -3,11 +3,12 @@
 #include "texture.h"
 #include "shader.h"
 
-Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
+Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
 	_graphics(graphics),
 	_offset(offset)
 {
 	_texture = _graphics->loadTexture(texturePath);
+	_palette = _graphics->loadTexture(palettePath);
 	_shader = _graphics->loadShader(vertPath, fragPath);
 
 	_sourceRect.x = sourcePosition.x;
@@ -27,7 +28,7 @@ void Sprite::draw(Vector2 position, const float clockWiseAngleRotation)
 		_sourceRect.w * globals::SPRITE_SCALE,
 		_sourceRect.h * globals::SPRITE_SCALE
 	};
-	_graphics->draw(_texture, _shader, _sourceRect, destRect, clockWiseAngleRotation);
+	_graphics->draw(_texture, _palette, _shader, _sourceRect, destRect, clockWiseAngleRotation);
 }
 
 Shader* Sprite::getShader()

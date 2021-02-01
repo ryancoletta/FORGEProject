@@ -5,8 +5,8 @@
 #include "shader.h"
 #include "texture.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
-	Sprite(graphics, texturePath, vertPath, fragPath, sourcePosition, sourceScale, offset),
+AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
+	Sprite(graphics, texturePath, palettePath, vertPath, fragPath, sourcePosition, sourceScale, offset),
 	_frameIndex(0),
 	_timeElapsed(0), 
 	_visible(true), 
@@ -129,6 +129,6 @@ void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) 
 			_sourceRect.h* globals::SPRITE_SCALE
 		};
 		SDL_Rect sourceRect = _animations[_currentAnimationName]->getFrameRect(_frameIndex);
-		_graphics->draw(_texture, _shader, sourceRect, destRect, clockWiseAngleRotation);
+		_graphics->draw(_texture, _palette, _shader, sourceRect, destRect, clockWiseAngleRotation);
 	}
 }

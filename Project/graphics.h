@@ -22,7 +22,7 @@ public:
 	void begin();
 	void render();
 	void clear();
-	void draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
+	void draw(Texture* texture, Texture* Palette, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
 	bool initGL();
 private:
 	Renderer* _renderer;

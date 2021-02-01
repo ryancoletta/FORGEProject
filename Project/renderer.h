@@ -18,7 +18,7 @@ class Renderer {
 public:
 	~Renderer();
 	void init();
-	void draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle);
+	void draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle);
 	void clear() const;
 
 	// stores all of the things I wish to draw and draws them

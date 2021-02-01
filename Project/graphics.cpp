@@ -81,9 +81,9 @@ Shader* Graphics::loadShader(const std::string& vertPath, const std::string& fra
 }
 
 
-void Graphics::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
+void Graphics::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle)
 {
-	_renderer->draw(texture, shader, sourceRect, destRect, clockwiseRotationAngle);
+	_renderer->draw(texture, palette, shader, sourceRect, destRect, clockwiseRotationAngle);
 }
 
 void Graphics::begin()

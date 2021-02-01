@@ -34,9 +34,9 @@ Text* HudManager::writeText(std::string text, Vector2 position, TextAlignment al
 	return newText;
 }
 
-HudImage* HudManager::spawnImage(std::string spriteName, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 destinationPosition)
+HudImage* HudManager::spawnImage(std::string spriteName, const std::string& texturePath, const std::string& palettePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 destinationPosition)
 {
-	Sprite* sprite = _spriteManager->loadSprite(spriteName, texturePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
+	Sprite* sprite = _spriteManager->loadSprite(spriteName, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 	HudImage* newImage = DBG_NEW HudImage(sprite, destinationPosition);
 	_allImages.push_back(newImage);
 	return newImage;

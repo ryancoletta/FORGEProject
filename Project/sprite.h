@@ -11,7 +11,7 @@ class Shader;
 class Sprite
 {
 public:
-	Sprite(Graphics* graphics, const std::string& texturePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset = glm::vec2(0));
+	Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset = glm::vec2(0));
 	virtual ~Sprite() {}
 
 	Shader* getShader();
@@ -26,7 +26,7 @@ protected:
 	SDL_Rect _sourceRect;
 	Graphics* _graphics;
 	Texture* _texture;
-	Texture* palette;
+	Texture* _palette;
 	Shader* _shader;
 };
 

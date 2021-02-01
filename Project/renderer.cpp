@@ -62,10 +62,16 @@ bool Renderer::glCheckError(const char* function, const char* file, int line) {
 	return true;
 }
 
-void Renderer::draw(Texture* texture, Shader* shader, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle)
+void Renderer::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect sourceRect, SDL_Rect destinationRect, const float clockwiseRotationAngle)
 {
 	_vertexArray->bind();
 	_indexBuffer->bind();
+
+	texture->bind(0);
+	palette->bind(1);
+
+	shader->setUniform1i("u_Texture", 0);
+	shader->setUniform1i("u_Palette", 1);
 
 	// sprite transform - move, scale, rotate the sprite within the window
 	glm::vec3 screenSpacePosition = glm::vec3((float)destinationRect.x, (float)destinationRect.y, 0.0f);
