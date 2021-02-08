@@ -151,6 +151,7 @@
     <ClCompile Include="animationmanager.cpp" />
     <ClCompile Include="batentity.cpp" />
     <ClCompile Include="boxentity.cpp" />
+    <ClCompile Include="dynamictile.cpp" />
     <ClCompile Include="holetile.cpp" />
     <ClCompile Include="directionalentity.cpp" />
     <ClCompile Include="entitymanager.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="animationmanager.h" />
     <ClInclude Include="batentity.h" />
     <ClInclude Include="boxentity.h" />
+    <ClInclude Include="dynamictile.h" />
     <ClInclude Include="holetile.h" />
     <ClInclude Include="directionalentity.h" />
     <ClInclude Include="entitymanager.h" />

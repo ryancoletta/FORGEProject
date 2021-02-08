@@ -17,6 +17,9 @@ public:
 	Shader* getShader();
 	Texture* getTexture();
 	SDL_Rect getSourceRect();
+	int getSortingOrder();
+
+	void setSortingOrder(int sortingOrder);
 
 	virtual void update(int deltaTime) {};
 	virtual void draw(Vector2 position, const float clockWiseAngleRotation = 0.0f);
@@ -28,5 +31,6 @@ protected:
 	Texture* _texture;
 	Texture* _palette;
 	Shader* _shader;
+	int _sortingOrder;
 };
 

@@ -4,6 +4,7 @@
 #include <string>
 #include "globals.h"
 #include "sprite.h"
+#include <functional>
 
 class Animation;
 
@@ -14,6 +15,8 @@ public:
 
 	void setVisible(bool visible);
 
+	// pass funciton parameter
+	// function pointers
 	virtual void onAnimationDone(std::string currentAnimationName) {}
 
 	void addAnimation(Animation* animation);

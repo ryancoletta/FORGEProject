@@ -11,16 +11,16 @@ uniform sampler2D u_Texture;
 uniform sampler2D u_Palette;
 
 uniform float u_Time;
+uniform float u_Fade;
 
 vec4 paletteSwap(vec4 baseColor) 
 {
 
-	float increaseAmt = ceil((sin(u_Time * 0.2) / 4.0 + 0.25) * 100) / 100;
-	//increaseAmt = 0;
+	float increaseAmt = 0.5 - u_Fade / 2.0;
 
 	if (baseColor.r > 0.0) 
 	{
-		float colorIndex = 0.0;
+		float colorIndex = 0.0; // y = 0
 		float shadeIndex = 0.5 - baseColor.r / 2;
 		shadeIndex += increaseAmt;
 
@@ -28,7 +28,8 @@ vec4 paletteSwap(vec4 baseColor)
 	}
 	else if (baseColor.g > 0.0) 
 	{
-		float colorIndex = 0.34;
+		// TODO work out the exact number
+		float colorIndex = 0.34; // y = 1
 		float shadeIndex = 0.5 - baseColor.g / 2;
 		shadeIndex += increaseAmt;
 
@@ -36,7 +37,7 @@ vec4 paletteSwap(vec4 baseColor)
 	}
 	else if (baseColor.b > 0.0) 
 	{
-		float colorIndex = 0.67;
+		float colorIndex = 0.67; // y = 2
 		float shadeIndex = 0.5 - baseColor.b / 2;
 		shadeIndex += increaseAmt;
 

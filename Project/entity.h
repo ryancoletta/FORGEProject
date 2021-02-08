@@ -8,10 +8,13 @@ class Tile;
 class Sprite;
 
 enum EntityType {
-	ENTITY_BOX			= 1 << 0,
-	ENTITY_BAT			= 1 << 1,
-	ENTITY_PLAYER		= 1 << 2,
-	ENTITY_SWORD		= 1 << 3,
+	ENTITY_NONE			= 1 << 0,
+	ENTITY_BOX			= 1 << 1,
+	ENTITY_BAT			= 1 << 2,
+	ENTITY_PLAYER		= 1 << 3,
+	ENTITY_SWORD		= 1 << 4,
+	ENTITY_GROUNDED		= ENTITY_BOX | ENTITY_PLAYER,
+	ENTITY_VULNERABLE	= ENTITY_BOX | ENTITY_BAT,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)
@@ -32,16 +35,18 @@ public:
 
 	EntityType getEntityType() const;
 	Tile* getTile() const;
+	Sprite* getSprite() const;
 	Vector2 getCoordinate() const;
 	bool isAlive() const;
 
 	virtual bool canMove(Vector2 direction) const;
-	virtual bool move(int turn, Vector2 direction);
+	virtual bool move(int turn, Vector2 direction, EntityType pushingEntityType = ENTITY_NONE);
 	virtual void undo(int turn);
 	virtual void reset();
 	virtual void draw();
 	virtual void kill(int turn);
-	
+	virtual void revive();
+
 	void update(int deltaTime);
 	void getAllConnected(std::vector<Entity*> &entities, EntityType flags);
 

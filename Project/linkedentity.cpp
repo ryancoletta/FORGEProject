@@ -40,12 +40,12 @@ bool LinkedEntity::canMove(Vector2 direction) const {
 	}
 	return true;
 }
-bool LinkedEntity::move(int turn, Vector2 direction) {
+bool LinkedEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 
 	// must first reorder so whatever is in *direction* goes first
 
 	for (int i = 0; i < _allLinkedEntities.size(); i++) {
-		if (!_allLinkedEntities[i]->Entity::move(turn, direction)) {
+		if (!_allLinkedEntities[i]->Entity::move(turn, direction, pushingEntityType)) {
 			return false;
 		}
 	}

@@ -97,9 +97,11 @@ void EntityManager::sortEntities()
 	{
 		for (int j = 0; j < numEntities - i - 1; j++)
 		{
-			int a = _allEntities[j]->getCoordinate().y;
-			int b = _allEntities[j + 1]->getCoordinate().y;
-			if (a > b) {
+			int aCoord = _allEntities[j]->getCoordinate().y;
+			int bCoord = _allEntities[j + 1]->getCoordinate().y;
+			int aOrder = _allEntities[j]->getSprite()->getSortingOrder();
+			int bOrder = _allEntities[j + 1]->getSprite()->getSortingOrder();
+			if ((aCoord > bCoord && aOrder == bOrder) || aOrder > bOrder) {
 				Entity* temp = _allEntities[j];
 				_allEntities[j] = _allEntities[j + 1];
 				_allEntities[j + 1] = temp;

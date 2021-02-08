@@ -22,19 +22,19 @@ void SwitchTile::findAllSpikeTiles(Level* level)
 
 void SwitchTile::onOccupy(int turn)
 {
-	if (_occupant->getEntityType() == ENTITY_BAT) { return; }
-
-	for (int i = 0; i < _spikeTiles.size(); i++) {
-		_spikeTiles[i]->toggleSpikes(turn);
+	if ((_occupant->getEntityType() & ENTITY_GROUNDED) > 0) { 
+		for (int i = 0; i < _spikeTiles.size(); i++) {
+			_spikeTiles[i]->toggleSpikes(turn);
+		}
 	}
 }
 
 void SwitchTile::onVacate(int turn)
 {
-	if (_occupant->getEntityType() == ENTITY_BAT) { return; }
-
-	for (int i = 0; i < _spikeTiles.size(); i++) {
-		_spikeTiles[i]->toggleSpikes(turn);
+	if ((_occupant->getEntityType() & ENTITY_GROUNDED) > 0) {
+		for (int i = 0; i < _spikeTiles.size(); i++) {
+			_spikeTiles[i]->toggleSpikes(turn);
+		}
 	}
 }
 

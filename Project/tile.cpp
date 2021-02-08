@@ -23,7 +23,7 @@ Entity* Tile::getOccupant() const { return _occupant; }
 
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 
-void Tile::vacate(int turn, bool triggerOnVacate) {
+void Tile::vacate(int turn, bool triggerOnVacate) { // TODO add the immigrant
 	if (triggerOnVacate) { onVacate(turn); }
 	_occupant = nullptr;
 }

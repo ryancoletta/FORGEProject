@@ -1,12 +1,11 @@
 #pragma once
 #include "globals.h"
-#include "tile.h"
-#include <stack>
+#include "dynamictile.h"
 
 class Sprite;
 enum EntityType;
 
-class HoleTile : public Tile
+class HoleTile : public DynamicTile
 {
 public:
 	HoleTile(Sprite* sprite, Vector2 coordinate, Vector2 position);

@@ -95,7 +95,7 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="45"/>
+   <tile gid="26"/>
    <tile gid="48"/>
    <tile gid="45"/>
    <tile gid="26"/>
@@ -111,9 +111,9 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="45"/>
+   <tile gid="26"/>
    <tile gid="33"/>
-   <tile gid="45"/>
+   <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>
@@ -191,7 +191,7 @@
    <tile/>
    <tile/>
    <tile gid="8"/>
-   <tile gid="26"/>
+   <tile gid="44"/>
    <tile gid="26"/>
    <tile gid="26"/>
    <tile gid="26"/>

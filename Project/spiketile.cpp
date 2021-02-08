@@ -2,40 +2,34 @@
 #include "entity.h"
 #include "animatedsprite.h"
 #include "playerentity.h"
-SpikeTile::SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool isOn) :
-	Tile(TILE_SPIKE, sprite, coordinate, position),
-	_isOn(isOn)
+SpikeTile::SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage) :
+	DynamicTile(TILE_SPIKE, sprite, coordinate, position, startingStage)
 {}
 
 void SpikeTile::toggleSpikes(int turn)
 {
-	_isOn = !_isOn;
-	static_cast<AnimatedSprite*>(_sprite)->playAnimation("spikes_on", false, true, !_isOn);
-	_lastTurnToggled.push(turn);
+	int toggleStage = (_stageHistory.top() + 1) % 2;
+	_stageHistory.push(toggleStage);
+	static_cast<AnimatedSprite*>(_sprite)->playAnimation("spikes_on", false, true, !_stageHistory.top());
+	_lastTurnModified.push(turn);
 	tryHurtOccupant(turn);
 }
 
 void SpikeTile::undo(int turn)
 {
-	if (_lastTurnToggled.size() > 0 && _lastTurnToggled.top() >= turn) {
-		_lastTurnToggled.pop();
-		_isOn = !_isOn;
-	}
-	static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("spikes_on", _isOn ? 3 : 0);
+	DynamicTile::undo(turn);
+	static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("spikes_on", _stageHistory.top() ? 3 : 0);
 }
 
 void SpikeTile::reset()
 {
-	while (_lastTurnToggled.size() > 0) {
-		_lastTurnToggled.pop();
-		_isOn = !_isOn;
-	}
-	static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("spikes_on", _isOn ? 3 : 0);
+	DynamicTile::reset();
+	static_cast<AnimatedSprite*>(_sprite)->jumpToFrame("spikes_on", _stageHistory.top() ? 3 : 0);
 }
 
 bool SpikeTile::isBlocked(EntityType entrant) const
 {
-	if (_isOn && entrant == ENTITY_BOX) {
+	if (_stageHistory.top() && (entrant & ENTITY_GROUNDED) > 0) {
 		return true;
 	}
 	return false;
@@ -48,7 +42,7 @@ void SpikeTile::onOccupy(int turn)
 
 void SpikeTile::tryHurtOccupant(int turn)
 {
-	if (_isOn && _occupant && _occupant->getEntityType() == ENTITY_PLAYER) {
+	if (_stageHistory.top() && _occupant && _occupant->getEntityType() == ENTITY_PLAYER) {
 		static_cast<PlayerEntity*>(_occupant)->kill(turn);
 	}
 }

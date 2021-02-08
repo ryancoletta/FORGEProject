@@ -28,12 +28,15 @@ private:
 	public:
 		BaseState(Game* owner);
 
-		virtual void Enter() override {};
+		virtual void Enter() override;
 		virtual void Execute(int deltaTimeMs) override;
 		virtual void Exit() override {};
 	protected:
 		Game* _owner;
 		SDL_Event _event;
+		bool _stateComplete;
+		float _fade;
+		float _maxFadeMs = 700.0f;
 	};
 
 	class TitleState : public BaseState
@@ -46,6 +49,7 @@ private:
 		void Exit() override;
 	private:
 		Text* _startText;
+		Text* _creditText;
 		float _timer;
 	};
 
@@ -60,9 +64,6 @@ private:
 	private:
 		int _turn;
 		PlayerEntity* _playerEntity;
-		bool _levelComplete;
-		float _fade;
-		float _maxFadeMs = 500.0f;
 	};
 
 	void draw();

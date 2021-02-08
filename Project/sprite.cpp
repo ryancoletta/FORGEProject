@@ -5,7 +5,8 @@
 
 Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
 	_graphics(graphics),
-	_offset(offset)
+	_offset(offset),
+	_sortingOrder(0)
 {
 	_texture = _graphics->loadTexture(texturePath);
 	_palette = _graphics->loadTexture(palettePath);
@@ -45,3 +46,7 @@ SDL_Rect Sprite::getSourceRect()
 {
 	return _sourceRect;
 }
+
+int Sprite::getSortingOrder() { return _sortingOrder; }
+
+void Sprite::setSortingOrder(int sortingOrder) { _sortingOrder = sortingOrder; }

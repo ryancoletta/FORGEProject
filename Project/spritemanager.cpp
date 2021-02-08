@@ -7,6 +7,7 @@
 #include "animationmanager.h"
 #include "level.h"
 #include "sprite.h"
+#include "shader.h"
 
 SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationManager) :
 	_graphics(graphics),
@@ -89,6 +90,15 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		_loadedSprites.insert(std::pair<std::string, Sprite*>(spriteName, newSprite));
 	}
 	return newSprite;
+}
+
+void SpriteManager::updateAllSpriteFade(float newFade)
+{
+	std::multimap<std::string, Sprite*>::iterator it;
+	for (it = _loadedSprites.begin(); it != _loadedSprites.end(); it++)
+	{
+		it->second->getShader()->setUniform1f("u_Fade", newFade);
+	}
 }
 
 

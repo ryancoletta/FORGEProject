@@ -8,9 +8,12 @@ BoxEntity::BoxEntity(Level* level, Sprite* sprite, Tile* startTile) :
 	Entity(ENTITY_BOX, level, sprite, startTile)
 {}
 
+
+// TODO add an update funciton, check to see if A you're in the box_fall animation and B it is complete, then kill
 void BoxEntity::kill(int turn)
 {
 	static_cast<AnimatedSprite*>(_sprite)->playAnimation("box_fall", false);
+	// TODO add pending turns function
 	Entity::kill(turn);
 }
 

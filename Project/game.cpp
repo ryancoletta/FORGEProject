@@ -94,6 +94,11 @@ void Game::update(int deltaTime) {
 Game::BaseState::BaseState(Game* owner) : _owner(owner)
 {}
 
+void Game::BaseState::Enter() {
+	_fade = 0.0f;
+	_stateComplete = false;
+}
+
 void Game::BaseState::Execute(int deltaTimeMs)
 {
 	_owner->_input->beginNewFrame();
@@ -113,6 +118,18 @@ void Game::BaseState::Execute(int deltaTimeMs)
 	if (_owner->_input->isKeyDown(SDL_SCANCODE_ESCAPE)) {
 		_owner->_gameOver = true;
 	}
+
+	// fade in and out
+	if (!_stateComplete && _fade < 1.0f) {
+		_fade += deltaTimeMs / _maxFadeMs;
+		_owner->_spriteManager->updateAllSpriteFade(std::min(_fade, 0.99f));
+		return;
+	}
+	else if (_stateComplete && _fade > 0.0f) {
+		_fade -= deltaTimeMs / _maxFadeMs;
+		_owner->_spriteManager->updateAllSpriteFade(std::max(_fade, 0.0f));
+		return;
+	}
 }
 
 // ----------------------------------------------------------------------------------------------------------
@@ -121,8 +138,10 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 {}
 
 void Game::TitleState::Enter() {
+	BaseState::Enter();
 	_timer = 0;
-	_startText = _owner->_hudManager->writeText("press SPACE to start", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);	
+	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
+	_creditText = _owner->_hudManager->writeText("@RyGuyDev", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
 	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "base.vert", "base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
@@ -130,13 +149,19 @@ void Game::TitleState::Execute(int deltaTimeMs)
 {
 	BaseState::Execute(deltaTimeMs);
 	
-	_timer += deltaTimeMs;
-	bool visible = floor(std::fmod(_timer / 300, 2)) == 0.0f;
-	_startText->setVisibility(visible);
-	//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
+	if (_stateComplete && _fade <= 0.0f) {
+		_owner->_stateMachine->ChangeState(_owner->_levelState);
+		return;
+	}
+	else {
+		_timer += deltaTimeMs;
+		bool visible = floor(std::fmod(_timer / 300, 2)) == 0.0f;
+		_startText->setVisibility(visible);
+		//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
 
-	if (_owner->_input->isKeyDown(SDL_SCANCODE_SPACE)) {
-		TitleState::_owner->_stateMachine->ChangeState(_owner->_levelState);
+		if (_owner->_input->isKeyDown(SDL_SCANCODE_SPACE)) {
+			_stateComplete = true;
+		}
 	}
 }
 
@@ -151,8 +176,7 @@ Game::LevelState::LevelState(Game* owner) : BaseState(owner)
 
 void Game::LevelState::Enter()
 {
-	_fade = 0.0f;
-	_levelComplete = false;
+	BaseState::Enter();
 	_turn = 0;
 	if (!_owner->_levelManager->loadNextLevel(_owner->_graphics, _owner->_entityManager, _owner->_spriteManager)) {
 		printf("No more levels remain");
@@ -178,59 +202,51 @@ void Game::LevelState::Execute(int deltaTimeMs)
 {
 	BaseState::Execute(deltaTimeMs);
 
-	// fade in and out
-	if (!_levelComplete && _fade < 1.0f) {
-		_fade += deltaTimeMs / _maxFadeMs;
-		return;
-	}
-	else if (_levelComplete && _fade > 0.0f) {
-		_fade -= deltaTimeMs / _maxFadeMs;
-		return;
-	}
-	else if (_levelComplete) {
+	if (_stateComplete && _fade <= 0.0f) {
 		_owner->_stateMachine->ChangeState(_owner->_levelState);
 		return;
 	}
-
-	// look for a next level event
-	if (_event.type == _owner->_nextLevelEvent) {
-		_levelComplete = true;
-	}
-
-	if (_owner->_input->anyKeyDown()) {
-		_owner->_entityManager->sortEntities();
-	}
-
-	// handle player input
-	if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
-		if (_turn > 0) { 
-			_turn--;
-			_owner->_entityManager->undoAll(_turn);
-			_owner->_levelManager->undo(_turn);
+	else if (_fade >= 1.0f) {
+		// look for a next level event
+		if (_event.type == _owner->_nextLevelEvent) {
+			_stateComplete = true;
 		}
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
-		if (_turn != 0) {
-			_owner->_entityManager->resetAll();
-			_owner->_levelManager->reset();
-			_turn = 0;
+
+		if (_owner->_input->anyKeyDown()) {
+			_owner->_entityManager->sortEntities();
 		}
-	}
-	// only undo availible to dead players
-	else if (!_playerEntity->isAlive()) {
-		return;
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
-		if (_playerEntity->move(_turn, Vector2::down())) { _turn++; }
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_RIGHT)) {
-		if (_playerEntity->move(_turn, Vector2::right())) { _turn++; }
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_DOWN)) {
-		if (_playerEntity->move(_turn, Vector2::up())) { _turn++; }
-	}
-	else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
-		if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
+
+		// handle player input
+		if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
+			if (_turn > 0) {
+				_turn--;
+				_owner->_entityManager->undoAll(_turn);
+				_owner->_levelManager->undo(_turn);
+			}
+		}
+		else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
+			if (_turn != 0) {
+				_owner->_entityManager->resetAll();
+				_owner->_levelManager->reset();
+				_turn = 0;
+			}
+		}
+		// only undo availible to dead players
+		else if (!_playerEntity->isAlive()) {
+			return;
+		}
+		else if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
+			if (_playerEntity->move(_turn, Vector2::down())) { _turn++; }
+		}
+		else if (_owner->_input->isKeyDown(SDL_SCANCODE_RIGHT)) {
+			if (_playerEntity->move(_turn, Vector2::right())) { _turn++; }
+		}
+		else if (_owner->_input->isKeyDown(SDL_SCANCODE_DOWN)) {
+			if (_playerEntity->move(_turn, Vector2::up())) { _turn++; }
+		}
+		else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
+			if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
+		}
 	}
 }
 

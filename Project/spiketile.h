@@ -1,11 +1,11 @@
 #pragma once
-#include "tile.h"
+#include "dynamictile.h"
 #include <stack>
 
-class SpikeTile : public Tile
+class SpikeTile : public DynamicTile
 {
 public:
-	SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool isOn);
+	SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage);
 	void toggleSpikes(int turn);
 	void undo(int turn) override;
 	void reset() override;
@@ -14,7 +14,5 @@ protected:
 	void onOccupy(int turn) override;
 private:
 	void tryHurtOccupant(int turn);
-	bool _isOn;
-	std::stack<int> _lastTurnToggled;
 };
 

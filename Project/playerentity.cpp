@@ -8,7 +8,7 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
 {}
 
-bool PlayerEntity::move(int turn, Vector2 direction) {
+bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
 	switch (dot) {
 		// move to the right or left
@@ -30,13 +30,13 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 			else if (aheadTile->isOccupied()) {
 				Entity* toPush = aheadTile->getOccupant();
 				if (!toPush->canMove(direction)) {
-					if (toPush->getEntityType() == ENTITY_BAT) {
+					if ((toPush->getEntityType() & ENTITY_VULNERABLE) > 0) {
 						toPush->kill(turn);
 					}
 					else return false;
 				}
-				toPush->move(turn, direction);
-				return Entity::move(turn, direction);
+				toPush->move(turn, direction, ENTITY_SWORD);
+				return Entity::move(turn, direction, pushingEntityType);
 			}
 		}
 		// move backward
@@ -44,7 +44,19 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 			if (!canMove(direction)) {
 				return false;
 			}
-			return Entity::move(turn, direction);
+
+			// player dies when they touch a bat
+			Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
+			Tile* newTile = _level->getTile(newCoordinate);
+			if (newTile->isOccupied()) {
+				Entity* toPush = newTile->getOccupant();
+				if (toPush->getEntityType() == ENTITY_BAT) {
+					toPush->kill(turn);
+					kill(turn);
+				}
+			}
+
+			return Entity::move(turn, direction, pushingEntityType);
 		}
 	}
 }
@@ -52,6 +64,7 @@ bool PlayerEntity::move(int turn, Vector2 direction) {
 void PlayerEntity::kill(int turn)
 {
 	Entity::kill(turn);
+	_sprite->setSortingOrder(1); // unlike other deaths, we DONT want the player sprite sorted to the bottom
 	updateAnimation();
 }
 
@@ -124,8 +137,8 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 		}
 	}
 
-	if (diagonalEntity) { diagonalEntity->move(turn, direction); }
-	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection); }
+	if (diagonalEntity) { diagonalEntity->move(turn, direction, ENTITY_SWORD); }
+	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection, ENTITY_SWORD); }
 
 	_facingHistory.push(direction);
 	_lastTurnTurned.push(turn);

@@ -97,7 +97,7 @@ void Renderer::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect
 	shader->setUniform2f("u_UVScale", uvScale.x, uvScale.y);
 
 	// TODO move elsewhere, "global shader constants"
-	shader->setUniform1f("u_Time", SDL_GetTicks() * 0.01f);
+	shader->setUniform1f("u_Time", SDL_GetTicks() * 0.01f); //TODO ticks might be calling the performance counter, get current frame time and pass down for the entire draw
 
 	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr));
 }

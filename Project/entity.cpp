@@ -23,6 +23,8 @@ EntityType Entity::getEntityType() const { return _entityType; }
 
 Tile* Entity::getTile() const { return _tileHistory.top(); }
 
+Sprite* Entity::getSprite() const { return _sprite; }
+
 Vector2 Entity::getCoordinate() const { return getTile()->getCoordinate(); }
 
 bool Entity::isAlive() const { return _isAlive; }
@@ -45,22 +47,26 @@ bool Entity::canMove(Vector2 direction) const {
 	return false;
 }
 
-bool Entity::move(int turn, Vector2 direction) {
+bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
+		Entity* toPush = nullptr;
 		if (newTile->isBlocked(_entityType)) {
 			return false;
 		}
 		else if (newTile->isOccupied()) {
-			Entity* toPush = newTile->getOccupant();
-			if (!toPush->move(turn, direction)) {
+			toPush = newTile->getOccupant();
+			if (!toPush->move(turn, direction, _entityType)) {
 				return false;
 			}
 		}
-		_tileHistory.top()->vacate(turn);
+		bool pushingEntityIsGrounded = (pushingEntityType & ENTITY_GROUNDED) > 0;
+		bool thisEntityIsGrounded = (_entityType & ENTITY_GROUNDED) > 0;
+		bool pushedEntityIsGrounded = toPush ? (toPush->getEntityType() & ENTITY_GROUNDED) > 0 : false;
+		_tileHistory.top()->vacate(turn, !pushingEntityIsGrounded && thisEntityIsGrounded);
 		_tileHistory.push(newTile);
-		_tileHistory.top()->occupy(this, turn);
+		_tileHistory.top()->occupy(this, turn, !pushedEntityIsGrounded && thisEntityIsGrounded);
 		_lastTurnMoved.push(turn);
 
 		return true;
@@ -72,9 +78,11 @@ void Entity::undo(int turn) {
 	while (_lastTurnMoved.size() > 0 && _lastTurnMoved.top() >= turn) {
 		// revive
 		if (!_isAlive) {
-			_lastTurnMoved.pop();
-			_isAlive = true;
-			_tileHistory.top()->occupy(this, turn, false); // TODO dangerous, this tile might be occupied alriedy
+			revive();
+			if (_tileHistory.top()->isOccupied()) {
+				_tileHistory.top()->getOccupant()->undo(turn); // if this tile is already occupied, let them go first
+			}
+			_tileHistory.top()->occupy(this, turn, false); 
 			continue;
 		}
 
@@ -95,8 +103,7 @@ void Entity::undo(int turn) {
 void Entity::reset() {
 	// revive if dead
 	if (!_isAlive) {
-		_isAlive = true;
-		_lastTurnMoved.pop();
+		revive();
 	}
 	else {
 		_tileHistory.top()->vacate(0, false);
@@ -122,16 +129,26 @@ void Entity::update(int deltaTime) {
 }
 
 void Entity::draw() {
+	assert(_sprite != nullptr);
+
 	_sprite->draw(_tileHistory.top()->getPosition());
 }
 
 void Entity::kill(int turn)
 {
-	if (_isAlive) {
-		_isAlive = false;
-		_lastTurnMoved.push(turn);
-		_tileHistory.top()->vacate(turn);
-	}
+	assert(_isAlive); // should not kill after already killed
+
+	_isAlive = false;
+	_lastTurnMoved.push(turn);
+	_tileHistory.top()->vacate(turn);
+	_sprite->setSortingOrder(-1);
+}
+
+void Entity::revive()
+{
+	_isAlive = true;
+	_lastTurnMoved.pop();
+	_sprite->setSortingOrder(0);
 }
 
 void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {
