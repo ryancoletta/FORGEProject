@@ -42,7 +42,12 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 		case GID_ENTITY_BAT:
 			newEntity = DBG_NEW BatEntity(level, sprite, startTile);
 			break;
-		case GID_ENTITY_PLAYER:
+		case GID_ENTITY_PLAYER_DOWN:
+		case GID_ENTITY_PLAYER_LEFT:
+		case GID_ENTITY_PLAYER_UP:
+		case GID_ENTITY_PLAYER_RIGHT:
+			float rotation = -90 * (gid - GID_ENTITY_PLAYER_DOWN) / 4;
+			facing = Vector2::rotate(Vector2::up(), rotation);
 			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, facing);
 			break;
 	}

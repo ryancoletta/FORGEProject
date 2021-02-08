@@ -118,8 +118,8 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							// get the position of tile in the level
 							int x = tileCounter % _levelSize.x;
 							int y = tileCounter / _levelSize.x;
-							int posX = x * tileWidth * globals::SPRITE_SCALE;
-							int posY = y * tileHeight * globals::SPRITE_SCALE;
+							int posX = (x + 0.5) * tileWidth * globals::SPRITE_SCALE;
+							int posY = (y + 0.5) * tileHeight * globals::SPRITE_SCALE;
 							Vector2 finalTilePosition = Vector2(posX, posY);
 
 							// calculate the position of the tile in the tileset, reading from the top left

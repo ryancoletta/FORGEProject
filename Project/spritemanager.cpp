@@ -41,12 +41,12 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 	std::string spriteName = "GID NO. " + std::to_string((int)gid);
 	std::string palettePath = "Assets/tile_palette_NES.png";
 	Sprite* newSprite = nullptr;
-	if (gid == GID_ENTITY_PLAYER) {
+	if (gid == GID_ENTITY_PLAYER_DOWN || gid == GID_ENTITY_PLAYER_LEFT || gid == GID_ENTITY_PLAYER_UP || gid == GID_ENTITY_PLAYER_RIGHT) {
 		Vector2 entityScale = Vector2(48, 48);
+		sourcePosition -= Vector2(16, 0) * (gid - GID_ENTITY_PLAYER_DOWN);
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition - Vector2(16, 16), entityScale, glm::vec2(0,-6));
 		Animation* newAnimation = _animationManager->loadAnimation("player_down", 4, 100, sourcePosition - Vector2(16, 16), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
-		static_cast<AnimatedSprite*>(newSprite)->playAnimation("player_down", true);
 
 		newAnimation = _animationManager->loadAnimation("player_left", 4, 100, sourcePosition - Vector2(16, 16) + Vector2(64 * 3, 0), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);

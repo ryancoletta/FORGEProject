@@ -6,7 +6,9 @@
 
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
-{}
+{
+	updateAnimation();
+}
 
 bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
@@ -41,10 +43,6 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 		}
 		// move backward
 		case -1: {
-			if (!canMove(direction)) {
-				return false;
-			}
-
 			// player dies when they touch a bat
 			Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 			Tile* newTile = _level->getTile(newCoordinate);
@@ -54,6 +52,10 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 					toPush->kill(turn);
 					kill(turn);
 				}
+			}
+
+			if (!canMove(direction)) {
+				return false;
 			}
 
 			return Entity::move(turn, direction, pushingEntityType);
