@@ -14,7 +14,7 @@ enum EntityType {
 	ENTITY_PLAYER		= 1 << 3,
 	ENTITY_SWORD		= 1 << 4,
 	ENTITY_GROUNDED		= ENTITY_BOX | ENTITY_PLAYER,
-	ENTITY_VULNERABLE	= ENTITY_BOX | ENTITY_BAT,
+	ENTITY_VULNERABLE	= ENTITY_BAT,
 };
 
 inline EntityType operator|(EntityType a, EntityType b)

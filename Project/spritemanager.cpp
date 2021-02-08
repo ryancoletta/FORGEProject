@@ -67,10 +67,14 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
 	else if (gid == GID_ENTITY_BAT) {
-		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition, sourceScale, glm::vec2(3, -9));
-		Animation* newAnimation = _animationManager->loadAnimation("goon_idle", 5, 100, sourcePosition, sourceScale);
+		Vector2 entityScale = Vector2(16, 32);
+		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition, entityScale, glm::vec2(0, -27));
+		Animation* newAnimation = _animationManager->loadAnimation("bat_idle", 5, 100, sourcePosition, entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
-		static_cast<AnimatedSprite*>(newSprite)->playAnimation("goon_idle", true);
+		static_cast<AnimatedSprite*>(newSprite)->playAnimation("bat_idle", true);
+
+		newAnimation = _animationManager->loadAnimation("bat_crushed", 7, 100, sourcePosition + Vector2(16 * 5, 0), entityScale);
+		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
 	else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition, sourceScale);

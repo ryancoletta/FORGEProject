@@ -23,9 +23,9 @@ void AnimatedSprite::addAnimation(Animation* animation) {
 }
 
 void AnimatedSprite::playAnimation(std::string animationName, bool isLoop, bool resetFrameIndex, bool inReverse) {
-	if (_animations.count(animationName) == 0) {
-		printf("Error: animation not found");
-	}
+	
+	assert(_animations.count(animationName) > 0); // animation not found
+	
 	_active = true;
 	_isLoop = isLoop;
 	_inReverse = inReverse;
