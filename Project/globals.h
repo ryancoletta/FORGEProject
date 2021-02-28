@@ -19,6 +19,8 @@ namespace globals {
 	const int SPRITE_SCALE = 3;
 	const int WINDOW_WIDTH = 256 * SPRITE_SCALE;
 	const int WINDOW_HEIGHT = 256 * SPRITE_SCALE;
+	const float MAX_SPRITE_FADE_TIME = 750.0f;
+	const float MAX_TIME_TILL_HELP_TEXT_DISPLAYED = 5000.0f;
 }
 
 struct Vector2 {

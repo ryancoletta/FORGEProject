@@ -62,6 +62,9 @@ void Shader::setUniformMat4f(const std::string& name, const glm::mat4& matrix)
 
 int Shader::getUniformLocation(const std::string& name)
 {
+	// TODO cache at startup the shader locations
+	// TODO high performance code should not use strings, GENERALLY, use index
+
 	if (_uniformLocationCache.find(name) != _uniformLocationCache.end()) {
 		return _uniformLocationCache[name];
 	}

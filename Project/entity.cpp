@@ -57,10 +57,14 @@ bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 		}
 		else if (newTile->isOccupied()) {
 			toPush = newTile->getOccupant();
+
+			assert(toPush != this); // stop pushing yourself!
+
 			if (!toPush->move(turn, direction, _entityType)) {
 				return false;
 			}
 		}
+
 		bool pushingEntityIsGrounded = (pushingEntityType & ENTITY_GROUNDED) > 0;
 		bool thisEntityIsGrounded = (_entityType & ENTITY_GROUNDED) > 0;
 		bool pushedEntityIsGrounded = toPush ? (toPush->getEntityType() & ENTITY_GROUNDED) > 0 : false;

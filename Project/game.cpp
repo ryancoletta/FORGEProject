@@ -97,6 +97,7 @@ Game::BaseState::BaseState(Game* owner) : _owner(owner)
 void Game::BaseState::Enter() {
 	_fade = 0.0f;
 	_stateComplete = false;
+	_stateEnterTime = SDL_GetTicks();
 }
 
 void Game::BaseState::Execute(int deltaTimeMs)
@@ -121,13 +122,13 @@ void Game::BaseState::Execute(int deltaTimeMs)
 
 	// fade in and out
 	if (!_stateComplete && _fade < 1.0f) {
-		_fade += deltaTimeMs / _maxFadeMs;
+		_fade += deltaTimeMs / globals::MAX_SPRITE_FADE_TIME;
 		_owner->_spriteManager->updateAllSpriteFade(std::min(_fade, 0.99f));
 		return;
 	}
 	else if (_stateComplete && _fade > 0.0f) {
-		_fade -= deltaTimeMs / _maxFadeMs;
-		_owner->_spriteManager->updateAllSpriteFade(std::max(_fade, 0.0f));
+		_fade -= deltaTimeMs / globals::MAX_SPRITE_FADE_TIME;
+		_owner->_spriteManager->updateAllSpriteFade(std::max(std::min(_fade, 0.99f), 0.0f));
 		return;
 	}
 }
@@ -139,7 +140,6 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 
 void Game::TitleState::Enter() {
 	BaseState::Enter();
-	_timer = 0;
 	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
 	_creditText = _owner->_hudManager->writeText("@RyGuyDev", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
 	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "base.vert", "base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
@@ -154,8 +154,8 @@ void Game::TitleState::Execute(int deltaTimeMs)
 		return;
 	}
 	else {
-		_timer += deltaTimeMs;
-		bool visible = floor(std::fmod(_timer / 300, 2)) == 0.0f;
+		float timeSinceEntry = SDL_GetTicks() - _stateEnterTime;
+		bool visible = floor(std::fmod(timeSinceEntry / 300, 2)) == 0.0f;
 		_startText->setVisibility(visible);
 		//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
 
@@ -195,6 +195,9 @@ void Game::LevelState::Enter()
 		// display the level number
 		int levelNumber = _owner->_levelManager->getLevelIndex() + 1;
 		_owner->_hudManager->writeText("Level " + std::to_string(levelNumber), Vector2(globals::WINDOW_WIDTH - 30.0f, globals::WINDOW_HEIGHT - 30.0f), RIGHT_ALIGNED);
+
+		_helpText = _owner->_hudManager->writeText("Z to undo | R to reset", Vector2(globals::WINDOW_WIDTH / 2.0f, 50.0f), MIDDLE_ALIGNED);
+		_helpText->setVisibility(false);
 	}
 }
 
@@ -216,7 +219,7 @@ void Game::LevelState::Execute(int deltaTimeMs)
 			_owner->_entityManager->sortEntities();
 		}
 
-		// handle player input
+		// undo and reset
 		if (_owner->_input->isKeyDown(SDL_SCANCODE_Z)) {
 			if (_turn > 0) {
 				_turn--;
@@ -231,10 +234,11 @@ void Game::LevelState::Execute(int deltaTimeMs)
 				_turn = 0;
 			}
 		}
-		// only undo availible to dead players
+		// dead players cannot access the below
 		else if (!_playerEntity->isAlive()) {
 			return;
 		}
+		// handle movement
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
 			if (_playerEntity->move(_turn, Vector2::down())) { _turn++; }
 		}
@@ -247,6 +251,16 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
 			if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
 		}
+		else {
+			// we only want to display the help text if the player hasn't had an input for X seconds
+			float timeSinceEntry = SDL_GetTicks() - _timeSinceLastMove;
+			if (timeSinceEntry > globals::MAX_TIME_TILL_HELP_TEXT_DISPLAYED) {
+				_helpText->setVisibility(true);
+			}
+			return;
+		}
+		_timeSinceLastMove = SDL_GetTicks();
+		_helpText->setVisibility(false);
 	}
 }
 

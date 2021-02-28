@@ -8,6 +8,8 @@
 #include "vertexarray.h"
 #include "texture.h"
 
+Graphics* Graphics::instance = nullptr;
+
 Graphics::Graphics()
 {
 	_window = SDL_CreateWindow("FORGE Project", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);

@@ -35,8 +35,8 @@ private:
 		Game* _owner;
 		SDL_Event _event;
 		bool _stateComplete;
+		float _stateEnterTime;
 		float _fade;
-		float _maxFadeMs = 700.0f;
 	};
 
 	class TitleState : public BaseState
@@ -50,7 +50,6 @@ private:
 	private:
 		Text* _startText;
 		Text* _creditText;
-		float _timer;
 	};
 
 	class LevelState : public BaseState
@@ -64,6 +63,8 @@ private:
 	private:
 		int _turn;
 		PlayerEntity* _playerEntity;
+		Text* _helpText;
+		float _timeSinceLastMove;
 	};
 
 	void draw();

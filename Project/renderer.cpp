@@ -9,6 +9,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "texture.h"
 
+std::string Renderer::shaderTextureVar = "u_Texture";
+std::string Renderer::shaderPaletteVar = "u_Palette";
+std::string Renderer::shaderMVPVar = "u_MVP";
+std::string Renderer::shaderUVOffsetVar = "u_UVOffset";
+std::string Renderer::shaderUVScaleVar = "u_UVScale";
+std::string Renderer::shaderTimeVar = "u_Time";
+
 Renderer::~Renderer()
 {
 	delete _vertexBuffer;
@@ -70,8 +77,8 @@ void Renderer::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect
 	texture->bind(0);
 	palette->bind(1);
 
-	shader->setUniform1i("u_Texture", 0);
-	shader->setUniform1i("u_Palette", 1);
+	shader->setUniform1i(shaderTextureVar, 0);
+	shader->setUniform1i(shaderPaletteVar, 1);
 
 	// sprite transform - move, scale, rotate the sprite within the window
 	glm::vec3 screenSpacePosition = glm::vec3((float)destinationRect.x, (float)destinationRect.y, 0.0f);
@@ -84,7 +91,7 @@ void Renderer::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect
 	glm::mat4 ctm = modelPositionMatrix * modelScaleMatrix * modelRotationMatrix;
 	glm::mat4 mvp = projectionMatrix * ctm;  
 
-	shader->setUniformMat4f("u_MVP", mvp);
+	shader->setUniformMat4f(shaderMVPVar, mvp);
 
 	// sprite sheet lookup - modify the UV to capture the correct sprite
 	float w = texture->getWidth();
@@ -93,11 +100,11 @@ void Renderer::draw(Texture* texture, Texture* palette, Shader* shader, SDL_Rect
 	// accounts for the fact that GL coords start from the bottom left and SDL coords start from the top left
 	glm::vec2 uvOffset = glm::vec2((float)(sourceRect.x / w), (float)((h - sourceRect.y - sourceRect.h) / h));
 	glm::vec2 uvScale = glm::vec2((float)sourceRect.w / w, (float)sourceRect.h / h);
-	shader->setUniform2f("u_UVOffset", uvOffset.x, uvOffset.y);
-	shader->setUniform2f("u_UVScale", uvScale.x, uvScale.y);
+	shader->setUniform2f(shaderUVOffsetVar, uvOffset.x, uvOffset.y);
+	shader->setUniform2f(shaderUVScaleVar, uvScale.x, uvScale.y);
 
 	// TODO move elsewhere, "global shader constants"
-	shader->setUniform1f("u_Time", SDL_GetTicks() * 0.01f); //TODO ticks might be calling the performance counter, get current frame time and pass down for the entire draw
+	shader->setUniform1f(shaderTimeVar, SDL_GetTicks() * 0.01f); //TODO ticks might be calling the performance counter, get current frame time and pass down for the entire draw
 
 	GLCall(glDrawElements(GL_TRIANGLES, _indexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr));
 }

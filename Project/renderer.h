@@ -2,6 +2,7 @@
 #include "globals.h"
 #include <GL/glew.h>
 #include <SDL_rect.h>
+#include <string>
 
 #define ASSERT(x) if (!(x)) __debugbreak();
 #define GLCall(x) Renderer::glClearError();\
@@ -25,6 +26,13 @@ public:
 	// submit(va, material, transform)
 	// vedrtex AND index buffers are all the same for a 2d game (quads)
 	// sprite needs a UV transform and a positionary Transform
+
+	static std::string shaderTextureVar;
+	static std::string shaderPaletteVar;
+	static std::string shaderMVPVar;
+	static std::string shaderUVOffsetVar;
+	static std::string shaderUVScaleVar;
+	static std::string shaderTimeVar;
 
 private:
 

@@ -24,6 +24,9 @@ public:
 	void clear();
 	void draw(Texture* texture, Texture* Palette, Shader* shader, SDL_Rect sourceRect, SDL_Rect destRect, const float clockwiseRotationAngle);
 	bool initGL();
+
+	static Graphics* instance;
+
 private:
 	Renderer* _renderer;
 	SDL_Window* _window;

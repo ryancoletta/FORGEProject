@@ -80,11 +80,6 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="22"/>
-   <tile gid="30"/>
-   <tile gid="12"/>
-   <tile gid="30"/>
-   <tile gid="23"/>
    <tile/>
    <tile/>
    <tile/>
@@ -96,11 +91,18 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="33"/>
-   <tile gid="36"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="29"/>
-   <tile gid="36"/>
-   <tile gid="34"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
    <tile/>
    <tile/>
    <tile/>
@@ -110,46 +112,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile gid="22"/>
-   <tile gid="39"/>
-   <tile gid="50"/>
-   <tile gid="65"/>
-   <tile gid="50"/>
-   <tile gid="38"/>
-   <tile gid="23"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="33"/>
-   <tile gid="25"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="24"/>
-   <tile gid="34"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="33"/>
+   <tile gid="29"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
-   <tile gid="34"/>
+   <tile gid="29"/>
    <tile/>
    <tile/>
    <tile/>
@@ -159,13 +128,61 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="33"/>
+   <tile gid="29"/>
+   <tile gid="69"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="29"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="29"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="69"/>
+   <tile gid="69"/>
+   <tile gid="47"/>
+   <tile gid="29"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="29"/>
+   <tile gid="69"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="47"/>
+   <tile gid="29"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="29"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
    <tile gid="47"/>
-   <tile gid="34"/>
+   <tile gid="29"/>
    <tile/>
    <tile/>
    <tile/>
@@ -175,13 +192,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="33"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="34"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
+   <tile gid="29"/>
    <tile/>
    <tile/>
    <tile/>
@@ -191,29 +208,12 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="33"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="47"/>
-   <tile gid="34"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="4"/>
-   <tile gid="40"/>
-   <tile gid="40"/>
-   <tile gid="40"/>
-   <tile gid="40"/>
-   <tile gid="40"/>
-   <tile gid="5"/>
    <tile/>
    <tile/>
    <tile/>
@@ -389,24 +389,23 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile gid="83"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile/>
    <tile gid="83"/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="83"/>
    <tile/>
    <tile/>
@@ -424,6 +423,8 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="83"/>
+   <tile gid="83"/>
    <tile/>
    <tile/>
    <tile/>
@@ -438,9 +439,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="195"/>
    <tile/>
-   <tile/>
+   <tile gid="207"/>
    <tile/>
    <tile/>
    <tile/>
