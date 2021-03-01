@@ -35,7 +35,7 @@ private:
 		Game* _owner;
 		SDL_Event _event;
 		bool _stateComplete;
-		float _stateEnterTime;
+		float _stateEnterTimeMS;
 		float _fade;
 	};
 
@@ -64,7 +64,7 @@ private:
 		int _turn;
 		PlayerEntity* _playerEntity;
 		Text* _helpText;
-		float _timeSinceLastMove;
+		float _lastInputTimeMS;
 	};
 
 	void draw();

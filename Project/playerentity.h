@@ -8,7 +8,7 @@ class PlayerEntity : public DirectionalEntity
 public:
 	PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
 
-	bool move(int turn, Vector2 direction, EntityType pushingEntityType = ENTITY_NONE) override;
+	bool move(int turn, Vector2 direction, Entity* pushingEntity = nullptr) override;
 
 	void kill(int turn) override; // TODO replace with virtual
 

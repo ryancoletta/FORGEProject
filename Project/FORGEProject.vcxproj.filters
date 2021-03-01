@@ -15,94 +15,88 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="graphics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="Maths\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="animatedsprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="level.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="entitymanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="spritemanager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="exittile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="playerentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="animationmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levelmanager.cpp">
+    <ClCompile Include="batentity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="boxentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="directionalentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="dynamictile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entitymanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exittile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="text.cpp">
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="holetile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hudimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="hudmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="linkedentity.cpp">
+    <ClCompile Include="indexbuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shader.cpp">
+    <ClCompile Include="input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="levelmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="playerentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertexbuffer.cpp">
+    <ClCompile Include="shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="indexbuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vertexarray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vertexbufferlayout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Maths\glm\detail\glm.cpp">
+    <ClCompile Include="spiketile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spritemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="statemachine.cpp">
@@ -111,113 +105,29 @@
     <ClCompile Include="switchtile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spiketile.cpp">
+    <ClCompile Include="text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="boxentity.cpp">
+    <ClCompile Include="texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="holetile.cpp">
+    <ClCompile Include="tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="batentity.cpp">
+    <ClCompile Include="tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hudimage.cpp">
+    <ClCompile Include="vertexarray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dynamictile.cpp">
+    <ClCompile Include="vertexbuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vertexbufferlayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="graphics.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="globals.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="animatedsprite.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="entity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tinyxml2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="animation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="level.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="entitymanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="spritemanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="exittile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="playerentity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="animationmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="levelmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="directionalentity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="text.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="hudmanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="linkedentity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vertexbuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="indexbuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vertexarray.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vertexbufferlayout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stb_image.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Maths\glm\detail\_features.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1073,34 +983,118 @@
     <ClInclude Include="Maths\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sprite.h">
+    <ClInclude Include="animatedsprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="statemachine.h">
+    <ClInclude Include="animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="state.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="switchtile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="spiketile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="boxentity.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="holetile.h">
+    <ClInclude Include="animationmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="batentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hudimage.h">
+    <ClInclude Include="boxentity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="directionalentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dynamictile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entitymanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="exittile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="holetile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hudimage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hudmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="indexbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="levelmanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="playerentity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spiketile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="spritemanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="statemachine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="switchtile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexbuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexbufferlayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1519,12 +1513,12 @@
     <None Include="Maths\glm\gtx\wrap.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="base.vert">
+    <None Include="Shaders\background.frag" />
+    <None Include="Shaders\base.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="base.frag">
+    <None Include="Shaders\base.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="background.frag" />
   </ItemGroup>
 </Project>

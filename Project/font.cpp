@@ -15,7 +15,7 @@ Font::Font(Graphics* graphics, const std::string& filePath, Vector2 charSize) {
 		int h = texture->getHeight();
 		Vector2 charSourcePos = Vector2((i * charSize.x) % w, h - charSize.y - (i * charSize.x) / w * charSize.y) ;
 		std::string palettePath = "Assets/logo_palette.png";
-		Sprite* newCharSprite = DBG_NEW Sprite(graphics, filePath, palettePath, "base.vert", "base.frag", charSourcePos, charSize);
+		Sprite* newCharSprite = DBG_NEW Sprite(graphics, filePath, palettePath, "Shaders/base.vert", "Shaders/base.frag", charSourcePos, charSize);
 		_fontMap.insert(std::pair<char, Sprite*>(thisChar, newCharSprite));
 	}
 }

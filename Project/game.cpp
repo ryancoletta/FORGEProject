@@ -30,7 +30,7 @@ Game::Game() :
 	_input				= DBG_NEW Input();
 	_hudManager			= DBG_NEW HudManager(_graphics, _spriteManager);
 	_stateMachine		= DBG_NEW StateMachine();
-	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "base.vert", "base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
+	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
 	_levelState			= DBG_NEW LevelState(this);
 }
@@ -97,7 +97,7 @@ Game::BaseState::BaseState(Game* owner) : _owner(owner)
 void Game::BaseState::Enter() {
 	_fade = 0.0f;
 	_stateComplete = false;
-	_stateEnterTime = SDL_GetTicks();
+	_stateEnterTimeMS = SDL_GetTicks();
 }
 
 void Game::BaseState::Execute(int deltaTimeMs)
@@ -142,7 +142,7 @@ void Game::TitleState::Enter() {
 	BaseState::Enter();
 	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
 	_creditText = _owner->_hudManager->writeText("@RyGuyDev", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
-	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "base.vert", "base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
+	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
 void Game::TitleState::Execute(int deltaTimeMs)
@@ -154,14 +154,18 @@ void Game::TitleState::Execute(int deltaTimeMs)
 		return;
 	}
 	else {
-		float timeSinceEntry = SDL_GetTicks() - _stateEnterTime;
-		bool visible = floor(std::fmod(timeSinceEntry / 300, 2)) == 0.0f;
-		_startText->setVisibility(visible);
-		//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
-
 		if (_owner->_input->isKeyDown(SDL_SCANCODE_SPACE)) {
 			_stateComplete = true;
 		}
+
+		// flash text
+		if (!_stateComplete) {
+			float timeSinceEntry = SDL_GetTicks() - _stateEnterTimeMS;
+			bool isVisible = floor(std::fmod(timeSinceEntry / 300, 2)) == 0.0f;
+			_startText->setVisibility(isVisible);
+			//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
+		}
+		else { _startText->setVisibility(true); }
 	}
 }
 
@@ -198,6 +202,7 @@ void Game::LevelState::Enter()
 
 		_helpText = _owner->_hudManager->writeText("Z to undo | R to reset", Vector2(globals::WINDOW_WIDTH / 2.0f, 50.0f), MIDDLE_ALIGNED);
 		_helpText->setVisibility(false);
+		_lastInputTimeMS = _stateEnterTimeMS;
 	}
 }
 
@@ -210,13 +215,23 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		return;
 	}
 	else if (_fade >= 1.0f) {
-		// look for a next level event
+		// check for a next level event
 		if (_event.type == _owner->_nextLevelEvent) {
 			_stateComplete = true;
 		}
 
 		if (_owner->_input->anyKeyDown()) {
 			_owner->_entityManager->sortEntities();
+
+			_lastInputTimeMS = SDL_GetTicks();
+			_helpText->setVisibility(false);
+		}
+		else {
+			// only display help text if player hasn't input for a few seconds
+			float timeSinceEntry = SDL_GetTicks() - _lastInputTimeMS;
+			if (timeSinceEntry > globals::MAX_TIME_TILL_HELP_TEXT_DISPLAYED && _turn > 0) {
+				_helpText->setVisibility(true);
+			}
 		}
 
 		// undo and reset
@@ -251,16 +266,6 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
 			if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
 		}
-		else {
-			// we only want to display the help text if the player hasn't had an input for X seconds
-			float timeSinceEntry = SDL_GetTicks() - _timeSinceLastMove;
-			if (timeSinceEntry > globals::MAX_TIME_TILL_HELP_TEXT_DISPLAYED) {
-				_helpText->setVisibility(true);
-			}
-			return;
-		}
-		_timeSinceLastMove = SDL_GetTicks();
-		_helpText->setVisibility(false);
 	}
 }
 

@@ -10,7 +10,7 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 	updateAnimation();
 }
 
-bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
+bool PlayerEntity::move(int turn, Vector2 direction, Entity* pushingEntity) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
 	switch (dot) {
 		// move to the right or left
@@ -37,8 +37,8 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 					}
 					else return false;
 				}
-				toPush->move(turn, direction, ENTITY_SWORD);
-				return Entity::move(turn, direction, pushingEntityType);
+				toPush->move(turn, direction);
+				return Entity::move(turn, direction, pushingEntity);
 			}
 		}
 		// move backward
@@ -58,7 +58,7 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 				return false;
 			}
 
-			return Entity::move(turn, direction, pushingEntityType);
+			return Entity::move(turn, direction, pushingEntity);
 		}
 	}
 }
@@ -139,8 +139,8 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 		}
 	}
 
-	if (diagonalEntity) { diagonalEntity->move(turn, direction, ENTITY_SWORD); }
-	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection, ENTITY_SWORD); }
+	if (diagonalEntity) { diagonalEntity->move(turn, direction); }
+	if (adjacentEntity) { adjacentEntity->move(turn, -playerFacingDirection); }
 
 	_facingHistory.push(direction);
 	_lastTurnTurned.push(turn);

@@ -40,7 +40,7 @@ public:
 	bool isAlive() const;
 
 	virtual bool canMove(Vector2 direction) const;
-	virtual bool move(int turn, Vector2 direction, EntityType pushingEntityType = ENTITY_NONE);
+	virtual bool move(int turn, Vector2 direction, Entity* pushingEntity = nullptr);
 	virtual void undo(int turn);
 	virtual void reset();
 	virtual void draw();

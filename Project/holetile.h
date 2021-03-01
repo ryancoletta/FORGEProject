@@ -9,7 +9,7 @@ class HoleTile : public DynamicTile
 {
 public:
 	HoleTile(Sprite* sprite, Vector2 coordinate, Vector2 position);
-	void onOccupy(int turn) override;
+	void onOccupy(int turn, Entity* outgoing = nullptr) override;
 	bool isBlocked(EntityType entrant) const override;
 };
 

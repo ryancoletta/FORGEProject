@@ -80,12 +80,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Game;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Game;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -169,7 +169,6 @@
     <ClCompile Include="level.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="levelmanager.cpp" />
-    <ClCompile Include="linkedentity.cpp" />
     <ClCompile Include="main.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
     </ClCompile>
@@ -213,7 +212,6 @@
     <ClInclude Include="input.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="levelmanager.h" />
-    <ClInclude Include="linkedentity.h" />
     <ClInclude Include="Maths\glm\common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_vector_relational.hpp" />
@@ -518,7 +516,7 @@
     <ClInclude Include="vertexbufferlayout.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="background.frag" />
+    <None Include="Shaders\background.frag" />
     <None Include="Maths\glm\detail\func_common.inl" />
     <None Include="Maths\glm\detail\func_common_simd.inl" />
     <None Include="Maths\glm\detail\func_exponential.inl" />
@@ -657,8 +655,8 @@
     <None Include="Maths\glm\gtx\vector_angle.inl" />
     <None Include="Maths\glm\gtx\vector_query.inl" />
     <None Include="Maths\glm\gtx\wrap.inl" />
-    <None Include="base.frag" />
-    <None Include="base.vert" />
+    <None Include="Shaders\base.frag" />
+    <None Include="Shaders\base.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

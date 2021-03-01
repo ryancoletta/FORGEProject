@@ -47,7 +47,7 @@ bool Entity::canMove(Vector2 direction) const {
 	return false;
 }
 
-bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
+bool Entity::move(int turn, Vector2 direction, Entity* pushingEntity) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
@@ -60,17 +60,14 @@ bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 
 			assert(toPush != this); // stop pushing yourself!
 
-			if (!toPush->move(turn, direction, _entityType)) {
+			if (!toPush->move(turn, direction, pushingEntity)) {
 				return false;
 			}
 		}
 
-		bool pushingEntityIsGrounded = (pushingEntityType & ENTITY_GROUNDED) > 0;
-		bool thisEntityIsGrounded = (_entityType & ENTITY_GROUNDED) > 0;
-		bool pushedEntityIsGrounded = toPush ? (toPush->getEntityType() & ENTITY_GROUNDED) > 0 : false;
-		_tileHistory.top()->vacate(turn, !pushingEntityIsGrounded && thisEntityIsGrounded);
+		_tileHistory.top()->vacate(turn, pushingEntity);
 		_tileHistory.push(newTile);
-		_tileHistory.top()->occupy(this, turn, !pushedEntityIsGrounded && thisEntityIsGrounded);
+		_tileHistory.top()->occupy(this, turn, toPush);
 		_lastTurnMoved.push(turn);
 
 		return true;
@@ -80,7 +77,7 @@ bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 
 void Entity::undo(int turn) {
 	while (_lastTurnMoved.size() > 0 && _lastTurnMoved.top() >= turn) {
-		// revive
+		// revive if dead
 		if (!_isAlive) {
 			revive();
 			if (_tileHistory.top()->isOccupied()) {
@@ -95,7 +92,7 @@ void Entity::undo(int turn) {
 		_tileHistory.pop();
 
 		// if someone is in this spot, make sure they perform their undo first
-		if (_tileHistory.top()->isOccupied()) { // DEAD OBJECTS REGISTER AS NON OCCUPIED
+		if (_tileHistory.top()->isOccupied()) {
 			_tileHistory.top()->getOccupant()->undo(turn);
 		}
 

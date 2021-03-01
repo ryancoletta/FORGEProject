@@ -3,11 +3,11 @@
 
 bool Input::anyKeyDown() { return !_downKeys.empty(); }
 
-bool Input::isKeyHeld(SDL_Scancode key) { return _heldKeys[key]; }
+bool Input::isKeyHeld(SDL_Scancode key) { return _heldKeys.count(key) > 0; }
 
-bool Input::isKeyDown(SDL_Scancode key) { return _downKeys[key]; }
+bool Input::isKeyDown(SDL_Scancode key) { return _downKeys.count(key) > 0; }
 
-bool Input::isKeyUp(SDL_Scancode key) { return _upKeys[key]; }
+bool Input::isKeyUp(SDL_Scancode key) { return _upKeys.count(key) > 0; }
 
 void Input::beginNewFrame() {
 	_downKeys.clear();

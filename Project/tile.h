@@ -30,8 +30,8 @@ public:
 
 	void setBlocked(bool blocked);
 
-	void vacate(int turn, bool triggerOnVacate = true);
-	void occupy(Entity* entityToOccupy, int turn, bool triggerOnOccupy = true);
+	void vacate(int turn, Entity* incoming = nullptr);
+	void occupy(Entity* entityToOccupy, int turn, Entity* outgoing = nullptr);
 	void draw();
 	void update(int deltaTimeMs);
 
@@ -39,8 +39,8 @@ public:
 	virtual void reset() {}
 
 protected:
-	virtual void onVacate(int turn);
-	virtual void onOccupy(int turn);
+	virtual void onVacate(int turn, Entity* incoming = nullptr);
+	virtual void onOccupy(int turn, Entity* outgoing = nullptr);
 
 	bool _blocked;
 	TileType _tileType;

@@ -11,7 +11,7 @@ public:
 	void reset() override;
 	bool isBlocked(EntityType entrant) const override;
 protected:
-	void onOccupy(int turn) override;
+	void onOccupy(int turn, Entity* outgoing = nullptr) override;
 private:
 	void tryHurtOccupant(int turn);
 };

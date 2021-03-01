@@ -20,7 +20,7 @@ void SwitchTile::findAllSpikeTiles(Level* level)
 	}
 }
 
-void SwitchTile::onOccupy(int turn)
+void SwitchTile::onOccupy(int turn, Entity* outgoing)
 {
 	if ((_occupant->getEntityType() & ENTITY_GROUNDED) > 0) { 
 		for (int i = 0; i < _spikeTiles.size(); i++) {
@@ -29,7 +29,7 @@ void SwitchTile::onOccupy(int turn)
 	}
 }
 
-void SwitchTile::onVacate(int turn)
+void SwitchTile::onVacate(int turn, Entity* incoming)
 {
 	if ((_occupant->getEntityType() & ENTITY_GROUNDED) > 0) {
 		for (int i = 0; i < _spikeTiles.size(); i++) {

@@ -12,8 +12,8 @@ public:
 	SwitchTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
 	void findAllSpikeTiles(Level* level);
 protected:
-	void onOccupy(int turn) override;
-	void onVacate(int turn) override;
+	void onOccupy(int turn, Entity* outgoing = nullptr) override;
+	void onVacate(int turn, Entity* incoming = nullptr) override;
 private:
 	std::vector<SpikeTile*> _spikeTiles;
 };
