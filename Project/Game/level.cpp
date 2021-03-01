@@ -3,16 +3,16 @@
 #include <sstream>
 #include <algorithm>
 #include <cmath>
-#include "entitymanager.h"
-#include "graphics.h"
-#include "spritemanager.h"
-#include "exittile.h"
-#include "entity.h"
+#include "Entities/entitymanager.h"
+#include "Graphics/graphics.h"
+#include "Sprites/spritemanager.h"
+#include "Tiles/exittile.h"
+#include "Entities/entity.h"
 #include "levelmanager.h"
-#include "sprite.h"
-#include "switchtile.h"
-#include "spiketile.h"
-#include "holetile.h"
+#include "Sprites/sprite.h"
+#include "Tiles/switchtile.h"
+#include "Tiles/spiketile.h"
+#include "Tiles/holetile.h"
 
 using namespace tinyxml2;
 

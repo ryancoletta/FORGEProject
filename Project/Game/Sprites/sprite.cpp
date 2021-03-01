@@ -1,7 +1,7 @@
 #include "sprite.h"
-#include "graphics.h"
-#include "texture.h"
-#include "shader.h"
+#include "Graphics/graphics.h"
+#include "Graphics/texture.h"
+#include "Graphics/shader.h"
 
 Sprite::Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
 	_graphics(graphics),

@@ -1,8 +1,8 @@
 #include "levelmanager.h"
 #include <SDL.h>
-#include "graphics.h"
-#include "entitymanager.h"
-#include "spritemanager.h"
+#include "Graphics/graphics.h"
+#include "Entities/entitymanager.h"
+#include "Sprites/spritemanager.h"
 #include "level.h"
 
 LevelManager::LevelManager(Uint32 nextLevelEvent) :

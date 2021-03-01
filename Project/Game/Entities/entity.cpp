@@ -1,8 +1,8 @@
 #include "globals.h"
 #include "entity.h"
 #include "level.h"
-#include "sprite.h"
-#include "tile.h"
+#include "Sprites/sprite.h"
+#include "Tiles/tile.h"
 
 Entity::Entity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile) :
 	_entityType(entityID),

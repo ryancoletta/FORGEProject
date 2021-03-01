@@ -18,112 +18,112 @@
     <ClCompile Include="Maths\glm\detail\glm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animatedsprite.cpp">
+    <ClCompile Include="Game\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animation.cpp">
+    <ClCompile Include="Game\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animationmanager.cpp">
+    <ClCompile Include="Game\level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="batentity.cpp">
+    <ClCompile Include="Game\levelmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="boxentity.cpp">
+    <ClCompile Include="Game\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="directionalentity.cpp">
+    <ClCompile Include="Game\statemachine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dynamictile.cpp">
+    <ClCompile Include="Game\tinyxml2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="entity.cpp">
+    <ClCompile Include="Game\Tiles\switchtile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="entitymanager.cpp">
+    <ClCompile Include="Game\Tiles\dynamictile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="exittile.cpp">
+    <ClCompile Include="Game\Tiles\exittile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="font.cpp">
+    <ClCompile Include="Game\Tiles\holetile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game.cpp">
+    <ClCompile Include="Game\Tiles\spiketile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="Game\Tiles\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="holetile.cpp">
+    <ClCompile Include="Game\Entities\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hudimage.cpp">
+    <ClCompile Include="Game\Entities\batentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hudmanager.cpp">
+    <ClCompile Include="Game\Entities\boxentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="indexbuffer.cpp">
+    <ClCompile Include="Game\Entities\directionalentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="input.cpp">
+    <ClCompile Include="Game\Entities\playerentity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="level.cpp">
+    <ClCompile Include="Game\HUD\font.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="levelmanager.cpp">
+    <ClCompile Include="Game\HUD\hudimage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Game\HUD\hudmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="playerentity.cpp">
+    <ClCompile Include="Game\HUD\text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="renderer.cpp">
+    <ClCompile Include="Game\Sprites\animatedsprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="shader.cpp">
+    <ClCompile Include="Game\Sprites\animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spiketile.cpp">
+    <ClCompile Include="Game\Sprites\animationmanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
+    <ClCompile Include="Game\Sprites\sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spritemanager.cpp">
+    <ClCompile Include="Game\Sprites\spritemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="statemachine.cpp">
+    <ClCompile Include="Game\Entities\entitymanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="switchtile.cpp">
+    <ClCompile Include="Game\Graphics\graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="text.cpp">
+    <ClCompile Include="Game\Graphics\indexbuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
+    <ClCompile Include="Game\Graphics\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tile.cpp">
+    <ClCompile Include="Game\Graphics\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tinyxml2.cpp">
+    <ClCompile Include="Game\Graphics\texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertexarray.cpp">
+    <ClCompile Include="Game\Graphics\vertexarray.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertexbuffer.cpp">
+    <ClCompile Include="Game\Graphics\vertexbuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="vertexbufferlayout.cpp">
+    <ClCompile Include="Game\Graphics\vertexbufferlayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -983,118 +983,118 @@
     <ClInclude Include="Maths\glm\vector_relational.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="animatedsprite.h">
+    <ClInclude Include="Game\game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="animation.h">
+    <ClInclude Include="Game\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="animationmanager.h">
+    <ClInclude Include="Game\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="batentity.h">
+    <ClInclude Include="Game\level.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="boxentity.h">
+    <ClInclude Include="Game\levelmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="directionalentity.h">
+    <ClInclude Include="Game\state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dynamictile.h">
+    <ClInclude Include="Game\statemachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="entity.h">
+    <ClInclude Include="Game\tinyxml2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="entitymanager.h">
+    <ClInclude Include="Game\Tiles\switchtile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="exittile.h">
+    <ClInclude Include="Game\Tiles\dynamictile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="font.h">
+    <ClInclude Include="Game\Tiles\exittile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game.h">
+    <ClInclude Include="Game\Tiles\holetile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="globals.h">
+    <ClInclude Include="Game\Tiles\spiketile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.h">
+    <ClInclude Include="Game\Tiles\tile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="holetile.h">
+    <ClInclude Include="Game\Entities\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hudimage.h">
+    <ClInclude Include="Game\Entities\batentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hudmanager.h">
+    <ClInclude Include="Game\Entities\boxentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="indexbuffer.h">
+    <ClInclude Include="Game\Entities\directionalentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="input.h">
+    <ClInclude Include="Game\Entities\playerentity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="level.h">
+    <ClInclude Include="Game\HUD\font.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="levelmanager.h">
+    <ClInclude Include="Game\HUD\hudimage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="playerentity.h">
+    <ClInclude Include="Game\HUD\hudmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="renderer.h">
+    <ClInclude Include="Game\HUD\text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
+    <ClInclude Include="Game\Sprites\animatedsprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spiketile.h">
+    <ClInclude Include="Game\Sprites\animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sprite.h">
+    <ClInclude Include="Game\Sprites\animationmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="spritemanager.h">
+    <ClInclude Include="Game\Sprites\sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="state.h">
+    <ClInclude Include="Game\Sprites\spritemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="statemachine.h">
+    <ClInclude Include="Game\Entities\entitymanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stb_image.h">
+    <ClInclude Include="Game\Graphics\graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="switchtile.h">
+    <ClInclude Include="Game\Graphics\indexbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="text.h">
+    <ClInclude Include="Game\Graphics\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
+    <ClInclude Include="Game\Graphics\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tile.h">
+    <ClInclude Include="Game\Graphics\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tinyxml2.h">
+    <ClInclude Include="Game\Graphics\texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertexarray.h">
+    <ClInclude Include="Game\Graphics\vertexbuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertexbuffer.h">
+    <ClInclude Include="Game\Graphics\vertexarray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vertexbufferlayout.h">
+    <ClInclude Include="Game\Graphics\vertexbufferlayout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

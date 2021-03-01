@@ -1,13 +1,13 @@
 #include "globals.h"
 #include "entitymanager.h"
-#include "entity.h"
+#include "Entities/entity.h"
 #include "level.h"
-#include "sprite.h"
-#include "tile.h"
-#include "playerentity.h"
-#include "directionalentity.h"
-#include "boxentity.h"
-#include "batentity.h"
+#include "Sprites/sprite.h"
+#include "Tiles/tile.h"
+#include "Entities/playerentity.h"
+#include "Entities/directionalentity.h"
+#include "Entities/boxentity.h"
+#include "Entities/batentity.h"
 
 EntityManager::~EntityManager() { clearEntities(); }
 

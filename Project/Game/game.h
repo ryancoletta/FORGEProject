@@ -1,6 +1,6 @@
 #pragma once
-#include "graphics.h"
-#include "entityManager.h"
+#include "Graphics/graphics.h"
+#include "Entities/entityManager.h"
 #include "state.h"
 #include "statemachine.h"
 

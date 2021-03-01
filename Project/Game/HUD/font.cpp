@@ -1,8 +1,8 @@
 #include "font.h"
-#include "graphics.h"
-#include "sprite.h"
+#include "Graphics/graphics.h"
+#include "Sprites/sprite.h"
 #include <SDL.h>
-#include "texture.h"
+#include "Graphics/texture.h"
 
 Font::Font(Graphics* graphics, const std::string& filePath, Vector2 charSize) {
 	const int CHAR_START_IDX = 32;

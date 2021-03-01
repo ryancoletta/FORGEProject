@@ -1,9 +1,9 @@
 #include "globals.h"
 #include "animatedsprite.h"
-#include "graphics.h"
+#include "Graphics/graphics.h"
 #include "animation.h"
-#include "shader.h"
-#include "texture.h"
+#include "Graphics/shader.h"
+#include "Graphics/texture.h"
 
 AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
 	Sprite(graphics, texturePath, palettePath, vertPath, fragPath, sourcePosition, sourceScale, offset),

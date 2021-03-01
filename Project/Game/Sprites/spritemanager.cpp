@@ -2,12 +2,12 @@
 #include "spritemanager.h"
 #include "animatedsprite.h"
 #include "animation.h"
-#include "graphics.h"
-#include "entity.h"
+#include "Graphics/graphics.h"
+#include "Entities/entity.h"
 #include "animationmanager.h"
 #include "level.h"
 #include "sprite.h"
-#include "shader.h"
+#include "Graphics/shader.h"
 
 SpriteManager::SpriteManager(Graphics* graphics, AnimationManager* animationManager) :
 	_graphics(graphics),

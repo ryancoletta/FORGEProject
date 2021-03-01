@@ -1,8 +1,8 @@
 #include "globals.h"
 #include "level.h"
-#include "tile.h"
+#include "Tiles/tile.h"
 #include "playerentity.h"
-#include "animatedsprite.h"
+#include "Sprites/animatedsprite.h"
 
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing)

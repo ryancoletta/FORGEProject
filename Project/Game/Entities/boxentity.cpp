@@ -1,7 +1,7 @@
 #include "boxentity.h"
-#include "animatedsprite.h"
-#include "tile.h"
-#include "spiketile.h"
+#include "Sprites/animatedsprite.h"
+#include "Tiles/tile.h"
+#include "Tiles/spiketile.h"
 
 
 BoxEntity::BoxEntity(Level* level, Sprite* sprite, Tile* startTile) :

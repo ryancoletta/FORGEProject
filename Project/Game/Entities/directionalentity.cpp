@@ -1,6 +1,6 @@
 #include "directionalentity.h"
-#include "sprite.h"
-#include "tile.h"
+#include "Sprites/sprite.h"
+#include "Tiles/tile.h"
 
 DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
 	Entity(entityID, level, sprite, startTile)

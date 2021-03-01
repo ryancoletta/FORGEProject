@@ -1,8 +1,8 @@
 #include "hudmanager.h"
 #include "text.h"
 #include "font.h"
-#include "graphics.h"
-#include "spritemanager.h"
+#include "Graphics/graphics.h"
+#include "Sprites/spritemanager.h"
 #include "hudimage.h"
 
 HudManager::HudManager(Graphics* graphics, SpriteManager* spriteManager) :

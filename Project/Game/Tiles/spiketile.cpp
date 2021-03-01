@@ -1,7 +1,7 @@
 #include "spiketile.h"
-#include "entity.h"
-#include "animatedsprite.h"
-#include "playerentity.h"
+#include "Entities/entity.h"
+#include "Sprites/animatedsprite.h"
+#include "Entities/playerentity.h"
 SpikeTile::SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage) :
 	DynamicTile(TILE_SPIKE, sprite, coordinate, position, startingStage)
 {}

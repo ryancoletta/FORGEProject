@@ -80,12 +80,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Game;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Game;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -123,7 +123,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Maths;$(ProjectDir)Game;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,7 +139,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Maths;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Maths;$(ProjectDir)Game;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,68 +150,68 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="animatedsprite.cpp" />
-    <ClCompile Include="animation.cpp" />
-    <ClCompile Include="animationmanager.cpp" />
-    <ClCompile Include="batentity.cpp" />
-    <ClCompile Include="boxentity.cpp" />
-    <ClCompile Include="dynamictile.cpp" />
-    <ClCompile Include="holetile.cpp" />
-    <ClCompile Include="directionalentity.cpp" />
-    <ClCompile Include="entitymanager.cpp" />
-    <ClCompile Include="exittile.cpp" />
-    <ClCompile Include="font.cpp" />
-    <ClCompile Include="game.cpp" />
-    <ClCompile Include="graphics.cpp" />
-    <ClCompile Include="hudimage.cpp" />
-    <ClCompile Include="hudmanager.cpp" />
-    <ClCompile Include="indexbuffer.cpp" />
-    <ClCompile Include="level.cpp" />
-    <ClCompile Include="input.cpp" />
-    <ClCompile Include="levelmanager.cpp" />
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Game\Sprites\animatedsprite.cpp" />
+    <ClCompile Include="Game\Sprites\animation.cpp" />
+    <ClCompile Include="Game\Sprites\animationmanager.cpp" />
+    <ClCompile Include="Game\Entities\batentity.cpp" />
+    <ClCompile Include="Game\Entities\boxentity.cpp" />
+    <ClCompile Include="Game\Tiles\dynamictile.cpp" />
+    <ClCompile Include="Game\Tiles\holetile.cpp" />
+    <ClCompile Include="Game\Entities\directionalentity.cpp" />
+    <ClCompile Include="Game\Entities\entitymanager.cpp" />
+    <ClCompile Include="Game\Tiles\exittile.cpp" />
+    <ClCompile Include="Game\HUD\font.cpp" />
+    <ClCompile Include="Game\game.cpp" />
+    <ClCompile Include="Game\Graphics\graphics.cpp" />
+    <ClCompile Include="Game\HUD\hudimage.cpp" />
+    <ClCompile Include="Game\HUD\hudmanager.cpp" />
+    <ClCompile Include="Game\Graphics\indexbuffer.cpp" />
+    <ClCompile Include="Game\level.cpp" />
+    <ClCompile Include="Game\input.cpp" />
+    <ClCompile Include="Game\levelmanager.cpp" />
+    <ClCompile Include="Game\main.cpp">
       <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</PreprocessToFile>
     </ClCompile>
-    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="Game\Entities\entity.cpp" />
     <ClCompile Include="Maths\glm\detail\glm.cpp" />
-    <ClCompile Include="playerentity.cpp" />
-    <ClCompile Include="renderer.cpp" />
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="spiketile.cpp" />
-    <ClCompile Include="sprite.cpp" />
-    <ClCompile Include="spritemanager.cpp" />
-    <ClCompile Include="statemachine.cpp" />
-    <ClCompile Include="switchtile.cpp" />
-    <ClCompile Include="text.cpp" />
-    <ClCompile Include="texture.cpp" />
-    <ClCompile Include="tile.cpp" />
-    <ClCompile Include="tinyxml2.cpp" />
-    <ClCompile Include="vertexarray.cpp" />
-    <ClCompile Include="vertexbuffer.cpp" />
-    <ClCompile Include="vertexbufferlayout.cpp" />
+    <ClCompile Include="Game\Entities\playerentity.cpp" />
+    <ClCompile Include="Game\Graphics\renderer.cpp" />
+    <ClCompile Include="Game\Graphics\shader.cpp" />
+    <ClCompile Include="Game\Tiles\spiketile.cpp" />
+    <ClCompile Include="Game\Sprites\sprite.cpp" />
+    <ClCompile Include="Game\Sprites\spritemanager.cpp" />
+    <ClCompile Include="Game\statemachine.cpp" />
+    <ClCompile Include="Game\Tiles\switchtile.cpp" />
+    <ClCompile Include="Game\HUD\text.cpp" />
+    <ClCompile Include="Game\Graphics\texture.cpp" />
+    <ClCompile Include="Game\Tiles\tile.cpp" />
+    <ClCompile Include="Game\tinyxml2.cpp" />
+    <ClCompile Include="Game\Graphics\vertexarray.cpp" />
+    <ClCompile Include="Game\Graphics\vertexbuffer.cpp" />
+    <ClCompile Include="Game\Graphics\vertexbufferlayout.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animatedsprite.h" />
-    <ClInclude Include="animation.h" />
-    <ClInclude Include="animationmanager.h" />
-    <ClInclude Include="batentity.h" />
-    <ClInclude Include="boxentity.h" />
-    <ClInclude Include="dynamictile.h" />
-    <ClInclude Include="holetile.h" />
-    <ClInclude Include="directionalentity.h" />
-    <ClInclude Include="entitymanager.h" />
-    <ClInclude Include="exittile.h" />
-    <ClInclude Include="font.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="globals.h" />
-    <ClInclude Include="graphics.h" />
-    <ClInclude Include="hudimage.h" />
-    <ClInclude Include="hudmanager.h" />
-    <ClInclude Include="indexbuffer.h" />
-    <ClInclude Include="level.h" />
-    <ClInclude Include="input.h" />
-    <ClInclude Include="entity.h" />
-    <ClInclude Include="levelmanager.h" />
+    <ClInclude Include="Game\Sprites\animatedsprite.h" />
+    <ClInclude Include="Game\Sprites\animation.h" />
+    <ClInclude Include="Game\Sprites\animationmanager.h" />
+    <ClInclude Include="Game\Entities\batentity.h" />
+    <ClInclude Include="Game\Entities\boxentity.h" />
+    <ClInclude Include="Game\Tiles\dynamictile.h" />
+    <ClInclude Include="Game\Tiles\holetile.h" />
+    <ClInclude Include="Game\Entities\directionalentity.h" />
+    <ClInclude Include="Game\Entities\entitymanager.h" />
+    <ClInclude Include="Game\Tiles\exittile.h" />
+    <ClInclude Include="Game\HUD\font.h" />
+    <ClInclude Include="Game\game.h" />
+    <ClInclude Include="Game\globals.h" />
+    <ClInclude Include="Game\Graphics\graphics.h" />
+    <ClInclude Include="Game\HUD\hudimage.h" />
+    <ClInclude Include="Game\HUD\hudmanager.h" />
+    <ClInclude Include="Game\Graphics\indexbuffer.h" />
+    <ClInclude Include="Game\level.h" />
+    <ClInclude Include="Game\input.h" />
+    <ClInclude Include="Game\Entities\entity.h" />
+    <ClInclude Include="Game\levelmanager.h" />
     <ClInclude Include="Maths\glm\common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_common.hpp" />
     <ClInclude Include="Maths\glm\detail\compute_vector_relational.hpp" />
@@ -497,23 +497,23 @@
     <ClInclude Include="Maths\glm\vec3.hpp" />
     <ClInclude Include="Maths\glm\vec4.hpp" />
     <ClInclude Include="Maths\glm\vector_relational.hpp" />
-    <ClInclude Include="playerentity.h" />
-    <ClInclude Include="renderer.h" />
-    <ClInclude Include="shader.h" />
-    <ClInclude Include="spiketile.h" />
-    <ClInclude Include="sprite.h" />
-    <ClInclude Include="spritemanager.h" />
-    <ClInclude Include="state.h" />
-    <ClInclude Include="statemachine.h" />
-    <ClInclude Include="stb_image.h" />
-    <ClInclude Include="switchtile.h" />
-    <ClInclude Include="text.h" />
-    <ClInclude Include="texture.h" />
-    <ClInclude Include="tile.h" />
-    <ClInclude Include="tinyxml2.h" />
-    <ClInclude Include="vertexarray.h" />
-    <ClInclude Include="vertexbuffer.h" />
-    <ClInclude Include="vertexbufferlayout.h" />
+    <ClInclude Include="Game\Entities\playerentity.h" />
+    <ClInclude Include="Game\Graphics\renderer.h" />
+    <ClInclude Include="Game\Graphics\shader.h" />
+    <ClInclude Include="Game\Tiles\spiketile.h" />
+    <ClInclude Include="Game\Sprites\sprite.h" />
+    <ClInclude Include="Game\Sprites\spritemanager.h" />
+    <ClInclude Include="Game\state.h" />
+    <ClInclude Include="Game\statemachine.h" />
+    <ClInclude Include="Game\Graphics\stb_image.h" />
+    <ClInclude Include="Game\Tiles\switchtile.h" />
+    <ClInclude Include="Game\HUD\text.h" />
+    <ClInclude Include="Game\Graphics\texture.h" />
+    <ClInclude Include="Game\Tiles\tile.h" />
+    <ClInclude Include="Game\tinyxml2.h" />
+    <ClInclude Include="Game\Graphics\vertexarray.h" />
+    <ClInclude Include="Game\Graphics\vertexbuffer.h" />
+    <ClInclude Include="Game\Graphics\vertexbufferlayout.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\background.frag" />

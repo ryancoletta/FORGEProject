@@ -2,7 +2,6 @@
 
 class State;
 
-// TODO gamestate manager seperate
 class StateMachine
 {
 public:

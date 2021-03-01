@@ -1,8 +1,8 @@
 #include "holetile.h"
-#include "sprite.h"
-#include "entity.h"
-#include "animatedsprite.h".
-#include "boxentity.h"
+#include "Sprites/sprite.h"
+#include "Entities/entity.h"
+#include "Sprites/animatedsprite.h".
+#include "Entities/boxentity.h"
 
 HoleTile::HoleTile(Sprite* sprite, Vector2 coordinate, Vector2 position) :
 	DynamicTile(TILE_HOLE, sprite, coordinate, position, 0)

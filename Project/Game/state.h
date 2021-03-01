@@ -7,6 +7,3 @@ public:
 	virtual void Exit() = 0;
 };
 
-// TODO void Enter(int i)
-// TODO have to specialize states at some point
-

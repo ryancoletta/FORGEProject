@@ -1,7 +1,7 @@
 #include "switchtile.h"
 #include "level.h"
 #include "spiketile.h"
-#include "entity.h"
+#include "Entities/entity.h"
 
 SwitchTile::SwitchTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
 	Tile(TILE_SWITCH, sprite, coordinate, position)

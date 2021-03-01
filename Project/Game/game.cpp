@@ -4,18 +4,18 @@
 #include "game.h"
 #include "input.h"
 #include "globals.h"
-#include "animatedsprite.h"
-#include "animation.h"
-#include "spritemanager.h"
+#include "Sprites/animatedsprite.h"
+#include "Sprites/animation.h"
+#include "Sprites/spritemanager.h"
 #include "level.h"
-#include "entity.h"
-#include "animationmanager.h"
+#include "Entities/entity.h"
+#include "Sprites/animationmanager.h"
 #include "levelmanager.h"
-#include "hudmanager.h"
-#include "sprite.h"
-#include "text.h"
+#include "HUD/hudmanager.h"
+#include "Sprites/sprite.h"
+#include "HUD/text.h"
 #include <cmath>
-#include "playerentity.h"
+#include "Entities/playerentity.h"
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
