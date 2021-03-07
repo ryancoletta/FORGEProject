@@ -25,7 +25,6 @@ private:
 	std::string _vertSource, _fragSource;
 	GLuint _vertexShader, _fragmentShader, _shaderProgram;
 	std::unordered_map<std::string, int> _uniformLocationCache;
-
 	bool load(std::string vertFileName, std::string fragFileName);
 	bool compile();
 	bool link();

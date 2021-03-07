@@ -10,8 +10,8 @@ HoleTile::HoleTile(Sprite* sprite, Vector2 coordinate, Vector2 position) :
 
 void HoleTile::onOccupy(int turn, EntityType outgoing)
 {
-	if (_stageHistory.top() == 0 && _occupant->getEntityType() == ENTITY_BOX) {
-		_occupant->kill(turn);
+	if (_stageHistory.top() == 0 && _occupant.top()->getEntityType() == ENTITY_BOX) {
+		_occupant.top()->kill(turn);
 		_stageHistory.push(1);
 		_lastTurnModified.push(turn);
 	}

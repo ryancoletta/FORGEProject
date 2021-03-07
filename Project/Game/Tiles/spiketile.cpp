@@ -42,7 +42,7 @@ void SpikeTile::onOccupy(int turn, EntityType outgoing)
 
 void SpikeTile::tryHurtOccupant(int turn)
 {
-	if (_stageHistory.top() && _occupant && _occupant->getEntityType() == ENTITY_PLAYER) {
-		static_cast<PlayerEntity*>(_occupant)->kill(turn);
+	if (_stageHistory.top() && !_occupant.empty() && _occupant.top()->getEntityType() == ENTITY_PLAYER) {
+		static_cast<PlayerEntity*>(_occupant.top())->kill(turn);
 	}
 }

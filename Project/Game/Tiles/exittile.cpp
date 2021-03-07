@@ -12,7 +12,7 @@ ExitTile::ExitTile(LevelManager* levelManager, Sprite* sprite, Vector2 coordinat
 {}
 
 void ExitTile::onOccupy(int turn, EntityType outgoing) {
-	if (_occupant->getEntityType() == ENTITY_PLAYER) {
+	if (_occupant.top()->getEntityType() == ENTITY_PLAYER) {
 		_levelManager->levelComplete();
 	}
 }

@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "tile.h"
 #include "SDL.h"
+#include "Entities/entity.h"
 #include "Sprites/sprite.h"
 
 Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
@@ -8,18 +9,27 @@ Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 positi
 	_sprite(sprite), 
 	_coordinate(coordinate), 
 	_position(position),
-	_occupant(nullptr),
 	_blocked(blocked)
 {}
 
 bool Tile::isBlocked(EntityType entrant) const { return _blocked; }
-bool Tile::isOccupied() const { return _occupant != nullptr; }
+bool Tile::isOccupied() const { 
+	if (!_occupant.empty()) {
+		return _occupant.top()->isAlive();
+	}
+	return false;
+}
 
 TileType Tile::getTileType() const { return _tileType; }
 Vector2 Tile::getCoordinate() const { return _coordinate; }
 Vector2 Tile::getPosition() const { return _position; }
 Sprite* Tile::getSprite() const { return _sprite; }
-Entity* Tile::getOccupant() const { return _occupant; }
+Entity* Tile::getOccupant() const { 
+	if (!_occupant.empty()) {
+		return _occupant.top();
+	}
+	return nullptr;
+}
 
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 
@@ -27,10 +37,10 @@ void Tile::vacate(int turn, EntityType incoming) {
 	if (incoming != ENTITY_NULL) {
 		onVacate(turn, incoming);
 	}
-	_occupant = nullptr;
+	_occupant.pop();
 }
 void Tile::occupy(Entity* entityToOccupy, int turn, EntityType outgoing) {
-	_occupant = entityToOccupy; 
+	_occupant.push(entityToOccupy); 
 	if (outgoing != ENTITY_NULL) {
 		onOccupy(turn, outgoing);
 	}

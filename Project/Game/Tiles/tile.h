@@ -45,7 +45,7 @@ protected:
 
 	bool _blocked;
 	TileType _tileType;
-	Entity* _occupant;
+	std::stack<Entity*> _occupant;
 	Sprite* _sprite;
 	Vector2 _coordinate;
 	Vector2 _position;

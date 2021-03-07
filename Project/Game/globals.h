@@ -11,6 +11,7 @@
 #include <crtdbg.h> // replaces malloc with a way to track
 #include <math.h>
 #include <map>
+#include <glm/glm.hpp>
 namespace globals {
 	const float PI = 3.14159265359;
 	const float TAU = 6.28318530718;
@@ -22,6 +23,14 @@ namespace globals {
 	const float MAX_SPRITE_FADE_TIME = 1000.0f;
 	const float MAX_TIME_TILL_HELP_TEXT_DISPLAYED = 3500.0f;
 }
+
+
+// adding constants
+static const glm::vec2 zero() { return glm::vec2(0, 0); }
+static const glm::vec2 up() { return glm::vec2(0, 1); }
+static const glm::vec2 right() { return glm::vec2(1, 0); }
+static const glm::vec2 down() { return glm::vec2(0, -1); }
+static const glm::vec2 left() { return glm::vec2(-1, 0); }
 
 
 enum EntityType {

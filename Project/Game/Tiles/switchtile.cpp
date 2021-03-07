@@ -22,7 +22,7 @@ void SwitchTile::findAllSpikeTiles(Level* level)
 
 void SwitchTile::onOccupy(int turn, EntityType outgoing)
 {
-	bool isIncomingGrounded = (_occupant->getEntityType() & ENTITY_GROUNDED) > 0;
+	bool isIncomingGrounded = (_occupant.top()->getEntityType() & ENTITY_GROUNDED) > 0;
 	bool isOutgoingGrounded = (outgoing & ENTITY_GROUNDED) > 0;
 	if (isIncomingGrounded ^ isOutgoingGrounded) {
 		for (int i = 0; i < _spikeTiles.size(); i++) {
@@ -34,7 +34,7 @@ void SwitchTile::onOccupy(int turn, EntityType outgoing)
 void SwitchTile::onVacate(int turn, EntityType incoming)
 {
 	bool isIncomingGrounded = (incoming & ENTITY_GROUNDED) > 0; 
-	bool isOutgoingGrounded = (_occupant->getEntityType() & ENTITY_GROUNDED) > 0;
+	bool isOutgoingGrounded = (_occupant.top()->getEntityType() & ENTITY_GROUNDED) > 0;
 	if (isIncomingGrounded ^ isOutgoingGrounded) {
 		for (int i = 0; i < _spikeTiles.size(); i++) {
 			_spikeTiles[i]->toggleSpikes(turn);
