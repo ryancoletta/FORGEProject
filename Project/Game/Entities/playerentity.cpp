@@ -10,7 +10,7 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 	updateAnimation();
 }
 
-bool PlayerEntity::move(int turn, Vector2 direction, Entity* pushingEntity) {
+bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 	int dot = Vector2::dot(direction, _facingHistory.top());
 	switch (dot) {
 		// move to the right or left
@@ -37,28 +37,17 @@ bool PlayerEntity::move(int turn, Vector2 direction, Entity* pushingEntity) {
 					}
 					else return false;
 				}
-				toPush->move(turn, direction);
-				return Entity::move(turn, direction, pushingEntity);
+				toPush->move(turn, direction, ENTITY_SWORD);
+				return Entity::move(turn, direction, pushingEntityType);
 			}
 		}
 		// move backward
 		case -1: {
-			// player dies when they touch a bat
-			Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
-			Tile* newTile = _level->getTile(newCoordinate);
-			if (newTile->isOccupied()) {
-				Entity* toPush = newTile->getOccupant();
-				if (toPush->getEntityType() == ENTITY_BAT) {
-					toPush->kill(turn);
-					kill(turn);
-				}
-			}
-
 			if (!canMove(direction)) {
 				return false;
 			}
 
-			return Entity::move(turn, direction, pushingEntity);
+			return Entity::move(turn, direction, pushingEntityType);
 		}
 	}
 }

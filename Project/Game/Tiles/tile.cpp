@@ -23,16 +23,20 @@ Entity* Tile::getOccupant() const { return _occupant; }
 
 void Tile::setBlocked(bool blocked) { _blocked = blocked; }
 
-void Tile::vacate(int turn, Entity* incoming) {
-	onVacate(turn);
+void Tile::vacate(int turn, EntityType incoming) {
+	if (incoming != ENTITY_NULL) {
+		onVacate(turn, incoming);
+	}
 	_occupant = nullptr;
 }
-void Tile::occupy(Entity* entityToOccupy, int turn, Entity* outgoing) {
+void Tile::occupy(Entity* entityToOccupy, int turn, EntityType outgoing) {
 	_occupant = entityToOccupy; 
-	onOccupy(turn);
+	if (outgoing != ENTITY_NULL) {
+		onOccupy(turn, outgoing);
+	}
 }
-void Tile::onVacate(int turn, Entity* incoming) { }
-void Tile::onOccupy(int turn, Entity* outgoing) { }
+void Tile::onVacate(int turn, EntityType incoming) { }
+void Tile::onOccupy(int turn, EntityType outgoing) { }
 void Tile::draw() { _sprite->draw(_position); }
 
 void Tile::update(int deltaTimeMs) { _sprite->update(deltaTimeMs); }

@@ -23,6 +23,28 @@ namespace globals {
 	const float MAX_TIME_TILL_HELP_TEXT_DISPLAYED = 3500.0f;
 }
 
+
+enum EntityType {
+	ENTITY_NULL = 0,
+	ENTITY_NONE = 1 << 0,
+	ENTITY_BOX = 1 << 1,
+	ENTITY_BAT = 1 << 2,
+	ENTITY_PLAYER = 1 << 3,
+	ENTITY_SWORD = 1 << 4,
+	ENTITY_GROUNDED = ENTITY_BOX | ENTITY_PLAYER,
+	ENTITY_VULNERABLE = ENTITY_BAT,
+};
+
+inline EntityType operator|(EntityType a, EntityType b)
+{
+	return static_cast<EntityType>(static_cast<int>(a) | static_cast<int>(b));
+}
+
+inline EntityType operator&(EntityType a, EntityType b)
+{
+	return static_cast<EntityType>(static_cast<int>(a) & static_cast<int>(b));
+}
+
 struct Vector2 {
 	int x, y;
 	Vector2() : x(0), y(0) {}

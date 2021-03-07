@@ -47,27 +47,28 @@ bool Entity::canMove(Vector2 direction) const {
 	return false;
 }
 
-bool Entity::move(int turn, Vector2 direction, Entity* pushingEntity) {
+bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
 	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
 		Entity* toPush = nullptr;
+		EntityType toPushType = ENTITY_NONE;
 		if (newTile->isBlocked(_entityType)) {
 			return false;
 		}
 		else if (newTile->isOccupied()) {
 			toPush = newTile->getOccupant();
-
+			toPushType = toPush->getEntityType();
 			assert(toPush != this); // stop pushing yourself!
 
-			if (!toPush->move(turn, direction, pushingEntity)) {
+			if (!toPush->move(turn, direction, _entityType)) {
 				return false;
 			}
 		}
 
-		_tileHistory.top()->vacate(turn, pushingEntity);
+		_tileHistory.top()->vacate(turn, pushingEntityType);
 		_tileHistory.push(newTile);
-		_tileHistory.top()->occupy(this, turn, toPush);
+		_tileHistory.top()->occupy(this, turn, toPushType);
 		_lastTurnMoved.push(turn);
 
 		return true;
@@ -83,12 +84,12 @@ void Entity::undo(int turn) {
 			if (_tileHistory.top()->isOccupied()) {
 				_tileHistory.top()->getOccupant()->undo(turn); // if this tile is already occupied, let them go first
 			}
-			_tileHistory.top()->occupy(this, turn, false); 
+			_tileHistory.top()->occupy(this, turn, ENTITY_NULL);
 			continue;
 		}
 
 		// undo move
-		_tileHistory.top()->vacate(turn, false);
+		_tileHistory.top()->vacate(turn, ENTITY_NULL);
 		_tileHistory.pop();
 
 		// if someone is in this spot, make sure they perform their undo first
@@ -96,7 +97,7 @@ void Entity::undo(int turn) {
 			_tileHistory.top()->getOccupant()->undo(turn);
 		}
 
-		_tileHistory.top()->occupy(this, turn, false);
+		_tileHistory.top()->occupy(this, turn, ENTITY_NULL);
 		_lastTurnMoved.pop();
 	}
 }
@@ -107,7 +108,7 @@ void Entity::reset() {
 		revive();
 	}
 	else {
-		_tileHistory.top()->vacate(0, false);
+		_tileHistory.top()->vacate(0, ENTITY_NULL);
 	}
 
 	// find the first tile in your history
@@ -122,7 +123,7 @@ void Entity::reset() {
 	}
 
 	// occupy your original tile
-	_tileHistory.top()->occupy(this, 0, false);
+	_tileHistory.top()->occupy(this, 0, ENTITY_NULL);
 }
 
 void Entity::update(int deltaTime) {

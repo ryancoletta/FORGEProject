@@ -1,4 +1,5 @@
 #pragma once
+#include <stack>
 #include "globals.h"
 
 class Entity;
@@ -30,8 +31,8 @@ public:
 
 	void setBlocked(bool blocked);
 
-	void vacate(int turn, Entity* incoming = nullptr);
-	void occupy(Entity* entityToOccupy, int turn, Entity* outgoing = nullptr);
+	void vacate(int turn, EntityType incoming = ENTITY_NONE);
+	void occupy(Entity* entityToOccupy, int turn, EntityType outgoing = ENTITY_NONE);
 	void draw();
 	void update(int deltaTimeMs);
 
@@ -39,8 +40,8 @@ public:
 	virtual void reset() {}
 
 protected:
-	virtual void onVacate(int turn, Entity* incoming = nullptr);
-	virtual void onOccupy(int turn, Entity* outgoing = nullptr);
+	virtual void onVacate(int turn, EntityType incoming = ENTITY_NONE);
+	virtual void onOccupy(int turn, EntityType outgoing = ENTITY_NONE);
 
 	bool _blocked;
 	TileType _tileType;

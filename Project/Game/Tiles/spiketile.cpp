@@ -35,7 +35,7 @@ bool SpikeTile::isBlocked(EntityType entrant) const
 	return false;
 }
 
-void SpikeTile::onOccupy(int turn, Entity* outgoing)
+void SpikeTile::onOccupy(int turn, EntityType outgoing)
 {
 	tryHurtOccupant(turn);
 }
