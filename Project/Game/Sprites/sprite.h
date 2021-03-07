@@ -11,7 +11,7 @@ class Shader;
 class Sprite
 {
 public:
-	Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset = glm::vec2(0));
+	Sprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, glm::vec2 sourcePosition, glm::vec2 sourceScale, glm::vec2 offset = glm::vec2(0));
 	virtual ~Sprite() {}
 
 	Shader* getShader();
@@ -22,7 +22,7 @@ public:
 	void setSortingOrder(int sortingOrder);
 
 	virtual void update(int deltaTime) {};
-	virtual void draw(Vector2 position, const float clockWiseAngleRotation = 0.0f);
+	virtual void draw(glm::vec2 position, const float clockWiseAngleRotation = 0.0f);
 
 protected:
 	glm::vec2 _offset;

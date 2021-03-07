@@ -11,7 +11,7 @@ class Animation;
 class AnimatedSprite : public Sprite
 {
 public:
-	AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset = glm::vec2(0));
+	AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, glm::vec2 sourcePosition, glm::vec2 sourceScale, glm::vec2 offset = glm::vec2(0));
 
 	void setVisible(bool visible);
 
@@ -25,7 +25,7 @@ public:
 	void resetAnimations();
 	void stopAnimation();
 	void update(int deltaTime) override;
-	void draw(Vector2 position, const float clockWiseAngleRotation = 0) override;
+	void draw(glm::vec2 position, const float clockWiseAngleRotation = 0) override;
 
 private:
 	int _frameIndex;

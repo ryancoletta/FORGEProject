@@ -30,7 +30,7 @@ Game::Game() :
 	_input				= DBG_NEW Input();
 	_hudManager			= DBG_NEW HudManager(_graphics, _spriteManager);
 	_stateMachine		= DBG_NEW StateMachine();
-	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
+	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
 	_levelState			= DBG_NEW LevelState(this);
 }
@@ -74,7 +74,7 @@ void Game::draw() {
 	_graphics->clear();
 	_graphics->begin();
 
-	_background->draw(Vector2(0,0));
+	_background->draw(glm::vec2(0,0));
 	_levelManager->draw();
 	_entityManager->draw();
 	_hudManager->draw();
@@ -140,9 +140,9 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 
 void Game::TitleState::Enter() {
 	BaseState::Enter();
-	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
-	_creditText = _owner->_hudManager->writeText("@RyGuyDev", Vector2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
-	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", Vector2::zero(), Vector2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), Vector2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
+	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
+	_creditText = _owner->_hudManager->writeText("@RyGuyDev", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
+	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), glm::vec2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
 void Game::TitleState::Execute(int deltaTimeMs)
@@ -163,7 +163,7 @@ void Game::TitleState::Execute(int deltaTimeMs)
 			float timeSinceEntry = SDL_GetTicks() - _stateEnterTimeMS;
 			bool isVisible = floor(std::fmod(timeSinceEntry / 300, 2)) == 0.0f;
 			_startText->setVisibility(isVisible);
-			//_startText->setOffset(Vector2(0, 10 * sin(_timer / 100.0f)));
+			//_startText->setOffset(glm::vec2(0, 10 * sin(_timer / 100.0f)));
 		}
 		else { _startText->setVisibility(true); }
 	}
@@ -198,9 +198,9 @@ void Game::LevelState::Enter()
 
 		// display the level number
 		int levelNumber = _owner->_levelManager->getLevelIndex() + 1;
-		_owner->_hudManager->writeText("Level " + std::to_string(levelNumber), Vector2(globals::WINDOW_WIDTH - 30.0f, globals::WINDOW_HEIGHT - 30.0f), RIGHT_ALIGNED);
+		_owner->_hudManager->writeText("Level " + std::to_string(levelNumber), glm::vec2(globals::WINDOW_WIDTH - 30.0f, globals::WINDOW_HEIGHT - 30.0f), RIGHT_ALIGNED);
 
-		_helpText = _owner->_hudManager->writeText("Z to undo | R to reset", Vector2(globals::WINDOW_WIDTH / 2.0f, 50.0f), MIDDLE_ALIGNED);
+		_helpText = _owner->_hudManager->writeText("Z to undo | R to reset", glm::vec2(globals::WINDOW_WIDTH / 2.0f, 50.0f), MIDDLE_ALIGNED);
 		_helpText->setVisibility(false);
 		_lastInputTimeMS = _stateEnterTimeMS;
 	}
@@ -255,16 +255,16 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		}
 		// handle movement
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_UP)) {
-			if (_playerEntity->move(_turn, Vector2::down())) { _turn++; }
+			if (_playerEntity->move(_turn, glm::vec2(0,-1))) { _turn++; }
 		}
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_RIGHT)) {
-			if (_playerEntity->move(_turn, Vector2::right())) { _turn++; }
+			if (_playerEntity->move(_turn, glm::vec2(1,0))) { _turn++; }
 		}
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_DOWN)) {
-			if (_playerEntity->move(_turn, Vector2::up())) { _turn++; }
+			if (_playerEntity->move(_turn, glm::vec2(0,1))) { _turn++; }
 		}
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_LEFT)) {
-			if (_playerEntity->move(_turn, Vector2::left())) { _turn++; }
+			if (_playerEntity->move(_turn, glm::vec2(-1,0))) { _turn++; }
 		}
 	}
 }

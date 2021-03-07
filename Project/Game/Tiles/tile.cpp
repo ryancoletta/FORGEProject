@@ -4,7 +4,7 @@
 #include "Entities/entity.h"
 #include "Sprites/sprite.h"
 
-Tile::Tile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
+Tile::Tile(TileType tileType, Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, bool blocked) :
 	_tileType(tileType),
 	_sprite(sprite), 
 	_coordinate(coordinate), 
@@ -21,8 +21,8 @@ bool Tile::isOccupied() const {
 }
 
 TileType Tile::getTileType() const { return _tileType; }
-Vector2 Tile::getCoordinate() const { return _coordinate; }
-Vector2 Tile::getPosition() const { return _position; }
+glm::vec2 Tile::getCoordinate() const { return _coordinate; }
+glm::vec2 Tile::getPosition() const { return _position; }
 Sprite* Tile::getSprite() const { return _sprite; }
 Entity* Tile::getOccupant() const { 
 	if (!_occupant.empty()) {
@@ -37,6 +37,9 @@ void Tile::vacate(int turn, EntityType incoming) {
 	if (incoming != ENTITY_NULL) {
 		onVacate(turn, incoming);
 	}
+
+	assert(!_occupant.empty());
+
 	_occupant.pop();
 }
 void Tile::occupy(Entity* entityToOccupy, int turn, EntityType outgoing) {

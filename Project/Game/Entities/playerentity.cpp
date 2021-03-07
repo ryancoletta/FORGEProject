@@ -4,14 +4,14 @@
 #include "playerentity.h"
 #include "Sprites/animatedsprite.h"
 
-PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
+PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
 {
 	updateAnimation();
 }
 
-bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
-	int dot = Vector2::dot(direction, _facingHistory.top());
+bool PlayerEntity::move(int turn, glm::vec2 direction, EntityType pushingEntityType) {
+	int dot = glm::dot(direction, _facingHistory.top());
 	switch (dot) {
 		// move to the right or left
 		case 0:
@@ -24,7 +24,7 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 			}
 
 			// then check if sword can move
-			Vector2 aheadCoordinate = _tileHistory.top()->getCoordinate() + direction * 2;
+			glm::vec2 aheadCoordinate = _tileHistory.top()->getCoordinate() + glm::vec2(direction.x * 2, direction.y * 2);
 			Tile* aheadTile = _level->getTile(aheadCoordinate);
 			if (aheadTile->isBlocked(ENTITY_SWORD)) {
 				return false;
@@ -42,7 +42,7 @@ bool PlayerEntity::move(int turn, Vector2 direction, EntityType pushingEntityTyp
 			}
 		}
 		// move backward
-		case -1: {
+		default: {
 			if (!canMove(direction)) {
 				return false;
 			}
@@ -61,20 +61,20 @@ void PlayerEntity::kill(int turn)
 
 void PlayerEntity::updateAnimation()
 {
-	Vector2 facing = _facingHistory.top();
+	glm::vec2 facing = _facingHistory.top();
 	if (!_isAlive) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_death", false, true);
 	}
-	else if (facing == Vector2::up()) {
+	else if (facing == glm::vec2(0,1)) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_down", true);
 	}
-	else if (facing == Vector2::left()) {
+	else if (facing == glm::vec2(-1,0)) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_left", true);
 	}
-	else if (facing == Vector2::down()) {
+	else if (facing == glm::vec2(0,-1)) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_up", true);
 	}
-	else if (facing == Vector2::right()) {
+	else if (facing == glm::vec2(1,0)) {
 		static_cast<AnimatedSprite*>(_sprite)->playAnimation("player_right", true);
 	}
 }
@@ -91,13 +91,13 @@ void PlayerEntity::reset()
 	updateAnimation();
 }
 
-bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
+bool PlayerEntity::turnTowards(int turn, glm::vec2 direction) {
 	
 	// store top up here so we can use throughout without fear of modifying the stack and for speed, also for readability
-	Vector2 playerFacingDirection = _facingHistory.top();
-	Vector2 currentCoordinate = _tileHistory.top()->getCoordinate();
+	glm::vec2 playerFacingDirection = _facingHistory.top();
+	glm::vec2 currentCoordinate = _tileHistory.top()->getCoordinate();
 
-	Vector2 diagonalCoordinate = currentCoordinate + playerFacingDirection + direction;
+	glm::vec2 diagonalCoordinate = currentCoordinate + playerFacingDirection + direction;
 	Entity* diagonalEntity = nullptr;
 	if (_level->isCoordinateInRange(diagonalCoordinate)) {
 		Tile* diagonalTile = _level->getTile(diagonalCoordinate);
@@ -112,7 +112,7 @@ bool PlayerEntity::turnTowards(int turn, Vector2 direction) {
 		}
 	}
 
-	Vector2 adjacentCoordinate = currentCoordinate + direction;
+	glm::vec2 adjacentCoordinate = currentCoordinate + direction;
 	Entity* adjacentEntity = nullptr;
 	if (_level->isCoordinateInRange(adjacentCoordinate)) {
 		Tile* adjacentTile = _level->getTile(adjacentCoordinate);

@@ -34,13 +34,13 @@ Level::~Level() {
 
 Tile* Level::getTile(int x, int y) const { return _tiles[x][y]; }
 
-Tile* Level::getTile(Vector2 coordinate) const { return getTile(coordinate.x, coordinate.y); }
+Tile* Level::getTile(glm::vec2 coordinate) const { return getTile(coordinate.x, coordinate.y); }
 
 bool Level::isCoordinateInRange(int x, int y) const { return (x >= 0) && (y >= 0) && (x < _levelSize.x) && (y < _levelSize.y); }
 
-bool Level::isCoordinateInRange(Vector2 coordinate) const { return isCoordinateInRange(coordinate.x, coordinate.y); }
+bool Level::isCoordinateInRange(glm::vec2 coordinate) const { return isCoordinateInRange(coordinate.x, coordinate.y); }
 
-Vector2 Level::getLevelSize() const
+glm::vec2 Level::getLevelSize() const
 {
 	return _levelSize;
 }
@@ -52,18 +52,23 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 	doc.LoadFile(ss.str().c_str());
 
 	XMLElement* mapNode = doc.FirstChildElement("map");
-	mapNode->QueryIntAttribute("width", &_levelSize.x);
-	mapNode->QueryIntAttribute("height", &_levelSize.y);
+	int width = 0;
+	int height = 0;
+	mapNode->QueryIntAttribute("width", &width);
+	mapNode->QueryIntAttribute("height", &height);
+
+	_levelSize.x = (float)width;
+	_levelSize.y = (float)height;
 
 	_tiles.resize(_levelSize.x);
-	for (int x = 0; x < _levelSize.x; x++) {
+	for (int x = 0; x < glm::round(_levelSize.x); x++) {
 		_tiles[x].resize(_levelSize.y);
 	}
 
 	int tileWidth, tileHeight;
 	mapNode->QueryIntAttribute("tilewidth", &tileWidth);
 	mapNode->QueryIntAttribute("tileheight", &tileHeight);
-	Vector2 tileSize(tileWidth, tileHeight);
+	glm::vec2 tileSize(tileWidth, tileHeight);
 
 	loadSpriteSheets(graphics, mapNode);
 
@@ -116,11 +121,11 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							int spriteSheetGid = gid - spriteSheet.firstGid;
 
 							// get the position of tile in the level
-							int x = tileCounter % _levelSize.x;
-							int y = tileCounter / _levelSize.x;
+							int x = tileCounter % (int)glm::round(_levelSize.x);
+							int y = tileCounter / (int)glm::round(_levelSize.x);
 							int posX = (x + 0.5) * tileWidth * globals::SPRITE_SCALE;
 							int posY = (y + 0.5) * tileHeight * globals::SPRITE_SCALE;
-							Vector2 finalTilePosition = Vector2(posX, posY);
+							glm::vec2 finalTilePosition = glm::vec2(posX, posY);
 
 							// calculate the position of the tile in the tileset, reading from the top left
 							int spriteSheetWidth = spriteSheet.width;
@@ -128,32 +133,32 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 							spriteSheetX *= tileWidth;
 							int spriteSheetY = spriteSheetGid / (spriteSheetWidth / tileWidth);
 							spriteSheetY *= tileHeight;
-							Vector2 finalTilesetPosition = Vector2(spriteSheetX, spriteSheet.height - tileHeight - spriteSheetY);
+							glm::vec2 finalTilesetPosition = glm::vec2(spriteSheetX, spriteSheet.height - tileHeight - spriteSheetY);
 
 							Sprite* tileSprite = _spriteManager->loadSprite(static_cast<GidElement>(gid), spriteSheet.path, "Shaders/base.vert", "Shaders/base.frag", finalTilesetPosition, tileSize);
 
 							if (std::string(layerName) == "BG") {
 								if (gid <= GID_TILE_WALL_END) {
-									_tiles[x][y] = DBG_NEW Tile(TILE_WALL, tileSprite, Vector2(x, y), finalTilePosition, true);
+									_tiles[x][y] = DBG_NEW Tile(TILE_WALL, tileSprite, glm::vec2(x, y), finalTilePosition, true);
 								}
 								else if (gid <= GID_TILE_OPEN_END) {
-									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW Tile(TILE_OPEN, tileSprite, glm::vec2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_HOLE) {
-									_tiles[x][y] = DBG_NEW HoleTile(tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW HoleTile(tileSprite, glm::vec2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_SWITCH) {
-									_tiles[x][y] = DBG_NEW SwitchTile(tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW SwitchTile(tileSprite, glm::vec2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_GOAL) {
-									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, Vector2(x, y), finalTilePosition);
+									_tiles[x][y] = DBG_NEW ExitTile(levelManager, tileSprite, glm::vec2(x, y), finalTilePosition);
 								}
 								else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
-									_tiles[x][y] = DBG_NEW SpikeTile(tileSprite, Vector2(x, y), finalTilePosition, gid == GID_TILE_SPIKE_ON);
+									_tiles[x][y] = DBG_NEW SpikeTile(tileSprite, glm::vec2(x, y), finalTilePosition, gid == GID_TILE_SPIKE_ON);
 								}
 							}
 							else {
-								_entityManager->addEntity(static_cast<GidElement>(gid), this, tileSprite, _tiles[x][y], Vector2::rotate(Vector2::up(), rotation));
+								_entityManager->addEntity(static_cast<GidElement>(gid), this, tileSprite, _tiles[x][y], rotate(glm::vec2(0,1), rotation));
 							}
 
 							tileCounter++;

@@ -7,7 +7,7 @@ public:
 
 	void kill(int turn) override;
 
-	bool canMove(Vector2 direction) const override;
+	bool canMove(glm::vec2 direction) const override;
 	void undo(int turn) override;
 	void reset() override;
 };

@@ -4,7 +4,7 @@
 #include "Sprites/animatedsprite.h".
 #include "Entities/boxentity.h"
 
-HoleTile::HoleTile(Sprite* sprite, Vector2 coordinate, Vector2 position) :
+HoleTile::HoleTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position) :
 	DynamicTile(TILE_HOLE, sprite, coordinate, position, 0)
 {}
 

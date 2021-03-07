@@ -9,7 +9,7 @@ class Graphics;
 class Font
 {
 public:
-	Font(Graphics* graphics, const std::string& filePath, Vector2 charSize);
+	Font(Graphics* graphics, const std::string& filePath, glm::uvec2 charSize);
 	~Font();
 
 	Sprite* getCharSprite(char c);

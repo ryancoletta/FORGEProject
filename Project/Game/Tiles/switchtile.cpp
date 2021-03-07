@@ -3,13 +3,13 @@
 #include "spiketile.h"
 #include "Entities/entity.h"
 
-SwitchTile::SwitchTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked) :
+SwitchTile::SwitchTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, bool blocked) :
 	Tile(TILE_SWITCH, sprite, coordinate, position)
 {}
 
 void SwitchTile::findAllSpikeTiles(Level* level)
 {
-	Vector2 levelSize = level->getLevelSize();
+	glm::vec2 levelSize = level->getLevelSize();
 	for (int x = 0; x < levelSize.x; x++) {
 		for (int y = 0; y < levelSize.y; y++) {
 			SpikeTile* tile = static_cast<SpikeTile*>(level->getTile(x, y));

@@ -2,19 +2,19 @@
 #include "Sprites/sprite.h"
 #include "Tiles/tile.h"
 
-DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) :
+DirectionalEntity::DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing) :
 	Entity(entityID, level, sprite, startTile)
 {
 	_facingHistory.push(facing);
 }
 
-Vector2 DirectionalEntity::getDirectionFacing() {
+glm::vec2 DirectionalEntity::getDirectionFacing() {
 	return _facingHistory.top();
 }
 
 /*
 void DirectionalEntity::draw() {
-	float rotationalOffset = Vector2::angle(Vector2::up(), getDirectionFacing());
+	float rotationalOffset = glm::vec2::angle(glm::vec2::up(), getDirectionFacing());
 	_sprite->draw(_tileHistory.top()->getPosition(), rotationalOffset);
 }
 */

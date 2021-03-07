@@ -16,11 +16,11 @@ public:
 	EntityType getEntityType() const;
 	Tile* getTile() const;
 	Sprite* getSprite() const;
-	Vector2 getCoordinate() const;
+	glm::vec2 getCoordinate() const;
 	bool isAlive() const;
 
-	virtual bool canMove(Vector2 direction) const;
-	virtual bool move(int turn, Vector2 direction, EntityType pushingEntityType = ENTITY_NONE);
+	virtual bool canMove(glm::vec2 direction) const;
+	virtual bool move(int turn, glm::vec2 direction, EntityType pushingEntityType = ENTITY_NONE);
 	virtual void undo(int turn);
 	virtual void reset();
 	virtual void draw();

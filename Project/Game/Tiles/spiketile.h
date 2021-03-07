@@ -5,7 +5,7 @@
 class SpikeTile : public DynamicTile
 {
 public:
-	SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage);
+	SpikeTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, int startingStage);
 	void toggleSpikes(int turn);
 	void undo(int turn) override;
 	void reset() override;

@@ -32,7 +32,7 @@ Entity* EntityManager::GetPlayerEntity() {
 	return playerEntities[0];
 }
 
-void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing) {
+void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing) {
 	Entity* newEntity = nullptr;
 
 	switch (gid) {
@@ -47,7 +47,7 @@ void EntityManager::addEntity(GidElement gid, Level* level, Sprite* sprite, Tile
 		case GID_ENTITY_PLAYER_UP:
 		case GID_ENTITY_PLAYER_RIGHT:
 			float rotation = -90 * (gid - GID_ENTITY_PLAYER_DOWN) / 4;
-			facing = Vector2::rotate(Vector2::up(), rotation);
+			facing = rotate(glm::vec2(0,1), rotation);
 			newEntity = DBG_NEW PlayerEntity(ENTITY_PLAYER, level, sprite, startTile, facing);
 			break;
 	}

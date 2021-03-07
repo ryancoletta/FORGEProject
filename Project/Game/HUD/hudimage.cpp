@@ -1,7 +1,7 @@
 #include "hudimage.h"
 #include "Sprites/sprite.h"
 
-HudImage::HudImage(Sprite* sprite, Vector2 position) :
+HudImage::HudImage(Sprite* sprite, glm::vec2 position) :
 	_sprite(sprite),
 	_position(position)
 {}

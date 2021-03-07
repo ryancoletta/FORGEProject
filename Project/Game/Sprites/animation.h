@@ -7,7 +7,7 @@
 class Animation
 {
 public:
-	Animation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale);
+	Animation(std::string name, int frames, int framesPerSecond, glm::vec2 firstFramePosition, glm::vec2 frameScale);
 
 	std::string getName() const;
 	int getFrames() const;
@@ -18,8 +18,8 @@ private:
 	int _frames;
 	int _milisecondsPerFrame;
 	std::string _name;
-	Vector2 _firstFramePosition;
-	Vector2 _frameScale;
+	glm::vec2 _firstFramePosition;
+	glm::vec2 _frameScale;
 	std::vector<SDL_Rect> _frameRects;
 };
 

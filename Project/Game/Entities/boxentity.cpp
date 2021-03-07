@@ -17,7 +17,7 @@ void BoxEntity::kill(int turn)
 	Entity::kill(turn);
 }
 
-bool BoxEntity::canMove(Vector2 direction) const
+bool BoxEntity::canMove(glm::vec2 direction) const
 {
 	Tile* currentTile = _tileHistory.top();
 	if (currentTile->getTileType() == TILE_SPIKE && static_cast<SpikeTile*>(currentTile)->isBlocked(ENTITY_BOX)) {

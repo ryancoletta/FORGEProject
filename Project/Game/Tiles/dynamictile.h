@@ -5,7 +5,7 @@
 class DynamicTile : public Tile
 {
 public:
-	DynamicTile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage);
+	DynamicTile(TileType tileType, Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, int startingStage);
 	void undo(int turn) override;
 	void reset() override;
 protected:

@@ -1,7 +1,7 @@
 #include "globals.h"
 #include "animation.h"
 
-Animation::Animation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale) :
+Animation::Animation(std::string name, int frames, int framesPerSecond, glm::vec2 firstFramePosition, glm::vec2 frameScale) :
 	_name(name),
 	_frames(frames),
 	_milisecondsPerFrame(framesPerSecond),
@@ -10,7 +10,12 @@ Animation::Animation(std::string name, int frames, int framesPerSecond, Vector2 
 {
 	for (int i = 0; i < frames; i++) {
 		int xPos = i * frameScale.x + firstFramePosition.x;
-		SDL_Rect newRect = { xPos, firstFramePosition.y, frameScale.x, frameScale.y };
+		SDL_Rect newRect = { 
+			xPos, 
+			static_cast<int>(firstFramePosition.y), 
+			static_cast<int>(frameScale.x), 
+			static_cast<int>(frameScale.y) 
+		};
 		_frameRects.push_back(newRect);
 	}
 }

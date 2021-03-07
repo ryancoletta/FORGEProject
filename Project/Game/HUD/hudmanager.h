@@ -17,8 +17,8 @@ public:
 	~HudManager();
 
 	void draw();
-	Text* writeText(std::string text, Vector2 position, TextAlignment alignment);
-	HudImage* spawnImage(std::string spriteName, const std::string& texturePath, const std::string& palettePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale, Vector2 destinationPosition);
+	Text* writeText(std::string text, glm::vec2 position, TextAlignment alignment);
+	HudImage* spawnImage(std::string spriteName, const std::string& texturePath, const std::string& palettePath, const std::string& vertexPath, const std::string& fragmentPath, glm::vec2 sourcePosition, glm::vec2 sourceScale, glm::vec2 destinationPosition);
 	void clearScreen();
 private:
 	SpriteManager* _spriteManager;

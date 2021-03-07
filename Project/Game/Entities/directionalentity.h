@@ -6,15 +6,15 @@
 class DirectionalEntity : public Entity
 {
 public:
-	DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
+	DirectionalEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing);
 	virtual ~DirectionalEntity() {}
 
-	Vector2 getDirectionFacing();
+	glm::vec2 getDirectionFacing();
 	void undo(int turn) override;
 	void reset() override;
 	//void draw() override;
 protected:
-	std::stack<Vector2> _facingHistory;
+	std::stack<glm::vec2> _facingHistory;
 	std::stack<int> _lastTurnTurned;
 };
 

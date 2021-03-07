@@ -38,10 +38,10 @@ public:
 	~Level();
 
 	Tile* getTile(int x, int y) const;
-	Tile* getTile(Vector2 coordinate) const;
+	Tile* getTile(glm::vec2 coordinate) const;
 	bool isCoordinateInRange(int x, int y) const;
-	bool isCoordinateInRange(Vector2 coordinate) const;
-	Vector2 getLevelSize() const;
+	bool isCoordinateInRange(glm::vec2 coordinate) const;
+	glm::vec2 getLevelSize() const;
 
 	void loadMap(LevelManager* levelManager, Graphics* graphics, const std::string* levelPath);
 	void loadSpriteSheets(Graphics* graphics, tinyxml2::XMLElement* mapNode);
@@ -54,7 +54,7 @@ public:
 	void connectTiles();
 
 private:
-	Vector2 _levelSize;
+	glm::vec2 _levelSize;
 	EntityManager* _entityManager;
 	SpriteManager* _spriteManager;
 	std::vector<std::vector<Tile*>> _tiles;

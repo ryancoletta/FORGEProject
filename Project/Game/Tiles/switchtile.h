@@ -9,7 +9,7 @@ class SpikeTile;
 class SwitchTile : public Tile
 {
 public:
-	SwitchTile(Sprite* sprite, Vector2 coordinate, Vector2 position, bool blocked = false);
+	SwitchTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, bool blocked = false);
 	void findAllSpikeTiles(Level* level);
 protected:
 	void onOccupy(int turn, EntityType outgoing = ENTITY_NONE) override;

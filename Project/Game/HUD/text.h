@@ -17,18 +17,18 @@ enum TextAlignment {
 class Text
 {
 public:
-	Text(Font* font, std::string text, Vector2 position, TextAlignment alignment = LEFT_ALIGNED);
+	Text(Font* font, std::string text, glm::vec2 position, TextAlignment alignment = LEFT_ALIGNED);
 
-	Vector2 getOrigin();
+	glm::vec2 getOrigin();
 
-	void setOffset(Vector2 offset);
+	void setOffset(glm::vec2 offset);
 	void setVisibility(bool isVisible);
 
 	void draw();
 
 private:
 	bool _isVisible;
-	Vector2 _offset;
+	glm::vec2 _offset;
 	SDL_Rect _rect;
 	std::vector<Sprite*> _charSprites;
 	TextAlignment _alignment;

@@ -1,7 +1,7 @@
 #include "animationmanager.h"
 #include "animation.h"
 
-Animation* AnimationManager::loadAnimation(std::string name, int frames, int framesPerSecond, Vector2 firstFramePosition, Vector2 frameScale) {
+Animation* AnimationManager::loadAnimation(std::string name, int frames, int framesPerSecond, glm::vec2 firstFramePosition, glm::vec2 frameScale) {
 	// these sprites all are uniform (no branching animations) so theres no need to create individual instances
 	Animation* newAnimation;
 	if (_loadedAnimations.count(name) == 0) {

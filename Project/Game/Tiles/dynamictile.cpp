@@ -1,6 +1,6 @@
 #include "dynamictile.h"
 
-DynamicTile::DynamicTile(TileType tileType, Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage) :
+DynamicTile::DynamicTile(TileType tileType, Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, int startingStage) :
 	Tile(tileType, sprite, coordinate, position)
 {
 	_stageHistory.push(startingStage);

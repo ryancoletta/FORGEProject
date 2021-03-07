@@ -25,12 +25,12 @@ Tile* Entity::getTile() const { return _tileHistory.top(); }
 
 Sprite* Entity::getSprite() const { return _sprite; }
 
-Vector2 Entity::getCoordinate() const { return getTile()->getCoordinate(); }
+glm::vec2 Entity::getCoordinate() const { return getTile()->getCoordinate(); }
 
 bool Entity::isAlive() const { return _isAlive; }
 
-bool Entity::canMove(Vector2 direction) const {
-	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
+bool Entity::canMove(glm::vec2 direction) const {
+	glm::vec2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
 		if (newTile->isBlocked(_entityType)) {
@@ -47,8 +47,8 @@ bool Entity::canMove(Vector2 direction) const {
 	return false;
 }
 
-bool Entity::move(int turn, Vector2 direction, EntityType pushingEntityType) {
-	Vector2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
+bool Entity::move(int turn, glm::vec2 direction, EntityType pushingEntityType) {
+	glm::vec2 newCoordinate = _tileHistory.top()->getCoordinate() + direction;
 	if (_level->isCoordinateInRange(newCoordinate)) {
 		Tile* newTile = _level->getTile(newCoordinate);
 		Entity* toPush = nullptr;
@@ -158,7 +158,7 @@ void Entity::getAllConnected(std::vector<Entity*> &entities, EntityType flags) {
 	for (int r = 0; r < 4; r++) {
 		int x = sin(r * M_PI / 2.0);
 		int y = cos(r * M_PI / 2.0);
-		Vector2 adjacentCoordinate = _tileHistory.top()->getCoordinate() + Vector2(x,y);
+		glm::vec2 adjacentCoordinate = _tileHistory.top()->getCoordinate() + glm::vec2(x,y);
 		if (_level->isCoordinateInRange(adjacentCoordinate)) {
 			Tile* adjacentTile = _level->getTile(adjacentCoordinate);
 			if (adjacentTile->isOccupied()) {

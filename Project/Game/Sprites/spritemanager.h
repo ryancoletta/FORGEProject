@@ -14,8 +14,8 @@ public:
 	SpriteManager(Graphics* graphics, AnimationManager* animationManager);
 	~SpriteManager();
 
-	Sprite* loadSprite(std::string spriteName, const std::string& texturePath, const std::string& palettePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale);
-	Sprite* loadSprite(GidElement gid, const std::string& filePath, const std::string& vertexPath, const std::string& fragmentPath, Vector2 sourcePosition, Vector2 sourceScale);
+	Sprite* loadSprite(std::string spriteName, const std::string& texturePath, const std::string& palettePath, const std::string& vertexPath, const std::string& fragmentPath, glm::vec2 sourcePosition, glm::vec2 sourceScale);
+	Sprite* loadSprite(GidElement gid, const std::string& filePath, const std::string& vertexPath, const std::string& fragmentPath, glm::vec2 sourcePosition, glm::vec2 sourceScale);
 
 	void updateAllSpriteFade(float newFade);
 

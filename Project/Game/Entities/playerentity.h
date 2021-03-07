@@ -6,9 +6,9 @@
 class PlayerEntity : public DirectionalEntity
 {
 public:
-	PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, Vector2 facing);
+	PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing);
 
-	bool move(int turn, Vector2 direction, EntityType pushingEntityType = ENTITY_NONE) override;
+	bool move(int turn, glm::vec2 direction, EntityType pushingEntityType = ENTITY_NONE) override;
 
 	void kill(int turn) override; // TODO replace with virtual
 
@@ -17,6 +17,6 @@ public:
 	void reset() override;
 
 private:
-	bool turnTowards(int turn, Vector2 direction);
+	bool turnTowards(int turn, glm::vec2 direction);
 };
 

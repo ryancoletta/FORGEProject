@@ -2,7 +2,7 @@
 #include "Entities/entity.h"
 #include "Sprites/animatedsprite.h"
 #include "Entities/playerentity.h"
-SpikeTile::SpikeTile(Sprite* sprite, Vector2 coordinate, Vector2 position, int startingStage) :
+SpikeTile::SpikeTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position, int startingStage) :
 	DynamicTile(TILE_SPIKE, sprite, coordinate, position, startingStage)
 {}
 

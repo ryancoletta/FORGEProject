@@ -5,7 +5,7 @@
 #include "Graphics/shader.h"
 #include "Graphics/texture.h"
 
-AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, Vector2 sourcePosition, Vector2 sourceScale, glm::vec2 offset) :
+AnimatedSprite::AnimatedSprite(Graphics* graphics, const std::string& texturePath, const std::string& palettePath, const std::string& vertPath, const std::string& fragPath, glm::vec2 sourcePosition, glm::vec2 sourceScale, glm::vec2 offset) :
 	Sprite(graphics, texturePath, palettePath, vertPath, fragPath, sourcePosition, sourceScale, offset),
 	_frameIndex(0),
 	_timeElapsed(0), 
@@ -112,7 +112,7 @@ void AnimatedSprite::update(int deltaTime) {
 	}
 }
 
-void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) {
+void AnimatedSprite::draw(glm::vec2 position, const float clockWiseAngleRotation) {
 	if (_animations.empty() || _currentAnimationName == "") {
 		Sprite::draw(position);
 		return;
@@ -123,8 +123,8 @@ void AnimatedSprite::draw(Vector2 position, const float clockWiseAngleRotation) 
 		_texture->bind(0);
 
 		SDL_Rect destRect = {
-			position.x + _offset.x,
-			position.y + _offset.y,
+			static_cast<int>(position.x + _offset.x),
+			static_cast<int>(position.y + _offset.y),
 			_sourceRect.w* globals::SPRITE_SCALE,
 			_sourceRect.h* globals::SPRITE_SCALE
 		};
