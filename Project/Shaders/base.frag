@@ -16,7 +16,7 @@ uniform float u_Fade;
 vec4 paletteSwap(vec4 baseColor) 
 {
 
-	float increaseAmt = 0.5 - u_Fade / 2.0;
+	float increaseAmt = 0.51 - u_Fade / 2.0;
 
 	if (baseColor.r > 0.0) 
 	{

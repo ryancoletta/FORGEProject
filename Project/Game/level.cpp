@@ -49,7 +49,7 @@ void Level::loadMap(LevelManager* levelManager, Graphics* graphics, const std::s
 	XMLDocument doc;
 	std::stringstream ss;
 	ss << *levelPath;
-	doc.LoadFile(ss.str().c_str());
+	assert(doc.LoadFile(ss.str().c_str()) == XML_SUCCESS);
 
 	XMLElement* mapNode = doc.FirstChildElement("map");
 	int width = 0;

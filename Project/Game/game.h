@@ -14,6 +14,7 @@ class HudManager;
 class StateMachine;
 class Text;
 class PlayerEntity;
+class SoundManager;
 
 class Game {
 public:

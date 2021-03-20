@@ -3,6 +3,7 @@
 #include "Tiles/tile.h"
 #include "playerentity.h"
 #include "Sprites/animatedsprite.h"
+#include "soundmanager.h"
 
 PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Tile* startTile, glm::vec2 facing) :
 	DirectionalEntity(entityID, level, sprite, startTile, facing)
@@ -11,50 +12,72 @@ PlayerEntity::PlayerEntity(EntityType entityID, Level* level, Sprite* sprite, Ti
 }
 
 bool PlayerEntity::move(int turn, glm::vec2 direction, EntityType pushingEntityType) {
+	bool success = false;
 	int dot = glm::dot(direction, _facingHistory.top());
 	switch (dot) {
 		// move to the right or left
 		case 0:
-			return turnTowards(turn, direction);
+		{
+			success = turnTowards(turn, direction);
+			break;
+		}
 		// move forward
-		case 1: {
+		case 1: 
+		{
 			// first check if player can move
 			if (!canMove(direction)) {
-				return false;
+				success = false;
+				break;
 			}
 
 			// then check if sword can move
 			glm::vec2 aheadCoordinate = _tileHistory.top()->getCoordinate() + glm::vec2(direction.x * 2, direction.y * 2);
 			Tile* aheadTile = _level->getTile(aheadCoordinate);
 			if (aheadTile->isBlocked(ENTITY_SWORD)) {
-				return false;
+				success = false;
+				break;
 			}
 			else if (aheadTile->isOccupied()) {
 				Entity* toPush = aheadTile->getOccupant();
 				if (!toPush->canMove(direction)) {
-					if ((toPush->getEntityType() & ENTITY_VULNERABLE) > 0) {
+					if ((toPush->getEntityType() & ENTITY_VULNERABLE) > 0) 
+					{
 						toPush->kill(turn);
 					}
-					else return false;
+					else
+					{
+						success = false;
+						break;
+					}
 				}
 				toPush->move(turn, direction, ENTITY_SWORD);
-				return Entity::move(turn, direction, pushingEntityType);
 			}
+			success = Entity::move(turn, direction, pushingEntityType);
+			break;
 		}
 		// move backward
-		default: {
+		default: 
+		{
 			if (!canMove(direction)) {
-				return false;
+				success = false;
+				break;
 			}
 
-			return Entity::move(turn, direction, pushingEntityType);
+			success = Entity::move(turn, direction, pushingEntityType);
+			break;
 		}
 	}
+
+	if (success)	SoundManager::instance->PlaySFX("step");
+	else			SoundManager::instance->PlaySFX("error");
+
+	return success;
 }
 
 void PlayerEntity::kill(int turn)
 {
 	Entity::kill(turn);
+	SoundManager::instance->PlaySFX("death");
 	_sprite->setSortingOrder(1); // unlike other deaths, we DONT want the player sprite sorted to the bottom
 	updateAnimation();
 }

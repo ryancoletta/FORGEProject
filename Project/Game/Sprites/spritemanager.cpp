@@ -73,13 +73,13 @@ Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 		static_cast<AnimatedSprite*>(newSprite)->playAnimation("bat_idle", true);
 
-		newAnimation = _animationManager->loadAnimation("bat_crushed", 7, 100, sourcePosition + glm::vec2(16 * 5, 0), entityScale);
+		newAnimation = _animationManager->loadAnimation("bat_crushed", 7, 80, sourcePosition + glm::vec2(16 * 5, 0), entityScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}
 	else if (gid == GID_TILE_SPIKE_OFF || gid == GID_TILE_SPIKE_ON) {
 		newSprite = DBG_NEW AnimatedSprite(_graphics, texturePath, palettePath, vertexPath, fragmentPath, sourcePosition, sourceScale);
 
-		sourcePosition -= glm::vec2((gid - GID_TILE_SPIKE_OFF) * 16, 0); // TODO if its the ON spike, then the animation needs to look backward, improve this
+		sourcePosition -= glm::vec2((gid - GID_TILE_SPIKE_OFF) * 16, 0);
 		Animation* newAnimation = _animationManager->loadAnimation("spikes_on", 4, 100, sourcePosition, sourceScale);
 		static_cast<AnimatedSprite*>(newSprite)->addAnimation(newAnimation);
 	}

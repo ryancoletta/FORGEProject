@@ -126,6 +126,9 @@
     <ClCompile Include="Game\Graphics\vertexbufferlayout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Game\soundmanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Maths\glm\detail\_features.hpp">
@@ -1095,6 +1098,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Game\Graphics\vertexbufferlayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\soundmanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

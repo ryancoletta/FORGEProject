@@ -3,6 +3,7 @@
 #include "Entities/entity.h"
 #include "Sprites/animatedsprite.h".
 #include "Entities/boxentity.h"
+#include "soundmanager.h"
 
 HoleTile::HoleTile(Sprite* sprite, glm::vec2 coordinate, glm::vec2 position) :
 	DynamicTile(TILE_HOLE, sprite, coordinate, position, 0)
@@ -14,6 +15,7 @@ void HoleTile::onOccupy(int turn, EntityType outgoing)
 		_occupant.top()->kill(turn);
 		_stageHistory.push(1);
 		_lastTurnModified.push(turn);
+		SoundManager::instance->PlaySFX("fall");
 	}
 }
 

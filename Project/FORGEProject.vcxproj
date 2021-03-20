@@ -80,8 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)..\Librarys\SDL2_mixer-2.0.4\include;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\include;$(ProjectDir)..\Librarys\glew-2.1.0\include;$(ProjectDir)..\Librarys\SDL2-2.0.12\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)..\Librarys\glew-2.1.0\lib\Release\x64;$(ProjectDir)..\Librarys\SDL2_image-2.0.5\lib\x64;$(ProjectDir)..\Librarys\SDL2_mixer-2.0.4\lib\x64;$(ProjectDir)..\Librarys\SDL2-2.0.12\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -128,7 +128,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32s.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;glew32s.lib;opengl32.lib;glu32.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -189,6 +189,7 @@
     <ClCompile Include="Game\Graphics\vertexarray.cpp" />
     <ClCompile Include="Game\Graphics\vertexbuffer.cpp" />
     <ClCompile Include="Game\Graphics\vertexbufferlayout.cpp" />
+    <ClCompile Include="Game\soundmanager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game\Sprites\animatedsprite.h" />
@@ -514,6 +515,7 @@
     <ClInclude Include="Game\Graphics\vertexarray.h" />
     <ClInclude Include="Game\Graphics\vertexbuffer.h" />
     <ClInclude Include="Game\Graphics\vertexbufferlayout.h" />
+    <ClInclude Include="Game\soundmanager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\background.frag" />

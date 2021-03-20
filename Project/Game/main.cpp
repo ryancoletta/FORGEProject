@@ -1,6 +1,11 @@
 #include "globals.h"
 #include "game.h"
 
+// Ryan Coletta		- Programming
+// shiru8bit		- SFX
+// RyanAvx			- MUSIC
+// ShwiggityShwag   - MUSIC
+// 0x72			    - ART
 
 int main(int argc, char* args[]) {
 	

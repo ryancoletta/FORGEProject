@@ -16,6 +16,9 @@
 #include "HUD/text.h"
 #include <cmath>
 #include "Entities/playerentity.h"
+#include "soundmanager.h"
+
+SoundManager* SoundManager::instance = 0;
 
 Game::Game() :
 	_nextLevelEvent(SDL_RegisterEvents(1)),
@@ -33,6 +36,9 @@ Game::Game() :
 	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
 	_levelState			= DBG_NEW LevelState(this);
+
+	// singletons
+	SoundManager::instance = DBG_NEW SoundManager();
 }
 
 Game::~Game() {
@@ -45,14 +51,16 @@ Game::~Game() {
 	delete _stateMachine;
 	delete _titleState;
 	delete _levelState;
+	delete SoundManager::instance;
 
-	_graphics			= nullptr;
-	_entityManager		= nullptr;
-	_spriteManager		= nullptr;
-	_levelManager		= nullptr;
-	_input				= nullptr;
-	_hudManager			= nullptr;
-	_stateMachine		= nullptr;
+	_graphics				= nullptr;
+	_entityManager			= nullptr;
+	_spriteManager			= nullptr;
+	_levelManager			= nullptr;
+	_input					= nullptr;
+	_hudManager				= nullptr;
+	_stateMachine			= nullptr;
+	SoundManager::instance	= nullptr;
 }
 
 void Game::play() {
@@ -122,12 +130,12 @@ void Game::BaseState::Execute(int deltaTimeMs)
 
 	// fade in and out
 	if (!_stateComplete && _fade < 1.0f) {
-		_fade += deltaTimeMs / globals::MAX_SPRITE_FADE_TIME;
+		_fade += deltaTimeMs / globals::SPRITE_FADE_TIME;
 		_owner->_spriteManager->updateAllSpriteFade(std::min(_fade, 0.99f));
 		return;
 	}
 	else if (_stateComplete && _fade > 0.0f) {
-		_fade -= deltaTimeMs / globals::MAX_SPRITE_FADE_TIME;
+		_fade -= deltaTimeMs / globals::SPRITE_FADE_TIME;
 		_owner->_spriteManager->updateAllSpriteFade(std::max(std::min(_fade, 0.99f), 0.0f));
 		return;
 	}
@@ -140,8 +148,10 @@ Game::TitleState::TitleState(Game* owner) : BaseState(owner)
 
 void Game::TitleState::Enter() {
 	BaseState::Enter();
+	SoundManager::instance->PlayMusic("title");
 	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
-	_creditText = _owner->_hudManager->writeText("@RyGuyDev", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
+	_owner->_hudManager->writeText("@RyGuyDev", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
+	_owner->_hudManager->writeText("@BananaboySam", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 250.0f), MIDDLE_ALIGNED);
 	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), glm::vec2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
@@ -156,6 +166,8 @@ void Game::TitleState::Execute(int deltaTimeMs)
 	else {
 		if (_owner->_input->isKeyDown(SDL_SCANCODE_SPACE)) {
 			_stateComplete = true;
+			SoundManager::instance->StopMusic();
+			SoundManager::instance->PlaySFX("title_confirm");
 		}
 
 		// flash text
@@ -171,6 +183,7 @@ void Game::TitleState::Execute(int deltaTimeMs)
 
 void Game::TitleState::Exit() {
 	_owner->_hudManager->clearScreen();
+	SoundManager::instance->PlayMusic("level", true);
 }
 
 // ----------------------------------------------------------------------------------------------------------
@@ -183,7 +196,9 @@ void Game::LevelState::Enter()
 	BaseState::Enter();
 	_turn = 0;
 	if (!_owner->_levelManager->loadNextLevel(_owner->_graphics, _owner->_entityManager, _owner->_spriteManager)) {
-		printf("No more levels remain");
+		//_owner->_hudManager->writeText("YOU WIN!", glm::vec2(globals::WINDOW_HEIGHT / 2, globals::WINDOW_WIDTH / 2), MIDDLE_ALIGNED);
+		SoundManager::instance->PlayMusic("victory");
+		SDL_Delay(6000);
 		_owner->_gameOver = true;
 	}
 	else {
@@ -229,7 +244,7 @@ void Game::LevelState::Execute(int deltaTimeMs)
 		else {
 			// only display help text if player hasn't input for a few seconds
 			float timeSinceEntry = SDL_GetTicks() - _lastInputTimeMS;
-			if (timeSinceEntry > globals::MAX_TIME_TILL_HELP_TEXT_DISPLAYED && _turn > 0) {
+			if (timeSinceEntry > globals::DISPLAY_HELP_TEXT_TIME && _turn > 0) {
 				_helpText->setVisibility(true);
 			}
 		}
@@ -240,13 +255,15 @@ void Game::LevelState::Execute(int deltaTimeMs)
 				_turn--;
 				_owner->_entityManager->undoAll(_turn);
 				_owner->_levelManager->undo(_turn);
+				SoundManager::instance->PlaySFX("undo");
 			}
 		}
 		else if (_owner->_input->isKeyDown(SDL_SCANCODE_R)) {
 			if (_turn != 0) {
+				_turn = 0;
 				_owner->_entityManager->resetAll();
 				_owner->_levelManager->reset();
-				_turn = 0;
+				SoundManager::instance->PlaySFX("reset");
 			}
 		}
 		// dead players cannot access the below
