@@ -50,7 +50,6 @@ private:
 		void Exit() override;
 	private:
 		Text* _startText;
-		Text* _creditText;
 	};
 
 	class LevelState : public BaseState
@@ -83,7 +82,6 @@ private:
 	SpriteManager* _spriteManager;
 	Input* _input;
 	HudManager* _hudManager;
-	Sprite* _background;
 	StateMachine* _stateMachine;
 
 	TitleState* _titleState;

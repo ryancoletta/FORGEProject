@@ -11,6 +11,8 @@ public:
 	SoundManager();
 	~SoundManager();
 
+	bool IsMusicPlaying();
+
 	void PlayMusic(const std::string& songName, bool isLoop = false);
 	void StopMusic();
 

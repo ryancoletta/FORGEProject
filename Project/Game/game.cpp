@@ -33,7 +33,6 @@ Game::Game() :
 	_input				= DBG_NEW Input();
 	_hudManager			= DBG_NEW HudManager(_graphics, _spriteManager);
 	_stateMachine		= DBG_NEW StateMachine();
-	_background			= _spriteManager->loadSprite("background", "Assets/background.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT));
 	_titleState			= DBG_NEW TitleState(this);
 	_levelState			= DBG_NEW LevelState(this);
 
@@ -82,7 +81,6 @@ void Game::draw() {
 	_graphics->clear();
 	_graphics->begin();
 
-	_background->draw(glm::vec2(0,0));
 	_levelManager->draw();
 	_entityManager->draw();
 	_hudManager->draw();
@@ -152,7 +150,7 @@ void Game::TitleState::Enter() {
 	_startText = _owner->_hudManager->writeText("PUSH SPACE BUTTON", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 125.0f), MIDDLE_ALIGNED);
 	_owner->_hudManager->writeText("@RyGuyDev", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 200.0f), MIDDLE_ALIGNED);
 	_owner->_hudManager->writeText("@BananaboySam", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT / 2.0f + 250.0f), MIDDLE_ALIGNED);
-	_owner->_hudManager->spawnImage("title_sprite", "Assets/logo.png", "Assets/tile_palette_NES.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), glm::vec2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
+	_owner->_hudManager->spawnImage("title_sprite", "Assets/Sprites/2_logo_sprite.png", "Assets/Palettes/0_base_palette.png", "Shaders/base.vert", "Shaders/base.frag", glm::vec2(0), glm::vec2(globals::WINDOW_WIDTH, globals::WINDOW_HEIGHT), glm::vec2(globals::WINDOW_WIDTH / 2, globals::WINDOW_HEIGHT / 2));
 }
 
 void Game::TitleState::Execute(int deltaTimeMs)
@@ -183,7 +181,6 @@ void Game::TitleState::Execute(int deltaTimeMs)
 
 void Game::TitleState::Exit() {
 	_owner->_hudManager->clearScreen();
-	SoundManager::instance->PlayMusic("level", true);
 }
 
 // ----------------------------------------------------------------------------------------------------------
@@ -213,9 +210,9 @@ void Game::LevelState::Enter()
 
 		// display the level number
 		int levelNumber = _owner->_levelManager->getLevelIndex() + 1;
-		_owner->_hudManager->writeText("Level " + std::to_string(levelNumber), glm::vec2(globals::WINDOW_WIDTH - 30.0f, globals::WINDOW_HEIGHT - 30.0f), RIGHT_ALIGNED);
+		_owner->_hudManager->writeText("LEVEL-" + std::to_string(levelNumber), glm::vec2(30.0f, 30.0f), LEFT_ALIGNED);
 
-		_helpText = _owner->_hudManager->writeText("Z to undo | R to reset", glm::vec2(globals::WINDOW_WIDTH / 2.0f, 50.0f), MIDDLE_ALIGNED);
+		_helpText = _owner->_hudManager->writeText("Z - UNDO | R - RESET", glm::vec2(globals::WINDOW_WIDTH / 2.0f, globals::WINDOW_HEIGHT - 50.0f), MIDDLE_ALIGNED);
 		_helpText->setVisibility(false);
 		_lastInputTimeMS = _stateEnterTimeMS;
 	}
@@ -223,6 +220,13 @@ void Game::LevelState::Enter()
 
 void Game::LevelState::Execute(int deltaTimeMs)
 {
+	// simulate loading between levels by adding a stall before running update logic
+	float timeSinceEntry = SDL_GetTicks() - _stateEnterTimeMS;
+	if (timeSinceEntry <= globals::BETWEEN_SCENES_TIME)
+		return;
+	else if (!SoundManager::instance->IsMusicPlaying())
+		SoundManager::instance->PlayMusic("level", true);
+
 	BaseState::Execute(deltaTimeMs);
 
 	if (_stateComplete && _fade <= 0.0f) {

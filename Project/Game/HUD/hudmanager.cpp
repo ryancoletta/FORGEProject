@@ -8,7 +8,7 @@
 HudManager::HudManager(Graphics* graphics, SpriteManager* spriteManager) :
 	_spriteManager(spriteManager)
 {
-	_font = DBG_NEW Font(graphics, "Assets/font.png", glm::vec2(8, 8)); // TODO hardcoded for now, don't really need more than one font though...
+	_font = DBG_NEW Font(graphics, "Assets/Sprites/1_font_spritesheet.png", glm::vec2(8, 8)); // TODO hardcoded for now, don't really need more than one font though...
 }
 
 HudManager::~HudManager() {

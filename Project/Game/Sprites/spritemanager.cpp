@@ -39,7 +39,7 @@ Sprite* SpriteManager::loadSprite(std::string spriteName, const std::string& tex
 // TODO find a better way
 Sprite* SpriteManager::loadSprite(GidElement gid, const std::string& texturePath, const std::string& vertexPath, const std::string& fragmentPath, glm::vec2 sourcePosition, glm::vec2 sourceScale) {
 	std::string spriteName = "GID NO. " + std::to_string((int)gid);
-	std::string palettePath = "Assets/tile_palette_NES.png";
+	std::string palettePath = "Assets/Palettes/0_base_palette.png";
 	Sprite* newSprite = nullptr;
 	if (gid == GID_ENTITY_PLAYER_DOWN || gid == GID_ENTITY_PLAYER_LEFT || gid == GID_ENTITY_PLAYER_UP || gid == GID_ENTITY_PLAYER_RIGHT) {
 		glm::vec2 entityScale = glm::vec2(48, 48);

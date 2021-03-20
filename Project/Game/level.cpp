@@ -220,12 +220,14 @@ void Level::loadSpriteSheets(Graphics* graphics, XMLElement* mapNode) {
 			int firstGid;
 			pSpriteSheet->QueryAttribute("firstgid", &firstGid);
 
-			const char* source = pSpriteSheet->FirstChildElement("image")->Attribute("source");
+			const char* relativeSource = pSpriteSheet->FirstChildElement("image")->Attribute("source");
+			std::string absoluteSource = "Assets" + std::string(relativeSource).erase(0,2);
+
 			int width = pSpriteSheet->FirstChildElement("image")->IntAttribute("width");
 			int height = pSpriteSheet->FirstChildElement("image")->IntAttribute("height");
 
 			std::stringstream ss;
-			ss << "Assets/" << source;
+			ss << absoluteSource.c_str();
 			SpriteSheet spriteSheet = SpriteSheet(firstGid, width, height, ss.str());
 			_spriteSheets.push_back(spriteSheet);
 

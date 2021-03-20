@@ -29,6 +29,11 @@ SoundManager::~SoundManager()
     }
 }
 
+bool SoundManager::IsMusicPlaying()
+{
+    return Mix_PlayingMusic();
+}
+
 void SoundManager::PlayMusic(const std::string& songName, bool isLoop)
 {
     if (Mix_PlayingMusic() == 0) {
